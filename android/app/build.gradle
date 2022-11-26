@@ -70,5 +70,6 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    classpath 'com.google.gms:google-services:4.3.13'
+    implementation 'com.google.android.gms:play-services:12.0.1'
 }
+apply plugin: 'com.google.gms.google-services'
