@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:pie_chart/pie_chart.dart';
+import 'setMedicineAlarmPage.dart';
 
 void main() => runApp(const AppBarApp());
 
@@ -237,6 +238,12 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
           }
         )
     );
+  }
+
+  void _pushSetMedicineAlarm(){
+    Navigator.of(context).push(MaterialPageRoute(builder: (_){
+      return  AlarmPage();
+    }));
   }
 
   void _pushMedicineSettings() {
@@ -737,7 +744,7 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
                 children: <Widget>[
                   IconButton(
                       icon: const Icon(_SliverAppBarExampleState.alarm),
-                      onPressed: () {},
+                      onPressed: () {_pushSetMedicineAlarm();},
                       tooltip: "Set medicine alarm",
                   ),
                 ],
@@ -758,6 +765,7 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
       ),
     );
   }
+
 }
 
 class GroupedStackedBarChart extends StatelessWidget {
