@@ -1,8 +1,10 @@
 //import 'package:charts_flutter/flutter.dart';
+
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:pie_chart/pie_chart.dart';
-import 'setMedicineAlarmPage.dart';
+//import 'setMedicineAlarmPage.dart';
+import 'setMedicineAlarm.dart';
 
 void main() => runApp(const AppBarApp());
 

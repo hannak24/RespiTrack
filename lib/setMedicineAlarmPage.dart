@@ -48,7 +48,7 @@ class _AlarmPageState extends State<AlarmPage>{
             ),
             const Divider(
               height: 0,
-              thickness: 2,
+              thickness: 5,
               indent: 0,
               endIndent: 0,
               color: Colors.black45,
