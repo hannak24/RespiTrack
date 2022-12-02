@@ -32,6 +32,10 @@ class SliverAppBarExample extends StatefulWidget {
 class _SliverAppBarExampleState extends State<SliverAppBarExample> {
   static const IconData alarm = IconData(0xe072, fontFamily: 'MaterialIcons');
   static const IconData create = IconData(0xe19d, fontFamily: 'MaterialIcons');
+  static const _kFontFam = 'MyFlutterApp';
+  static const String? _kFontPkg = null;
+  static const IconData graph = IconData(0xf35a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData bar_chart = IconData(0xe0cc, fontFamily: 'MaterialIcons');
 
   // pie chart data:
   final dataMap = <String, double>{
@@ -748,6 +752,16 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
                       icon: const Icon(_SliverAppBarExampleState.alarm),
                       onPressed: () {_pushSetMedicineAlarm();},
                       tooltip: "Set medicine alarm",
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  IconButton(
+                    icon: const Icon(_SliverAppBarExampleState.bar_chart),
+                    onPressed: () {_pushSetMedicineAlarm();},
+                    tooltip: "Medicines statistics",
                   ),
                 ],
               ),
