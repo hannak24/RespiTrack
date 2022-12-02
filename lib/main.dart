@@ -35,6 +35,8 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
   static const String? _kFontPkg = null;
   static const IconData graph = IconData(0xf35a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData bar_chart = IconData(0xe0cc, fontFamily: 'MaterialIcons');
+  static const IconData medication = IconData(0xe3d9, fontFamily: 'MaterialIcons');
+
 
   // pie chart data:
   final dataMap = <String, double>{
@@ -77,6 +79,17 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
       const Color.fromRGBO(191, 191, 255, 1),
     ],
   ];
+
+  void _pushMedicineStatistics() {
+    Navigator.of(context).push(
+        MaterialPageRoute<void>(
+            builder: (context) {
+              return Scaffold(
+              );
+            }
+        )
+    );
+  }
 
   void _pushLogin() {
     Navigator.of(context).push(
@@ -251,7 +264,7 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
     }));
   }
 
-  void _pushMedicineSettings() {
+  void _pushProfile() {
     Navigator.of(context).push(
         MaterialPageRoute<void>(
             builder: (context) {
@@ -266,7 +279,7 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
                             backgroundColor: Colors.blue,
                             flexibleSpace: const FlexibleSpaceBar(
                               title: Text(
-                                  'RespiTrack',
+                                  'Profile',
                                   style: TextStyle(
                                     fontSize: 19,
                                   )
@@ -286,70 +299,339 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
                                   (BuildContext context, int index) {
                                 Size size = MediaQuery.of(context).size;
                                 return Container(
-                                  height: 1000 - MediaQuery.of(context).viewInsets.bottom,
+                                  height: 2000 - MediaQuery.of(context).viewInsets.bottom,
                                   color: Colors.white,
                                   child: SingleChildScrollView(
                                     child: Padding(
-                                      padding: const EdgeInsets.all(16.0),
+                                      padding: const EdgeInsets.all(8.0),
                                       child: Column(
                                         children: [
-                                          CircleAvatar(
-                                            radius: 80, // Image radius
-                                            backgroundImage: NetworkImage("https://www.aaaai.org/Aaaai/media/MediaLibraryRedesign/Tools%20for%20the%20Public/Conditions%20Library/Library%20-%20Asthma/skd238387sdc-mother-daugh-inhaler-cropped.jpg"),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Column(
+                                          SizedBox(
+                                            height: 200,
+                                            width: 200,
+                                            child: Stack(
+                                              clipBehavior: Clip.none,
+                                              fit: StackFit.expand,
+                                              children: [
+                                                CircleAvatar(
+                                                  radius: 100,
+                                                  backgroundImage: NetworkImage("https://www.aaaai.org/Aaaai/media/MediaLibraryRedesign/Tools%20for%20the%20Public/Conditions%20Library/Library%20-%20Asthma/skd238387sdc-mother-daugh-inhaler-cropped.jpg"),
+                                                ),
+                                                Positioned(
+                                                    bottom: 0,
+                                                    left: -15,
+                                                    child: RawMaterialButton(
+                                                      onPressed: () {},
+                                                      elevation: 5.0,
+                                                      fillColor: Color(0xFFF5F6F9),
+                                                      child: Icon(Icons.camera_alt_outlined, color: Colors.blue,),
+                                                      padding: EdgeInsets.all(15.0),
+                                                      shape: CircleBorder(),
+                                                    )),
+                                              ],
+                                            ),
+                                      ), //avatar
+                                          SizedBox(height: 7),
+                                          Card(
+                                            elevation: 3.5,
+                                            // ignore: sort_child_properties_last
+                                            child: Column(
                                                 children: [
-                                                  Text("name"),
-                                                  Text("Pippi")
-                                                ],
+                                                  Container(
+                                                      // decoration: BoxDecoration(
+                                                      //     borderRadius: BorderRadius.all(Radius.circular(0))
+                                                      // ),
+                                                    height: 50,
+                                                    color: Colors.grey,
+                                                    child: Center(
+                                                        child: Column(
+                                                          children:[
+                                                            Icon(Icons.person),
+                                                            Text("Personal details")
+                                                          ]
+                                                        )
+                                                    )
+                                                  ),
+                                                  Padding(
+                                                   padding: const EdgeInsets.all(10.0),
+                                                   child: Column(
+                                                     children: [
+                                                       Row(
+                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                           mainAxisSize: MainAxisSize.max,
+                                                           children: [
+                                                             Column(
+                                                               children: [
+                                                                 Text("name", style: TextStyle(color: Colors.black.withOpacity(0.6)),),
+                                                                 Text("Pippi")
+                                                               ],
+                                                             ),
+                                                             IconButton(
+                                                               icon: Icon(_SliverAppBarExampleState.create),
+                                                               onPressed: () {},
+                                                             ),
+                                                           ]
+                                                       ), //name
+                                                       SizedBox(height: 10),
+                                                       Row(
+                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                           mainAxisSize: MainAxisSize.max,
+                                                           children: [
+                                                             Column(
+                                                               crossAxisAlignment: CrossAxisAlignment.start,
+                                                               children: [
+                                                                 Text("age",style: TextStyle(color: Colors.black.withOpacity(0.6)),),
+                                                                 Text("11")
+                                                               ],
+                                                             ),
+                                                             IconButton(
+                                                               icon: Icon(_SliverAppBarExampleState.create),
+                                                               onPressed: () {},
+                                                             ),
+                                                           ]
+                                                       ), //age
+                                                       SizedBox(height: 10),
+                                                       Row(
+                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                           mainAxisSize: MainAxisSize.max,
+                                                           children: [
+                                                             Column(
+                                                               crossAxisAlignment: CrossAxisAlignment.start,
+                                                               children: [
+                                                                 Text("id",style: TextStyle(color: Colors.black.withOpacity(0.6)),),
+                                                                 Text("123456789")
+                                                               ],
+                                                             ),
+                                                             IconButton(
+                                                               icon: Icon(_SliverAppBarExampleState.create),
+                                                               onPressed: () {},
+                                                             ),
+                                                           ]
+                                                       ), //i
+                                                     ]
+                                                   )
+                                                  ),
+                                                ]
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                color: Theme.of(context).colorScheme.outline,
                                               ),
-                                              IconButton(
-                                                icon: Icon(_SliverAppBarExampleState.create),
-                                                onPressed: () {},
+                                              borderRadius: const BorderRadius.all(Radius.circular(12)),
+                                            ),
+                                          ),
+                                          SizedBox(height: 10),
+                                          Card(
+                                            elevation: 3.5,
+                                            child: Column(
+                                                children: [
+                                                  Container(
+                                                      height: 50,
+                                                      color: Colors.grey,
+                                                      child: Center(
+                                                          child: Padding(
+                                                            padding: const EdgeInsets.all(3.0),
+                                                            child: Column(
+                                                                children:[
+                                                                  Icon(_SliverAppBarExampleState.medication),
+                                                                  Text("Routine Inhaler")
+                                                                ]
+                                                            )
+                                                          )
+                                                      )
+                                                  ),
+                                                  Padding(
+                                                      padding: const EdgeInsets.all(10.0),
+                                                      child: Column(
+                                                          children: [
+                                                            Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                mainAxisSize: MainAxisSize.max,
+                                                                children: [
+                                                                  Column(
+                                                                    children: [
+                                                                      Text("Medicine name", style: TextStyle(color: Colors.black.withOpacity(0.6)),),
+                                                                      Text("Salbutrim")
+                                                                    ],
+                                                                  ),
+                                                                  IconButton(
+                                                                    icon: Icon(_SliverAppBarExampleState.create),
+                                                                    onPressed: () {},
+                                                                  ),
+                                                                ]
+                                                            ), //name
+                                                            SizedBox(height: 10),
+                                                            Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                mainAxisSize: MainAxisSize.max,
+                                                                children: [
+                                                                  Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      Text("Prescripted Dose",style: TextStyle(color: Colors.black.withOpacity(0.6)),),
+                                                                      Text("1")
+                                                                    ],
+                                                                  ),
+                                                                  IconButton(
+                                                                    icon: Icon(_SliverAppBarExampleState.create),
+                                                                    onPressed: () {},
+                                                                  ),
+                                                                ]
+                                                            ), //age
+                                                            SizedBox(height: 10),
+                                                            Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                mainAxisSize: MainAxisSize.max,
+                                                                children: [
+                                                                  Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      Text("Num of doses in bottle",style: TextStyle(color: Colors.black.withOpacity(0.6)),),
+                                                                      Text("200")
+                                                                    ],
+                                                                  ),
+                                                                  IconButton(
+                                                                    icon: Icon(_SliverAppBarExampleState.create),
+                                                                    onPressed: () {},
+                                                                  ),
+                                                                ]
+                                                            ),
+                                                            SizedBox(height: 10),
+                                                            Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                mainAxisSize: MainAxisSize.max,
+                                                                children: [
+                                                                  Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      Text("Expiration Date",style: TextStyle(color: Colors.black.withOpacity(0.6)),),
+                                                                      Text("11/11/2026")
+                                                                    ],
+                                                                  ),
+                                                                  IconButton(
+                                                                    icon: Icon(_SliverAppBarExampleState.create),
+                                                                    onPressed: () {},
+                                                                  ),
+                                                                ]
+                                                            ), //i
+                                                          ]
+                                                      )
+                                                  ),
+                                                ]
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                color: Theme.of(context).colorScheme.outline,
                                               ),
-                                            ]
-                                          ), //name
+                                              borderRadius: const BorderRadius.all(Radius.circular(12)),
+                                            ),
+                                          ),
                                           SizedBox(height: 10),
-                                          Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text("age"),
-                                                    Text("11")
-                                                  ],
-                                                ),
-                                                IconButton(
-                                                  icon: Icon(_SliverAppBarExampleState.create),
-                                                  onPressed: () {},
-                                                ),
-                                              ]
-                                          ), //age
-                                          SizedBox(height: 10),
-                                          Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text("id"),
-                                                    Text("123456789")
-                                                  ],
-                                                ),
-                                                IconButton(
-                                                  icon: Icon(_SliverAppBarExampleState.create),
-                                                  onPressed: () {},
-                                                ),
-                                              ]
-                                          ), //id
-                                          SizedBox(height: 40),
+                                          Card(
+                                            elevation: 3.5,
+                                            child: Column(
+                                                children: [
+                                                  Container(
+                                                      height: 50,
+                                                      color: Colors.grey,
+                                                      child: Center(
+                                                          child: Padding(
+                                                              padding: const EdgeInsets.all(3.0),
+                                                              child: Column(
+                                                                  children:[
+                                                                    Icon(_SliverAppBarExampleState.medication),
+                                                                    Text("Acoutic Inhaler")
+                                                                  ]
+                                                              )
+                                                          )
+                                                      )
+                                                  ),
+                                                  Padding(
+                                                      padding: const EdgeInsets.all(10.0),
+                                                      child: Column(
+                                                          children: [
+                                                            Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                mainAxisSize: MainAxisSize.max,
+                                                                children: [
+                                                                  Column(
+                                                                    children: [
+                                                                      Text("Medicine name", style: TextStyle(color: Colors.black.withOpacity(0.6)),),
+                                                                      Text("Turbuhaler")
+                                                                    ],
+                                                                  ),
+                                                                  IconButton(
+                                                                    icon: Icon(_SliverAppBarExampleState.create),
+                                                                    onPressed: () {},
+                                                                  ),
+                                                                ]
+                                                            ), //name
+                                                            SizedBox(height: 10),
+                                                            Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                mainAxisSize: MainAxisSize.max,
+                                                                children: [
+                                                                  Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      Text("Prescripted Dose",style: TextStyle(color: Colors.black.withOpacity(0.6)),),
+                                                                      Text("2")
+                                                                    ],
+                                                                  ),
+                                                                  IconButton(
+                                                                    icon: Icon(_SliverAppBarExampleState.create),
+                                                                    onPressed: () {},
+                                                                  ),
+                                                                ]
+                                                            ), //age
+                                                            SizedBox(height: 10),
+                                                            Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                mainAxisSize: MainAxisSize.max,
+                                                                children: [
+                                                                  Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      Text("Num of doses in bottle",style: TextStyle(color: Colors.black.withOpacity(0.6)),),
+                                                                      Text("120")
+                                                                    ],
+                                                                  ),
+                                                                  IconButton(
+                                                                    icon: Icon(_SliverAppBarExampleState.create),
+                                                                    onPressed: () {},
+                                                                  ),
+                                                                ]
+                                                            ),
+                                                            SizedBox(height: 10),
+                                                            Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                mainAxisSize: MainAxisSize.max,
+                                                                children: [
+                                                                  Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      Text("Expiration Date",style: TextStyle(color: Colors.black.withOpacity(0.6)),),
+                                                                      Text("11/11/2026")
+                                                                    ],
+                                                                  ),
+                                                                  IconButton(
+                                                                    icon: Icon(_SliverAppBarExampleState.create),
+                                                                    onPressed: () {},
+                                                                  ),
+                                                                ]
+                                                            ), //i
+                                                          ]
+                                                      )
+                                                  ),
+                                                ]
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                color: Theme.of(context).colorScheme.outline,
+                                              ),
+                                              borderRadius: const BorderRadius.all(Radius.circular(12)),
+                                            ),
+                                          ),
                                           Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               mainAxisSize: MainAxisSize.max,
@@ -366,79 +648,77 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
                                                   onPressed: () {},
                                                 ),
                                               ]
-                                          ), //Acoutic medicine name
+                                          ),
                                           SizedBox(height: 10),
-                                          Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text("Routine medicine dose"),
-                                                    Text("1")
-                                                  ],
-                                                ),
-                                                IconButton(
-                                                  icon: Icon(_SliverAppBarExampleState.create),
-                                                  onPressed: () {},
-                                                ),
-                                              ]
-                                          ), //Acoutic medicine dose
-                                          SizedBox(height: 20),
-                                          Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text("Routine medicine name"),
-                                                    Text("Turbuhaler")
-                                                  ],
-                                                ),
-                                                IconButton(
-                                                  icon: Icon(_SliverAppBarExampleState.create),
-                                                  onPressed: () {},
-                                                ),
-                                              ]
-                                          ), //Routine medicine name
-                                          SizedBox(height: 10),
-                                          Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text("Acoutic medicine dose"),
-                                                    Text("1")
-                                                  ],
-                                                ),
-                                                IconButton(
-                                                  icon: Icon(_SliverAppBarExampleState.create),
-                                                  onPressed: () {},
-                                                ),
-                                              ]
-                                          ), //Routine medicine dose
-                                          SizedBox(height: 20),
-                                          Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text("Doctor's mail"),
-                                                    Text("doctorStrange@gmail.com")
-                                                  ],
-                                                ),
-                                                IconButton(
-                                                  icon: Icon(_SliverAppBarExampleState.create),
-                                                  onPressed: () {},
-                                                ),
-                                              ]
-                                          ), //Doctor's Email
+                                          Card(
+                                            elevation: 3.5,
+                                            child: Column(
+                                                children: [
+                                                  Container(
+                                                      height: 50,
+                                                      color: Colors.grey,
+                                                      child: Center(
+                                                          child: Padding(
+                                                              padding: const EdgeInsets.all(3.0),
+                                                              child: Column(
+                                                                  children:[
+                                                                    Icon( Icons.medical_services_outlined, ),
+                                                                    Text("Doctor")
+                                                                  ]
+                                                              )
+                                                          )
+                                                      )
+                                                  ),
+                                                  Padding(
+                                                      padding: const EdgeInsets.all(10.0),
+                                                      child: Column(
+                                                          children: [
+                                                            Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                mainAxisSize: MainAxisSize.max,
+                                                                children: [
+                                                                  Column(
+                                                                    children: [
+                                                                      Text("Doctor's name", style: TextStyle(color: Colors.black.withOpacity(0.6)),),
+                                                                      Text("Dr. Strange")
+                                                                    ],
+                                                                  ),
+                                                                  IconButton(
+                                                                    icon: Icon(_SliverAppBarExampleState.create),
+                                                                    onPressed: () {},
+                                                                  ),
+                                                                ]
+                                                            ), //name
+                                                            SizedBox(height: 10),
+                                                            Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                mainAxisSize: MainAxisSize.max,
+                                                                children: [
+                                                                  Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      Text("Doctor's Email",style: TextStyle(color: Colors.black.withOpacity(0.6)),),
+                                                                      Text("DoctorStrange@gmail.com")
+                                                                    ],
+                                                                  ),
+                                                                  IconButton(
+                                                                    icon: Icon(_SliverAppBarExampleState.create),
+                                                                    onPressed: () {},
+                                                                  ),
+                                                                ]
+                                                            ), //age
+                                                          ]
+                                                      )
+                                                  ),
+                                                ]
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                color: Theme.of(context).colorScheme.outline,
+                                              ),
+                                              borderRadius: const BorderRadius.all(Radius.circular(12)),
+                                            ),
+                                          ),//Acoutic medicine name
                                           SizedBox(height: 40),
                                           TextButton(
                                             style: ButtonStyle(
@@ -739,7 +1019,7 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
                 children: <Widget>[
                   IconButton(
                     icon: const Icon(Icons.person_outlined),
-                    onPressed: () {_pushMedicineSettings();},
+                    onPressed: () {_pushProfile();},
                     tooltip: "medicine settings",
                   ),
                 ],
