@@ -88,11 +88,810 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
     Navigator.of(context).push(
         MaterialPageRoute<void>(
             builder: (context) {
-              return Scaffold(
+              return DefaultTabController(
+                length: 4,
+                child: Scaffold(
+                  bottomNavigationBar: BottomAppBar(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: OverflowBar(
+                        alignment: MainAxisAlignment.spaceEvenly,
+                        overflowAlignment: OverflowBarAlignment.center,
+                        children: <Widget>[
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              IconButton(
+                                icon: const Icon(Icons.person_outlined),
+                                onPressed: () {_pushProfile();},
+                                tooltip: "medicine settings",
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              IconButton(
+                                icon: const Icon(_SliverAppBarExampleState.alarm),
+                                onPressed: () {_pushSetMedicineAlarm();},
+                                tooltip: "Set medicine alarm",
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              IconButton(
+                                icon: const Icon(_SliverAppBarExampleState.bar_chart),
+                                onPressed: () {_pushSetMedicineAlarm();},
+                                tooltip: "Medicines statistics",
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              IconButton(
+                                icon: const Icon(Icons.sick_outlined),
+                                onPressed: () {},
+                                tooltip: "add symptom entry",
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  appBar: AppBar(
+                    bottom:  TabBar(
+                      tabs: [
+                        Tab(icon: graphIcon()),
+                        Tab(icon: routineIcon()),
+                        Tab(icon: acuteIcon()),
+                        Tab(icon: symptomIcon()),
+                      ],
+                    ),
+                    title: const Text('Medical Statistics'),
+                  ),
+                  body: TabBarView(
+                    children: [
+                      CustomScrollView(
+                        slivers: <Widget>[
+                          SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                                  (BuildContext context, int index) {
+                                Size size = MediaQuery
+                                    .of(context)
+                                    .size;
+                                return Container(
+                                  height: 1000 - MediaQuery
+                                      .of(context)
+                                      .viewInsets
+                                      .bottom,
+                                  color: Colors.black12,
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 7.0,
+                                          width: size.width,
+                                        ),
+                                        Container(
+                                            height: 70.0,
+                                            width: size.width,
+                                            //color: Color(0xFF010280),
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                  colors: [
+                                                    const Color(0xFF010280),
+                                                    const Color(0xFF135CC5),
+                                                    const Color(0xFF010280),
+                                                  ],
+                                                  begin: const FractionalOffset(
+                                                      0.0, 0.0),
+                                                  end: const FractionalOffset(
+                                                      1.0, 0.0),
+                                                  stops: [0.0, 0.5, 0.8],
+                                                  tileMode: TileMode.mirror),
+                                            ),
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: 8.0),
+                                                  child: Text(
+                                                    "Doses remaining ",
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        color: Colors.white),),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 50.0, right: 50.0),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment
+                                                        .spaceBetween,
+                                                    mainAxisSize: MainAxisSize
+                                                        .max,
+                                                    children: [
+                                                      Column(
+                                                          children: [
+                                                            Text(
+                                                              "acute inhaler: ",
+                                                              style: TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors
+                                                                      .white),),
+                                                            Text("146",
+                                                              style: TextStyle(
+                                                                  fontSize: 20,
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight: FontWeight
+                                                                      .bold),)
+                                                          ]
+                                                      ),
+                                                      Column(
+                                                          children: [
+                                                            Text(
+                                                              "Routine inhaler: ",
+                                                              style: TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors
+                                                                      .white),),
+                                                            Text("25",
+                                                              style: TextStyle(
+                                                                  fontSize: 20,
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight: FontWeight
+                                                                      .bold),)
+                                                          ]
+                                                      )
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                        ),
+                                        //dozes remaining
+
+                                        SizedBox(
+                                          height: 5.0,
+                                          width: size.width,
+                                        ),
+                                        // space
+
+                                        SizedBox(
+                                          height: 250.0,
+                                          width: size.width,
+                                          child: Card(
+                                            elevation: 3.5,
+                                            child: GroupedStackedBarChart(
+                                                GroupedStackedBarChart
+                                                    .createSampleData()),
+                                            shape: RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                color: Theme
+                                                    .of(context)
+                                                    .colorScheme
+                                                    .outline,
+                                              ),
+                                              borderRadius: const BorderRadius
+                                                  .all(Radius.circular(12)),
+                                            ),
+                                          ),
+                                        ),
+                                        // bar chart inhaler uses per month
+
+                                        SizedBox(
+                                          height: 10,
+                                          width: size.width,
+                                        ),
+                                        //space
+
+                                        SizedBox(
+                                          height: 87.0,
+                                          width: size.width,
+                                          child: Card(
+                                              elevation: 3.5,
+                                              color: Colors.white,
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 5.0),
+                                                    child: Text(
+                                                      "Average number of squeezes/rotations per usage: ",
+                                                      style: TextStyle(
+                                                          fontSize: 15,
+                                                          color: Colors
+                                                              .black),),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 70.0,
+                                                        right: 70.0,
+                                                        top: 10),
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment
+                                                          .spaceBetween,
+                                                      mainAxisSize: MainAxisSize
+                                                          .max,
+                                                      children: [
+                                                        Column(
+                                                            children: [
+                                                              Text(
+                                                                "acute inhaler: ",
+                                                                style: TextStyle(
+                                                                    fontSize: 12,
+                                                                    color: Colors
+                                                                        .black),),
+                                                              Text("1.4",
+                                                                style: TextStyle(
+                                                                    fontSize: 12,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight: FontWeight
+                                                                        .bold),)
+                                                            ]
+                                                        ),
+                                                        Column(
+                                                            children: [
+                                                              Text(
+                                                                "Routine inhaler: ",
+                                                                style: TextStyle(
+                                                                    fontSize: 12,
+                                                                    color: Colors
+                                                                        .black),),
+                                                              Text("1.1",
+                                                                style: TextStyle(
+                                                                    fontSize: 12,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight: FontWeight
+                                                                        .bold),)
+                                                            ]
+                                                        )
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              )
+                                          ),
+                                        ),
+                                        //average number of squeezes per use
+
+                                        SizedBox(
+                                          height: 10,
+                                          width: size.width,
+                                        ),
+                                        // space
+
+                                        SizedBox(
+                                          height: 250.0,
+                                          width: size.width,
+                                          child: Card(
+                                            elevation: 3.5,
+                                            child: PieChart(
+                                              dataMap: dataMap,
+                                              animationDuration: Duration(
+                                                  milliseconds: 1500),
+                                              chartLegendSpacing: 40,
+                                              chartRadius: MediaQuery
+                                                  .of(context)
+                                                  .size
+                                                  .width / 3.3,
+                                              colorList: colorList,
+                                              initialAngleInDegree: 0,
+                                              chartType: ChartType.ring,
+                                              ringStrokeWidth: 32,
+                                              centerText: "Symptoms\n before\n attacks",
+                                              legendOptions: LegendOptions(
+                                                showLegendsInRow: false,
+                                                legendPosition: LegendPosition
+                                                    .right,
+                                                showLegends: true,
+                                                //legendShape: _BoxShape.circle,
+                                                legendTextStyle: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              chartValuesOptions: ChartValuesOptions(
+                                                showChartValueBackground: true,
+                                                showChartValues: true,
+                                                showChartValuesInPercentage: true,
+                                                showChartValuesOutside: true,
+                                                decimalPlaces: 1,
+                                              ),
+                                              gradientList: gradientList,
+                                              // emptyColorGradient: ---Empty Color gradient---
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                color: Theme
+                                                    .of(context)
+                                                    .colorScheme
+                                                    .outline,
+                                              ),
+                                              borderRadius: const BorderRadius
+                                                  .all(Radius.circular(12)),
+                                            ),
+                                          ),
+                                        ),
+                                        // pie chart symptoms before asthma attacks
+
+                                        SizedBox(
+                                          height: 10,
+                                          width: size.width,
+                                        ),
+
+                                        SizedBox(
+                                          height: 250.0,
+                                          width: size.width,
+                                          child: Card(
+                                            elevation: 3.5,
+                                            shape: RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                color: Theme
+                                                    .of(context)
+                                                    .colorScheme
+                                                    .outline,
+                                              ),
+                                              borderRadius: const BorderRadius
+                                                  .all(Radius.circular(12)),
+                                            ),
+                                            child: SimpleScatterPlotChart(
+                                              SimpleScatterPlotChart
+                                                  ._createSampleData(),),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                              childCount: 1,
+                            ),
+                          ),
+                        ],
+                      ),
+                      CustomScrollView(
+                        slivers: <Widget>[
+                        SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                        Size size = MediaQuery
+                            .of(context)
+                            .size;
+                        return Container(
+                          height: 1000 - MediaQuery
+                              .of(context)
+                              .viewInsets
+                              .bottom,
+                          color: Colors.black12,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                              SizedBox(
+                              height: 7.0,
+                              width: size.width,
+                              ),
+
+                              Container(
+                              height: 70.0,
+                              width: size.width,
+                              //color: Color(0xFF010280),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    const Color(0xFF010280),
+                                    const Color(0xFF135CC5),
+                                    const Color(0xFF010280),
+                                  ],
+                                  begin: const FractionalOffset(
+                                    0.0, 0.0),
+                                  end: const FractionalOffset(
+                                    1.0, 0.0),
+                                  stops: [0.0, 0.5, 0.8],
+                                  tileMode: TileMode.mirror),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                    padding: EdgeInsets.only(
+                                    top: 8.0),
+                                    child: Text(
+                                      "Doses remaining ",
+                                      style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.white),),
+                                    ),
+                                    Padding(
+                                    padding: EdgeInsets.only(
+                                    left: 50.0, right: 50.0),
+                                    child: Center(
+                                      child: Column(
+                                      children: [
+                                      Text("25",
+                                      style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors
+                                          .white,
+                                      fontWeight: FontWeight
+                                          .bold),)
+                                      ]
+                                      )
+                                     ),
+                                   )
+                                 ],
+                                )
+                              ),//doses remaining
+
+
+                              SizedBox(
+                              height: 5.0,
+                              width: size.width,
+                              ),
+                              // space
+
+                              SizedBox(
+                              height: 250.0,
+                              width: size.width,
+                              child: Card(
+                              elevation: 3.5,
+                              child: GroupedStackedBarChart(
+                              GroupedStackedBarChart
+                                  .createSampleDataRoutine()),
+                              shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .outline,
+                              ),
+                              borderRadius: const BorderRadius
+                                  .all(Radius.circular(12)),
+                              ),
+                              ),
+                              ),// bar chart inhaler uses per month
+
+
+                              SizedBox(
+                              height: 10,
+                              width: size.width,
+                              ),
+                              //space
+
+                              SizedBox(
+                              height: 87.0,
+                              width: size.width,
+                              child: Card(
+                                elevation: 3.5,
+                                color: Colors.white,
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                      top: 5.0),
+                                      child: Text(
+                                      "Average number of squeezes per usage: ",
+                                      style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors
+                                          .black),),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                      left: 70.0,
+                                      right: 70.0,
+                                      top: 10),
+                                      child: Center(
+                                        child: Column(
+                                        children: [
+                                      Text("1.1",
+                                      style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors
+                                          .black,
+                                      fontWeight: FontWeight
+                                          .bold),)
+                                      ]
+                                        )
+                                      ),
+                                    ),
+                                  ]
+                                )
+                               ),
+                              ),//average number of squeezes per use
+
+
+                              SizedBox(
+                              height: 10,
+                              width: size.width,
+                              ),// space
+
+
+                              SizedBox(
+                              height: 250.0,
+                              width: size.width,
+                              child: Card(
+                              elevation: 3.5,
+                              shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .outline,
+                              ),
+                              borderRadius: const BorderRadius
+                                  .all(Radius.circular(12)),
+                              ),
+                              child: SimpleScatterPlotChart(
+                              SimpleScatterPlotChart
+                                  ._createSampleData(),),
+                              ),
+                              ),
+                              ],
+                            ),
+                          ),
+                        );
+                        },
+                        childCount: 1,
+                        ),
+                        ),
+                        ],
+                      ),
+                      CustomScrollView(
+                        slivers: <Widget>[
+                        SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                        Size size = MediaQuery
+                            .of(context)
+                            .size;
+                        return Container(
+                          height: 1000 - MediaQuery
+                              .of(context)
+                              .viewInsets
+                              .bottom,
+                          color: Colors.black12,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                              SizedBox(
+                              height: 7.0,
+                              width: size.width,
+                              ),
+
+                              Container(
+                              height: 70.0,
+                              width: size.width,
+                              //color: Color(0xFF010280),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    const Color(0xFF010280),
+                                    const Color(0xFF135CC5),
+                                    const Color(0xFF010280),
+                                  ],
+                                  begin: const FractionalOffset(
+                                    0.0, 0.0),
+                                  end: const FractionalOffset(
+                                    1.0, 0.0),
+                                  stops: [0.0, 0.5, 0.8],
+                                  tileMode: TileMode.mirror),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                    padding: EdgeInsets.only(
+                                    top: 8.0),
+                                    child: Text(
+                                      "Doses remaining ",
+                                      style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.white),),
+                                    ),
+                                    Padding(
+                                    padding: EdgeInsets.only(
+                                    left: 50.0, right: 50.0),
+                                    child: Center(
+                                      child: Column(
+                                      children: [
+                                      Text("146",
+                                      style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors
+                                          .white,
+                                      fontWeight: FontWeight
+                                          .bold),)
+                                      ]
+                                      )
+                                     ),
+                                   )
+                                 ],
+                                )
+                              ),//doses remaining
+
+
+                              SizedBox(
+                              height: 5.0,
+                              width: size.width,
+                              ),
+                              // space
+
+                              SizedBox(
+                              height: 250.0,
+                              width: size.width,
+                              child: Card(
+                              elevation: 3.5,
+                              child: GroupedStackedBarChart(
+                              GroupedStackedBarChart
+                                  .createSampleDataAcute()),
+                              shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .outline,
+                              ),
+                              borderRadius: const BorderRadius
+                                  .all(Radius.circular(12)),
+                              ),
+                              ),
+                              ),// bar chart inhaler uses per month
+
+
+                              SizedBox(
+                              height: 10,
+                              width: size.width,
+                              ),
+                              //space
+
+                              SizedBox(
+                              height: 87.0,
+                              width: size.width,
+                              child: Card(
+                                elevation: 3.5,
+                                color: Colors.white,
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                      top: 5.0),
+                                      child: Text(
+                                      "Average number of squeezes per usage: ",
+                                      style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors
+                                          .black),),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                      left: 70.0,
+                                      right: 70.0,
+                                      top: 10),
+                                      child: Center(
+                                        child: Column(
+                                        children: [
+                                      Text("1.4",
+                                      style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors
+                                          .black,
+                                      fontWeight: FontWeight
+                                          .bold),)
+                                      ]
+                                        )
+                                      ),
+                                    ),
+                                  ]
+                                )
+                               ),
+                              ),//average number of squeezes per use
+
+                              ],
+                            ),
+                          ),
+                        );
+                        },
+                        childCount: 1,
+                        ),
+                        ),
+                        ],
+                      ),
+                      CustomScrollView(
+                        slivers: <Widget>[
+                          SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                                  (BuildContext context, int index) {
+                                Size size = MediaQuery
+                                    .of(context)
+                                    .size;
+                                return Container(
+                                  height: 1000 - MediaQuery
+                                      .of(context)
+                                      .viewInsets
+                                      .bottom,
+                                  color: Colors.black12,
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+
+                                        SizedBox(
+                                          height: 7.0,
+                                          width: size.width,
+                                        ), // space
+
+                                        SizedBox(
+                                          height: 250.0,
+                                          width: size.width,
+                                          child: Card(
+                                            elevation: 3.5,
+                                            child: PieChart(
+                                              dataMap: dataMap,
+                                              animationDuration: Duration(
+                                                  milliseconds: 1500),
+                                              chartLegendSpacing: 40,
+                                              chartRadius: MediaQuery
+                                                  .of(context)
+                                                  .size
+                                                  .width / 3.3,
+                                              colorList: colorList,
+                                              initialAngleInDegree: 0,
+                                              chartType: ChartType.ring,
+                                              ringStrokeWidth: 32,
+                                              centerText: "Symptoms\n before\n attacks",
+                                              legendOptions: LegendOptions(
+                                                showLegendsInRow: false,
+                                                legendPosition: LegendPosition
+                                                    .right,
+                                                showLegends: true,
+                                                //legendShape: _BoxShape.circle,
+                                                legendTextStyle: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              chartValuesOptions: ChartValuesOptions(
+                                                showChartValueBackground: true,
+                                                showChartValues: true,
+                                                showChartValuesInPercentage: true,
+                                                showChartValuesOutside: true,
+                                                decimalPlaces: 1,
+                                              ),
+                                              gradientList: gradientList,
+                                              // emptyColorGradient: ---Empty Color gradient---
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                color: Theme
+                                                    .of(context)
+                                                    .colorScheme
+                                                    .outline,
+                                              ),
+                                              borderRadius: const BorderRadius
+                                                  .all(Radius.circular(12)),
+                                            ),
+                                          ),
+                                        ), // pie chart symptoms before asthma attacks
+
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                              childCount: 1,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               );
-            }
-        )
-    );
+            },
+    ));
   }
 
   void _pushLogin() {
@@ -620,7 +1419,7 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
                                                       children:[
                                                         Icon(CustomIcons.inhalator__1_, color: Colors.white),
                                                         SizedBox(height: 7),
-                                                        Text("Acoutic Inhaler",style: TextStyle(color:Colors.white))
+                                                        Text("acute Inhaler",style: TextStyle(color:Colors.white))
                                                       ]
                                                   )
                                               )
@@ -767,6 +1566,7 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
     );
   }
 
+
 // [SliverAppBar]s are typically used in [CustomScrollView.slivers], which in
 // turn can be placed in a [Scaffold.body].
   @override
@@ -844,7 +1644,7 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
                                         children: [
                                           Column(
                                               children: [
-                                                Text("Acoutic inhaler: ", style: TextStyle(
+                                                Text("acute inhaler: ", style: TextStyle(
                                                     fontSize: 12, color: Colors.white),),
                                                 Text("146", style: TextStyle(
                                                     fontSize: 12, color: Colors.white, fontWeight: FontWeight.bold),)
@@ -912,7 +1712,7 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
                                               children: [
                                                 Column(
                                                     children: [
-                                                      Text("Acoutic inhaler: ", style: TextStyle(
+                                                      Text("acute inhaler: ", style: TextStyle(
                                                           fontSize: 12, color: Colors.black),),
                                                       Text("1.4", style: TextStyle(
                                                           fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold),)
@@ -1045,7 +1845,7 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
                 children: <Widget>[
                   IconButton(
                     icon: const Icon(_SliverAppBarExampleState.bar_chart),
-                    onPressed: () {_pushSetMedicineAlarm();},
+                    onPressed: () {_pushMedicineStatistics();},
                     tooltip: "Medicines statistics",
                   ),
                 ],
@@ -1106,7 +1906,7 @@ class GroupedStackedBarChart extends StatelessWidget {
       new medicineTaken('April', 45),
     ];
 
-    final acoutic_Inhalor = [
+    final acute_Inhalor = [
       new medicineTaken('January', 5),
       new medicineTaken('February', 2),
       new medicineTaken('March', 10),
@@ -1123,11 +1923,59 @@ class GroupedStackedBarChart extends StatelessWidget {
         colorFn: (medicineTaken count, _) => lightBlue[1],
       ),
       new charts.Series<medicineTaken, String>(
-        id: 'acoutic Inhalor',
-        seriesCategory: 'acoutic',
+        id: 'acute Inhalor',
+        seriesCategory: 'acute',
         domainFn: (medicineTaken sales, _) => sales.month,
         measureFn: (medicineTaken sales, _) => sales.count,
-        data: acoutic_Inhalor,
+        data: acute_Inhalor,
+        colorFn: (medicineTaken count, _) => blue[1],
+      ),
+    ];
+  }
+
+  static List<charts.Series<medicineTaken, String>> createSampleDataRoutine() {
+    final blue = charts.MaterialPalette.indigo.makeShades(22);
+    final lightBlue = charts.MaterialPalette.blue.makeShades(2);
+
+    final routine_Inhalor = [
+      new medicineTaken('January', 60),
+      new medicineTaken('February', 47),
+      new medicineTaken('March', 53),
+      new medicineTaken('April', 45),
+    ];
+
+
+    return [
+      new charts.Series<medicineTaken, String>(
+        id: 'routine Inhalor',
+        seriesCategory: 'routine',
+        domainFn: (medicineTaken count, _) => count.month,
+        measureFn: (medicineTaken count, _) => count.count,
+        data: routine_Inhalor,
+        colorFn: (medicineTaken count, _) => lightBlue[1],
+      ),
+    ];
+  }
+
+  static List<charts.Series<medicineTaken, String>> createSampleDataAcute() {
+    final blue = charts.MaterialPalette.indigo.makeShades(22);
+    final lightBlue = charts.MaterialPalette.blue.makeShades(2);
+
+
+    final acute_Inhalor = [
+      new medicineTaken('January', 5),
+      new medicineTaken('February', 2),
+      new medicineTaken('March', 10),
+      new medicineTaken('April', 4),
+    ];
+
+    return [
+      new charts.Series<medicineTaken, String>(
+        id: 'acute Inhalor',
+        seriesCategory: 'acute',
+        domainFn: (medicineTaken sales, _) => sales.month,
+        measureFn: (medicineTaken sales, _) => sales.count,
+        data: acute_Inhalor,
         colorFn: (medicineTaken count, _) => blue[1],
       ),
     ];
@@ -1274,3 +2122,115 @@ class medicineIntake {
 
 }
 
+class GradientIcon extends StatelessWidget {
+  GradientIcon(
+      this.icon,
+      this.size,
+      this.gradient,
+      this.title
+      );
+
+  final IconData icon;
+  final double size;
+  final Gradient gradient;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+        children: [
+          ShaderMask(
+            child: Icon(
+            icon,
+            size: size,
+            color: Colors.white,
+            ),
+            shaderCallback: (Rect bounds) {
+            final Rect rect = Rect.fromLTRB(0, 0, size * 0.9, size * 0.85);
+            return gradient.createShader(rect);
+            },
+          ),
+          SizedBox(
+            height: 3,
+          ),
+          Text(title, style: TextStyle(color:Colors.white.withOpacity(0.6))),
+        ]
+    );
+  }
+}
+
+class graphIcon extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GradientIcon(
+      CustomIcons.graph,
+      27.0,
+      LinearGradient(
+        colors: <Color>[
+          Colors.indigo,
+          Colors.orange,
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+      "General",
+    );
+  }
+}
+
+class symptomIcon extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GradientIcon(
+      Icons.sick_outlined,
+      27.0,
+      LinearGradient(
+        colors: <Color>[
+          Colors.orange,
+          Colors.indigo,
+        ],
+        begin: Alignment.bottomLeft,
+        end: Alignment.topRight,
+      ),
+      "Symptom",
+    );
+  }
+}
+
+class routineIcon extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GradientIcon(
+      CustomIcons.inhalator__1_,
+      27.0,
+      LinearGradient(
+        colors: <Color>[
+          Colors.orange,
+          Colors.orange,
+        ],
+        begin: Alignment.bottomLeft,
+        end: Alignment.topRight,
+      ),
+      "Routine",
+    );
+  }
+}
+
+class acuteIcon extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GradientIcon(
+      CustomIcons.inhalator__1_,
+      27.0,
+      LinearGradient(
+        colors: <Color>[
+          Colors.indigo,
+          Colors.indigo,
+        ],
+        begin: Alignment.bottomLeft,
+        end: Alignment.topRight,
+      ),
+      "Acute",
+    );
+  }
+}
