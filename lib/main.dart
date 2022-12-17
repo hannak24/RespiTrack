@@ -5,8 +5,16 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:pie_chart/pie_chart.dart';
 //import 'setMedicineAlarmPage.dart';
 import 'setMedicineAlarm.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() => runApp(const AppBarApp());
+
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const AppBarApp());
+}
+//void main() => runApp(const AppBarApp());
 
 class AppBarApp extends StatelessWidget {
   const AppBarApp({super.key});

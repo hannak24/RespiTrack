@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'clockView.dart';
 import 'data.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 //import 'package:respi_track/constants/theme_data.dart';
 
@@ -13,6 +17,80 @@ class AlarmPage extends StatefulWidget {
 }
 
 class _AlarmPageState extends State<AlarmPage> {
+
+  DateTime? _alarmTime;
+  late String _alarmTimeString = DateFormat('HH:mm').format(DateTime.now());
+  bool _isRepeatSelected = false;
+  final CollectionReference _alarms = FirebaseFirestore.instance.collection('alarms');
+  final TextEditingController _titleController = TextEditingController();
+
+  Future<void> _create([DocumentSnapshot? documentSnapshot]) async{
+  //_alarmTimeString = DateFormat('HH:mm').format(DateTime.now());
+  await showModalBottomSheet(useRootNavigator: true, context: context, clipBehavior: Clip.antiAlias,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24),),),
+    builder: (BuildContext ctx) {
+          return Container(
+            padding: const EdgeInsets.all(30),
+            child: Column(
+              children: [
+                TextButton(
+                  onPressed: () async {
+                    var selectedTime = await showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay.now(),
+                    );
+                    if (selectedTime != null) {
+                      final now = DateTime.now();
+                      var selectedDateTime = DateTime(
+                          now.year, now.month, now.day, selectedTime.hour, selectedTime.minute);
+                      _alarmTime = selectedDateTime;
+                      _alarmTimeString = DateFormat('HH:mm').format(selectedDateTime);
+                    }
+                  },
+                  child: Text(
+                    _alarmTimeString,
+                    style: TextStyle(fontSize: 50),
+                  ),
+                ),
+                ListTile(
+                  title: Text('Repeat'),
+                  trailing: Switch(
+                    onChanged: (value) {
+                        _isRepeatSelected = value;
+                    },
+                    value: _isRepeatSelected,
+                  ),
+                ),
+                TextField(
+                  controller: _titleController,
+                  decoration: const InputDecoration(labelText: 'Title'),
+                ),
+                SizedBox(height: 50),
+                FloatingActionButton.extended(
+                  onPressed: () async {
+                    await _alarms.add({"time": _alarmTimeString, "title": _titleController.text});
+                    _titleController.text = '';
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icon(Icons.alarm),
+                  label: Text('Save'),
+                ),
+              ],
+            ),
+          );
+    },
+  );
+  // scheduleAlarm();
+}//////////////////////////////////////////////////////////onpressed
+
+
+  Future<void> _delete(String productId) async {
+    await _alarms.doc(productId).delete();
+
+    /*ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('You have successfully deleted a product')));*/
+  }
+
   @override
   Widget build(BuildContext context) {
     var timeNow =DateTime.now();
@@ -24,112 +102,82 @@ class _AlarmPageState extends State<AlarmPage> {
         appBar: AppBar(
           title: Text('SET MEDICINE ALARM'),
         ),
-        body: Column(
-          children: [
-            /*TabBar(tabs:[
-              Tab(icon: Icon(Icons.access_time_outlined, color: Colors.indigoAccent)),
-              Tab(icon: Icon(Icons.notifications_on_outlined, color: Colors.indigoAccent)),
-            ],
-            ),*/
-            Expanded(
-              child: TabBarView(children: [
-               /* Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.all(40),
-                  alignment: Alignment.center,
-                  child: Column(
-                    children: [
-                      Text(time, style: TextStyle(fontSize: 60, color: Colors.black45),),
-                      SizedBox(height: 15),
-                      Text(date, style: TextStyle(fontSize: 35, color: Colors.black45),),
-                      SizedBox(height: 50),
-                      Clock()],
-                  ),), */
-                Container(
-                  color: Colors.grey.shade300,
-                  padding: EdgeInsets.symmetric(horizontal:5 ,vertical: 30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: ListView(
-                          padding: EdgeInsets.symmetric(horizontal: 10,vertical: 8),
-                          children: alarms.map((alarm){
-                            return Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                              margin:EdgeInsets.only(bottom: 20),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(20)),
-                                gradient: LinearGradient(
-                                  colors: [Colors.blueGrey, Colors.grey],
-                                  begin: Alignment.centerLeft, end: Alignment.centerRight),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black26,spreadRadius: 5, blurRadius: 2, offset: Offset(3,3)
-                                  )
-                                ]
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          SizedBox(width:10),
-                                          Icon(Icons.label_important, color: Colors.grey.shade700),
-                                          SizedBox(width:10),
-                                          Text('first dose', style: TextStyle(color: Colors.white,fontSize: 20),
-                                          ),
-                                        ],
-                                        ),
-                                          Switch(activeColor: Colors.white,value: true, onChanged: (bool value) {},
-                                          )
-                                    ],
-                                  ),
-                                  Text(' 07:00AM', style: TextStyle(color: Colors.white,fontSize: 30, fontWeight: FontWeight.w600)),
+        body: StreamBuilder(
+          stream: _alarms.snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+            if (streamSnapshot.hasData) {
+              return ListView.builder(
+                itemCount: streamSnapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  final DocumentSnapshot documentSnapshot =
+                  streamSnapshot.data!.docs[index];
 
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text('  Sun - Sat', style: TextStyle(color: Colors.white,fontSize: 20)),
-                                      IconButton(
-                                          icon: Icon(Icons.delete),
-                                          onPressed: () {},
-                                          color: Colors.white)
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            );
-                          }).followedBy([
-                            Container(
-                              color: Colors.grey.shade300,
-                              height: 100,
-                              child: TextButton(
-                                onPressed: () {},
-                                child: Column(
-                                  children: [
+                  return Container(
+                    //////////////////////////////////////////////////////////////////////
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                    margin: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        gradient: LinearGradient(colors: [Colors.blue, Colors.blueGrey], begin: Alignment.centerLeft, end: Alignment.centerRight),
 
-                                    Image.asset('images/icons8-plus-65.png', ),
-                                    Text('Add Alarm', style: TextStyle(color: Colors.black45, fontSize: 15, fontWeight: FontWeight.w600)),
+                       // gradient: LinearGradient(colors: [const Color(0xFF010280), const Color(0xFF135CC5), const Color(0xFF010280),],
+                          //  begin: const FractionalOffset(0.0, 0.0), end: const FractionalOffset(1.0, 0.0), stops: [0.0, 0.5, 0.8], tileMode: TileMode.mirror),
 
-                                  ],
-                                ),
-                              ),
-                            )
-                          ]).toList(),
+                        boxShadow: [BoxShadow(color: Colors.black26, spreadRadius: 5, blurRadius: 2, offset: Offset(3, 3))]
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                SizedBox(width: 10),
+                                Icon(Icons.label_important, color: Colors.grey.shade700),
+                                SizedBox(width: 10),
+                                Text(documentSnapshot['title'], style: TextStyle(color: Colors.white, fontSize: 20),),],
+                            ),
+                            Switch(activeColor: Colors.white, value: true, onChanged: (bool value) {},)
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ]),
-            )
-         ],
+                        Text(documentSnapshot['time'], style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w600)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('  Sun - Sat', style: TextStyle(color: Colors.white, fontSize: 20)),
+                            IconButton(
+                                icon: Icon(Icons.delete),
+                                onPressed: () =>
+                                    _delete(documentSnapshot.id),
+                                color: Colors.white
+                                )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ); //////////////////////////////////////////////////////////////////////////////////////////
+
+
+                },
+              );
+          }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
         ),
+        ////add new
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => _create(),
+            child: const Icon(Icons.add),
+
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat
+
       ),
     );
-  }
+  } //below overridw
+
+
 }
