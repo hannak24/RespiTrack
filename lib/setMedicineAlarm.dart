@@ -45,6 +45,7 @@ class _AlarmPageState extends State<AlarmPage> {
                           now.year, now.month, now.day, selectedTime.hour, selectedTime.minute);
                       _alarmTime = selectedDateTime;
                       _alarmTimeString = DateFormat('HH:mm').format(selectedDateTime);
+
                     }
                   },
                   child: Text(
@@ -68,7 +69,7 @@ class _AlarmPageState extends State<AlarmPage> {
                 SizedBox(height: 50),
                 FloatingActionButton.extended(
                   onPressed: () async {
-                    await _alarms.add({"time": _alarmTimeString, "title": _titleController.text});
+                    await _alarms.add({"time": _alarmTimeString.toString() +':00', "title": _titleController.text});
                     _titleController.text = '';
                     Navigator.of(context).pop();
                   },
@@ -141,7 +142,7 @@ class _AlarmPageState extends State<AlarmPage> {
                             Switch(activeColor: Colors.white, value: true, onChanged: (bool value) {},)
                           ],
                         ),
-                        Text(documentSnapshot['time'], style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w600)),
+                        Text(documentSnapshot['time'].toString().substring(0,5) , style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w600)),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
