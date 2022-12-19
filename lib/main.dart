@@ -7,6 +7,7 @@ import 'package:pie_chart/pie_chart.dart';
 import 'setMedicineAlarm.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'setSymptoms.dart';
 
 
 Future main() async {
@@ -252,6 +253,12 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
   void _pushSetMedicineAlarm(){
     Navigator.of(context).push(MaterialPageRoute(builder: (_){
       return  AlarmPage();
+    }));
+  }
+
+  void _pushSymptoms(){
+    Navigator.of(context).push(MaterialPageRoute(builder: (_){
+      return  SymptomsPage();
     }));
   }
 
@@ -763,7 +770,7 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
                 children: <Widget>[
                   IconButton(
                     icon: const Icon(Icons.sick_outlined),
-                    onPressed: () {},
+                    onPressed: () {_pushSymptoms();},
                     tooltip: "add symptom entry",
                   ),
                 ],
