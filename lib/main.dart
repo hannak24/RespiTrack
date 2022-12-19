@@ -1158,7 +1158,7 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
                     ),
                   ),
                   appBar: AppBar(
-                    bottom: const TabBar(
+                      bottom: const TabBar(
                       tabs: [
                         Tab(icon: Icon(Icons.person), text: "profile"),
                         Tab(icon: Icon(CustomIcons.inhalator__1_), text: "Medications"),
@@ -1976,11 +1976,18 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
             ),
           ),
         ),
+          floatingActionButton: FloatingActionButton(
+                tooltip: 'Send report to doctor',
+                onPressed: () {},
+                backgroundColor: Colors.blue,
+                child: const Icon(Icons.send),
+              ),
           body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
                 bottom: TabBar(
+                  indicatorColor: Colors.red,
                   unselectedLabelColor: Color(0xFFE0A1A1),
                   tabs: <Widget>[
                     Tab(icon: Icon(CustomIcons.inhalator__1_,size:20, color: Colors.white)),
@@ -2210,33 +2217,135 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
                     SliverList(
                       delegate: SliverChildListDelegate(
                         [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Expanded(
-                                child: Container(
-                                  color: Colors.white,
-                                  width: double.infinity,
-                                  child: Image.network('https://cdn.britannica.com/24/58624-050-73A7BF0B/valley-Atlas-Mountains-Morocco.jpg',
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ],
+                          SizedBox(
+                            height: 10,
+                          ), //space
+                          SizedBox(
+                            height: 60.0,
+                            child: Card(
+                                elevation: 5,
+                                color: Colors.white,
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                        padding: EdgeInsets.only(top: 5.0, left: 5.0),
+                                        child: Row(
+                                            children: [
+                                              Icon(CustomIcons.inhalator__1_, color: Colors.orange, size: 15.0),
+                                              Padding(
+                                                  padding: EdgeInsets.only(top: 5.0, left: 11.0),
+                                                  child: Text("Only 10% battery left in routine inhaler!", style: TextStyle(fontSize: 19, color: Colors.black),)
+                                              )
+                                            ]
+                                        )
+                                    ),
+                                    SizedBox(
+                                      height: 13,
+                                    ),
+                                  ],
+                                )
+                            ),
                           ),
                           SizedBox(
-                            height: 10.0,
+                            height: 5,
+                          ), //space
+                          SizedBox(
+                            height: 60.0,
+                            child: Card(
+                                elevation: 5,
+                                color: Colors.white,
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                        padding: EdgeInsets.only(top: 5.0, left: 5.0),
+                                        child: Row(
+                                            children: [
+                                              Icon(CustomIcons.inhalator__1_, color: Colors.indigo, size: 15.0),
+                                              Padding(
+                                                  padding: EdgeInsets.only(top: 5.0, left: 11.0),
+                                                  child: Text("Only 5 doses left in acute inhaler!", style: TextStyle(fontSize: 19, color: Colors.black),)
+                                              )
+                                            ]
+                                        )
+                                    ),
+                                    SizedBox(
+                                      height: 13,
+                                    ),
+                                  ],
+                                )
+                            ),
                           ),
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Container(
-                                  color: Colors.white,
-                                  width: double.infinity,
-                                  child: Text('text'),
-                                ),
-                              ),
-                            ],
+                          SizedBox(
+                            height: 5,
+                          ), //space
+                          SizedBox(
+                            height: 60.0,
+                            child: Card(
+                                elevation: 5,
+                                color: Colors.white,
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                        padding: EdgeInsets.only(top: 5.0, left: 5.0),
+                                        child: Row(
+                                            children: [
+                                              Icon(CustomIcons.inhalator__1_, color: Colors.indigo, size: 15.0),
+                                              Padding(
+                                                  padding: EdgeInsets.only(top: 5.0, left: 11.0),
+                                                  child: Text("Acute inhaler expires in 2 days!", style: TextStyle(fontSize: 19, color: Colors.black),)
+                                              )
+                                            ]
+                                        )
+                                    ),
+                                    SizedBox(
+                                      height: 13,
+                                    ),
+                                  ],
+                                )
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ), //space
+                          SizedBox(
+                            height: 100.0,
+                            child: Card(
+                                elevation: 5,
+                                color: Colors.white,
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                        padding: EdgeInsets.only(left: 5.0),
+                                        child: Row(
+                                            children: [
+                                              Padding(
+                                                  padding: EdgeInsets.only(top: 5.0),
+                                                  child: Column(
+                                                    children:[
+                                                      Row(
+                                                        children:[
+                                                          Icon(CustomIcons.inhalator__1_, color: Colors.indigo, size: 15.0),
+                                                          SizedBox(
+                                                            width: 11,
+                                                          ),
+                                                          Text("The average time between the uses ", style: TextStyle(fontSize: 19, color: Colors.black),),
+                                                        ]
+                                                      ),
+                                                      Text("of the acute inhaler is less than ", style: TextStyle(fontSize: 19, color: Colors.black),),
+                                                      Text("4 hours. Better get checked!", style: TextStyle(fontSize: 19, color: Colors.black),)
+                                                    ]
+                                                  )
+
+                                              )
+                                            ]
+                                        )
+                                    ),
+                                    SizedBox(
+                                      height: 13,
+                                    ),
+                                  ],
+                                )
+                            ),
                           ),
                         ],
                       ),
