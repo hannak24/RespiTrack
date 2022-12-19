@@ -18,7 +18,7 @@ class AppBarApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       //home: SliverAppBarExample(),
-      home: MoboApp(),
+      home: SliverAppBarExample(),
     );
   }
 }
@@ -127,8 +127,18 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               IconButton(
+                                icon: const Icon(_SliverAppBarExampleState.home_outlined),
+                                onPressed: () {Navigator.of(context).popUntil((route) => route.isFirst);},
+                                tooltip: "Back to home page",
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              IconButton(
                                 icon: const Icon(_SliverAppBarExampleState.bar_chart),
-                                onPressed: () {_pushSetMedicineAlarm();},
+                                onPressed: () {_pushMedicineStatistics();},
                                 tooltip: "Medicines statistics",
                               ),
                             ],
@@ -1117,8 +1127,18 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               IconButton(
+                                icon: const Icon(_SliverAppBarExampleState.home_outlined),
+                                onPressed: () {Navigator.of(context).popUntil((route) => route.isFirst);},
+                                tooltip: "Back to home page",
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              IconButton(
                                 icon: const Icon(_SliverAppBarExampleState.bar_chart),
-                                onPressed: () {_pushSetMedicineAlarm();},
+                                onPressed: () {_pushMedicineStatistics();},
                                 tooltip: "Medicines statistics",
                               ),
                             ],
@@ -1577,208 +1597,397 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
     );
   }
 
-  void _pushHome() {
-    Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          builder: (context) {
-            return DefaultTabController(
-              length: 2,
-              child: Scaffold(
-                bottomNavigationBar: BottomAppBar(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: OverflowBar(
-                      alignment: MainAxisAlignment.spaceEvenly,
-                      overflowAlignment: OverflowBarAlignment.center,
-                      children: <Widget>[
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            IconButton(
-                              icon: const Icon(Icons.person_outlined),
-                              onPressed: () {_pushProfile();},
-                              tooltip: "medicine settings",
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            IconButton(
-                              icon: const Icon(_SliverAppBarExampleState.alarm),
-                              onPressed: () {_pushSetMedicineAlarm();},
-                              tooltip: "Set medicine alarm",
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            IconButton(
-                              icon: const Icon(_SliverAppBarExampleState.bar_chart),
-                              onPressed: () {_pushSetMedicineAlarm();},
-                              tooltip: "Medicines statistics",
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            IconButton(
-                              icon: const Icon(Icons.sick_outlined),
-                              onPressed: () {},
-                              tooltip: "add symptom entry",
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                body: Stack(
-                  children: [
-                    CustomScrollView(
-                      slivers: <Widget>[
-                        SliverAppBar(
-                          expandedHeight: 160.0,
-                          backgroundColor: Colors.blue,
-                          flexibleSpace: const FlexibleSpaceBar(
-                            title: Text(
-                                'RespiTrack',
-                                style: TextStyle(
-                                  fontSize: 19,
-                                )
-                            ),
-                            titlePadding: EdgeInsets.all(11.0),
-                            background: Padding(
-                                padding: const EdgeInsets.only(bottom: 10.0, left: 6.0, top: 2.0),
-                                child: const Image(
-                                  //image: NetworkImage("https://www.aaaai.org/Aaaai/media/MediaLibraryRedesign/Tools%20for%20the%20Public/Conditions%20Library/Library%20-%20Asthma/skd238387sdc-mother-daugh-inhaler-cropped.jpg"),
-                                  image: NetworkImage("https://cdn.pixabay.com/photo/2019/04/27/01/46/asthma-4159147_1280.png"),
-                                )
-                            ),
-                          ),
-                        ),
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                                (BuildContext context, int index) {
-                              Size size = MediaQuery
-                                  .of(context)
-                                  .size;
-                              return Container(
-                                height: 1000 - MediaQuery.of(context).viewInsets.bottom,
-                                color: Colors.black12,
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                          height: 1000 - MediaQuery.of(context).viewInsets.bottom,
-                                          width: size.width,
-                                          child: DefaultTabController(
-                                            length: 2,
-                                            child: Scaffold(
-                                              appBar: AppBar(
-                                                bottom: TabBar(
-                                                  tabs: [
-                                                    Tab(icon: Icon(_SliverAppBarExampleState.home), text: "Home"),
-                                                    Tab(icon: Icon(_SliverAppBarExampleState.warning), text: "Alerts",),
-                                                  ],
-                                                ),
-                                              ),
-                                              body: TabBarView(
-                                                children: [
-                                                  Column(
-                                                    children:[
-                                                      SizedBox(
-                                                      height: 120.0,
-                                                      width: size.width,
-                                                      child: Card(
-                                                          elevation: 3.5,
-                                                          color: Colors.white,
-                                                          child: Column(
-                                                            children: [
-                                                              Padding(
-                                                                padding: EdgeInsets.only(top: 5.0),
-                                                                child: Text("Average number of squeezes/rotations per usage: ",style: TextStyle(
-                                                                    fontSize: 15, color: Colors.black),),
-                                                              ),
-                                                              Padding(
-                                                                padding: EdgeInsets.only(left: 70.0,right: 70.0, top: 10),
-                                                                child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  mainAxisSize: MainAxisSize.max,
-                                                                  children: [
-                                                                    Column(
-                                                                        children: [
-                                                                          Text("acute inhaler: ", style: TextStyle(
-                                                                              fontSize: 12, color: Colors.black),),
-                                                                          Text("1.4", style: TextStyle(
-                                                                              fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold),)
-                                                                        ]
-                                                                    ),
-                                                                    Column(
-                                                                        children: [
-                                                                          Text("Routine inhaler: ",style: TextStyle(
-                                                                              fontSize: 12, color: Colors.black),),
-                                                                          Text("1.1", style: TextStyle(
-                                                                              fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold),)
-                                                                        ]
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                              )
-                                                            ],
-                                                          )
-                                                      ),
-                                                    ),
-                                                      Icon(Icons.directions_transit),
-                                                ],
-                                              ),
-                                             ]
-                                            ),
-                                          ),
-                                        ),
-                                       )
-                                     ]
-                                  ),
-                                ),
-                              );
-                          },
-                          childCount: 1,
-                         ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-               ),
-              );
-             },
-           )
-          );
-         }
-
-
 
 // [SliverAppBar]s are typically used in [CustomScrollView.slivers], which in
 // turn can be placed in a [Scaffold.body].
+  //@override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     floatingActionButton: FloatingActionButton(
+  //       tooltip: 'Send report to doctor',
+  //       onPressed: () {},
+  //       backgroundColor: Colors.blue,
+  //       child: const Icon(Icons.send),
+  //     ),
+  //     //floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+  //     body: Stack(
+  //       children: [
+  //         CustomScrollView(
+  //
+  //           slivers: <Widget>[
+  //             SliverAppBar(
+  //               expandedHeight: 160.0,
+  //               backgroundColor: Colors.blue,
+  //               flexibleSpace: const FlexibleSpaceBar(
+  //                 title: Text(
+  //                     'RespiTrack',
+  //                     style: TextStyle(
+  //                       fontSize: 19,
+  //                     )
+  //                 ),
+  //                 titlePadding: EdgeInsets.all(11.0),
+  //                 background: Padding(
+  //                     padding: const EdgeInsets.only(bottom: 10.0, left: 6.0, top: 2.0),
+  //                     child: const Image(
+  //                       //image: NetworkImage("https://www.aaaai.org/Aaaai/media/MediaLibraryRedesign/Tools%20for%20the%20Public/Conditions%20Library/Library%20-%20Asthma/skd238387sdc-mother-daugh-inhaler-cropped.jpg"),
+  //                       image: NetworkImage("https://cdn.pixabay.com/photo/2019/04/27/01/46/asthma-4159147_1280.png"),
+  //                       )
+  //                     ),
+  //               ),
+  //             ),
+  //             SliverList(
+  //               delegate: SliverChildBuilderDelegate(
+  //                     (BuildContext context, int index) {
+  //                       Size size = MediaQuery.of(context).size;
+  //                       return Container(
+  //                         height: 1000 - MediaQuery.of(context).viewInsets.bottom,
+  //                         color: Colors.black12,
+  //                         child: SingleChildScrollView(
+  //                           child: Column(
+  //                             children: [
+  //                               Container(
+  //                                 height: 60.0,
+  //                                 width: size.width,
+  //                                 //color: Color(0xFF010280),
+  //                                   decoration: BoxDecoration(
+  //                                     gradient: LinearGradient(
+  //                                         colors: [
+  //                                           const Color(0xFF010280),
+  //                                           const Color(0xFF135CC5),
+  //                                           const Color(0xFF010280),
+  //                                         ],
+  //                                         begin: const FractionalOffset(0.0, 0.0),
+  //                                         end: const FractionalOffset(1.0, 0.0),
+  //                                         stops: [0.0, 0.5, 0.8],
+  //                                         tileMode: TileMode.mirror),
+  //                                   ),
+  //                                 child: Column(
+  //                                   children: [
+  //                                     Padding(
+  //                                     padding: EdgeInsets.only(top: 5.0),
+  //                                       child: Text("Dozes remaining ",style: TextStyle(
+  //                                           fontSize: 15, color: Colors.white),),
+  //                                     ),
+  //                                     Padding(
+  //                                       padding: EdgeInsets.only(left: 50.0,right: 50.0),
+  //                                       child: Row(
+  //                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                                       mainAxisSize: MainAxisSize.max,
+  //                                       children: [
+  //                                         Column(
+  //                                             children: [
+  //                                               Text("acute inhaler: ", style: TextStyle(
+  //                                                   fontSize: 12, color: Colors.white),),
+  //                                               Text("146", style: TextStyle(
+  //                                                   fontSize: 12, color: Colors.white, fontWeight: FontWeight.bold),)
+  //                                               ]
+  //                                         ),
+  //                                         Column(
+  //                                             children: [
+  //                                               Text("Routine inhaler: ",style: TextStyle(
+  //                                                   fontSize: 12, color: Colors.white),),
+  //                                               Text("25", style: TextStyle(
+  //                                                   fontSize: 12, color: Colors.white, fontWeight: FontWeight.bold),)
+  //                                             ]
+  //                                         )
+  //                                       ],
+  //
+  //                                     ),
+  //                                     )
+  //                                   ],
+  //                                 )
+  //                               ), //dozes remaining
+  //
+  //                               SizedBox(
+  //                                 height: 5.0,
+  //                                 width: size.width,
+  //                               ),// space
+  //
+  //                               SizedBox(
+  //                               height: 250.0,
+  //                               width: size.width,
+  //                               child: Card(
+  //                                 elevation: 3.5,
+  //                                 child: GroupedStackedBarChart(GroupedStackedBarChart.createSampleData()),
+  //                                 shape: RoundedRectangleBorder(
+  //                                   side: BorderSide(
+  //                                     color: Theme.of(context).colorScheme.outline,
+  //                                   ),
+  //                                   borderRadius: const BorderRadius.all(Radius.circular(12)),
+  //                                 ),
+  //                                ),
+  //                               ),// bar chart inhaler uses per month
+  //
+  //                               SizedBox(
+  //                                 height: 10,
+  //                                 width: size.width,
+  //                               ), //space
+  //
+  //                               SizedBox(
+  //                                   height: 87.0,
+  //                                   width: size.width,
+  //                                   child: Card(
+  //                                     elevation: 3.5,
+  //                                       color: Colors.white,
+  //                                       child: Column(
+  //                                       children: [
+  //                                         Padding(
+  //                                           padding: EdgeInsets.only(top: 5.0),
+  //                                           child: Text("Average number of squeezes/rotations per usage: ",style: TextStyle(
+  //                                               fontSize: 15, color: Colors.black),),
+  //                                         ),
+  //                                         Padding(
+  //                                           padding: EdgeInsets.only(left: 70.0,right: 70.0, top: 10),
+  //                                           child: Row(
+  //                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                                             mainAxisSize: MainAxisSize.max,
+  //                                             children: [
+  //                                               Column(
+  //                                                   children: [
+  //                                                     Text("acute inhaler: ", style: TextStyle(
+  //                                                         fontSize: 12, color: Colors.black),),
+  //                                                     Text("1.4", style: TextStyle(
+  //                                                         fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold),)
+  //                                                   ]
+  //                                               ),
+  //                                               Column(
+  //                                                   children: [
+  //                                                     Text("Routine inhaler: ",style: TextStyle(
+  //                                                         fontSize: 12, color: Colors.black),),
+  //                                                     Text("1.1", style: TextStyle(
+  //                                                         fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold),)
+  //                                                   ]
+  //                                               )
+  //                                           ],
+  //                                         ),
+  //                                       )
+  //                                     ],
+  //                                   )
+  //                                 ),
+  //                               ), //average number of squeezes per use
+  //
+  //                               SizedBox(
+  //                                 height: 10,
+  //                                 width: size.width,
+  //                               ), // space
+  //
+  //                               SizedBox(
+  //                                 height: 250.0,
+  //                                 width: size.width,
+  //                                 child: Card(
+  //                                   elevation: 3.5,
+  //                                   child: PieChart(
+  //                                     dataMap: dataMap,
+  //                                     animationDuration: Duration(milliseconds: 1500),
+  //                                     chartLegendSpacing: 40,
+  //                                     chartRadius: MediaQuery.of(context).size.width / 3.3,
+  //                                     colorList: colorList,
+  //                                     initialAngleInDegree: 0,
+  //                                     chartType: ChartType.ring,
+  //                                     ringStrokeWidth: 32,
+  //                                     centerText: "Symptoms\n before\n attacks",
+  //                                     legendOptions: LegendOptions(
+  //                                       showLegendsInRow: false,
+  //                                       legendPosition: LegendPosition.right,
+  //                                       showLegends: true,
+  //                                       //legendShape: _BoxShape.circle,
+  //                                       legendTextStyle: TextStyle(
+  //                                         fontWeight: FontWeight.bold,
+  //                                       ),
+  //                                     ),
+  //                                     chartValuesOptions: ChartValuesOptions(
+  //                                       showChartValueBackground: true,
+  //                                       showChartValues: true,
+  //                                       showChartValuesInPercentage: true,
+  //                                       showChartValuesOutside: true,
+  //                                       decimalPlaces: 1,
+  //                                     ),
+  //                                       gradientList: gradientList,
+  //                                     // emptyColorGradient: ---Empty Color gradient---
+  //                                   ),
+  //                                   shape: RoundedRectangleBorder(
+  //                                     side: BorderSide(
+  //                                       color: Theme.of(context).colorScheme.outline,
+  //                                     ),
+  //                                     borderRadius: const BorderRadius.all(Radius.circular(12)),
+  //                                   ),
+  //                                 ),
+  //                               ), // pie chart symptoms before asthma attacks
+  //
+  //                               SizedBox(
+  //                                 height: 10,
+  //                                 width: size.width,
+  //                               ),
+  //
+  //                               SizedBox(
+  //                                 height: 250.0,
+  //                                 width: size.width,
+  //                                 child: Card(
+  //                                   elevation: 3.5,
+  //                                   shape: RoundedRectangleBorder(
+  //                                     side: BorderSide(
+  //                                       color: Theme.of(context).colorScheme.outline,
+  //                                     ),
+  //                                     borderRadius: const BorderRadius.all(Radius.circular(12)),
+  //                                   ),
+  //                                   child: SimpleScatterPlotChart(SimpleScatterPlotChart._createSampleData(),),
+  //                                   ),
+  //                                 ),
+  //                             ],
+  //                         ),
+  //                       ),
+  //                   );
+  //                 },
+  //                 childCount: 1,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ]
+  //     ),
+  //     bottomNavigationBar: BottomAppBar(
+  //       child: Padding(
+  //         padding: const EdgeInsets.all(8),
+  //         child: OverflowBar(
+  //           alignment: MainAxisAlignment.spaceEvenly,
+  //           overflowAlignment: OverflowBarAlignment.center,
+  //           children: <Widget>[
+  //             Row(
+  //               mainAxisSize: MainAxisSize.min,
+  //               children: <Widget>[
+  //                 IconButton(
+  //                   icon: const Icon(Icons.person_outlined),
+  //                   onPressed: () {_pushProfile();},
+  //                   tooltip: "medicine settings",
+  //                 ),
+  //               ],
+  //             ),
+  //             Row(
+  //               mainAxisSize: MainAxisSize.min,
+  //               children: <Widget>[
+  //                 IconButton(
+  //                     icon: const Icon(_SliverAppBarExampleState.alarm),
+  //                     onPressed: () {_pushSetMedicineAlarm();},
+  //                     tooltip: "Set medicine alarm",
+  //                 ),
+  //               ],
+  //             ),
+  //             Row(
+  //               mainAxisSize: MainAxisSize.min,
+  //               children: <Widget>[
+  //                 IconButton(
+  //                   icon: const Icon(_SliverAppBarExampleState.home_outlined),
+  //                   onPressed: () {_pushHomePage();},
+  //                   tooltip: "Go to home page",
+  //                 ),
+  //               ],
+  //             ),
+  //             Row(
+  //               mainAxisSize: MainAxisSize.min,
+  //               children: <Widget>[
+  //                 IconButton(
+  //                   icon: const Icon(_SliverAppBarExampleState.bar_chart),
+  //                   onPressed: () {_pushMedicineStatistics();},
+  //                   tooltip: "Medicines statistics",
+  //                 ),
+  //               ],
+  //             ),
+  //             Row(
+  //               mainAxisSize: MainAxisSize.min,
+  //               children: <Widget>[
+  //                 IconButton(
+  //                   icon: const Icon(Icons.sick_outlined),
+  //                   onPressed: () {},
+  //                   tooltip: "add symptom entry",
+  //                 ),
+  //               ],
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Send report to doctor',
-        onPressed: () {},
-        backgroundColor: Colors.blue,
-        child: const Icon(Icons.send),
-      ),
-      //floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: Stack(
-        children: [
-          CustomScrollView(
-
-            slivers: <Widget>[
+    return DefaultTabController(
+      length: 2,
+      // child: Builder(builder: (BuildContext context) {
+      //   return NestedScrollView(
+      child: Scaffold(
+          bottomNavigationBar: BottomAppBar(
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: OverflowBar(
+              alignment: MainAxisAlignment.spaceEvenly,
+              overflowAlignment: OverflowBarAlignment.center,
+              children: <Widget>[
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    IconButton(
+                      icon: const Icon(Icons.person_outlined),
+                      onPressed: () {_pushProfile();},
+                      tooltip: "medicine settings",
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    IconButton(
+                      icon: const Icon(_SliverAppBarExampleState.alarm),
+                      onPressed: () {_pushSetMedicineAlarm();},
+                      tooltip: "Set medicine alarm",
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    IconButton(
+                      icon: const Icon(_SliverAppBarExampleState.home_outlined),
+                      onPressed: () {Navigator.of(context).popUntil((route) => route.isFirst);},
+                      tooltip: "Back to home page",
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    IconButton(
+                      icon: const Icon(_SliverAppBarExampleState.bar_chart),
+                      onPressed: () {_pushMedicineStatistics();},
+                      tooltip: "Medicines statistics",
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    IconButton(
+                      icon: const Icon(Icons.sick_outlined),
+                      onPressed: () {},
+                      tooltip: "add symptom entry",
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+          body: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
               SliverAppBar(
-                expandedHeight: 160.0,
+                bottom: TabBar(
+                  unselectedLabelColor: Color(0xFFE0A1A1),
+                  tabs: <Widget>[
+                    Tab(icon: Icon(CustomIcons.inhalator__1_,size:20, color: Colors.white)),
+                    Tab(icon: Icon(_SliverAppBarExampleState.warning, color: Colors.white),)
+                  ],
+                ),
+                expandedHeight: 200.0,
                 backgroundColor: Colors.blue,
                 flexibleSpace: const FlexibleSpaceBar(
                   title: Text(
@@ -1787,284 +1996,255 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
                         fontSize: 19,
                       )
                   ),
-                  titlePadding: EdgeInsets.all(11.0),
+                  titlePadding: EdgeInsets.only(bottom: 48.0, left: 12.0),
                   background: Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0, left: 6.0, top: 2.0),
+                      padding: const EdgeInsets.only(
+                          bottom: 50.0, left: 6.0, top: 2.0),
                       child: const Image(
                         //image: NetworkImage("https://www.aaaai.org/Aaaai/media/MediaLibraryRedesign/Tools%20for%20the%20Public/Conditions%20Library/Library%20-%20Asthma/skd238387sdc-mother-daugh-inhaler-cropped.jpg"),
-                        image: NetworkImage("https://cdn.pixabay.com/photo/2019/04/27/01/46/asthma-4159147_1280.png"),
-                        )
-                      ),
+                        image: NetworkImage(
+                            "https://cdn.pixabay.com/photo/2019/04/27/01/46/asthma-4159147_1280.png"),
+                      )
+                  ),
                 ),
               ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        Size size = MediaQuery.of(context).size;
-                        return Container(
-                          height: 1000 - MediaQuery.of(context).viewInsets.bottom,
-                          color: Colors.black12,
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 60.0,
-                                  width: size.width,
-                                  //color: Color(0xFF010280),
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                          colors: [
-                                            const Color(0xFF010280),
-                                            const Color(0xFF135CC5),
-                                            const Color(0xFF010280),
-                                          ],
-                                          begin: const FractionalOffset(0.0, 0.0),
-                                          end: const FractionalOffset(1.0, 0.0),
-                                          stops: [0.0, 0.5, 0.8],
-                                          tileMode: TileMode.mirror),
-                                    ),
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                      padding: EdgeInsets.only(top: 5.0),
-                                        child: Text("Dozes remaining ",style: TextStyle(
-                                            fontSize: 15, color: Colors.white),),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 50.0,right: 50.0),
+            ];
+          },
+          body: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [Colors.blue, Colors.red,],
+                )
+              // gradient: LinearGradient(
+              //     colors: [
+              //       const Color(0xFF010280),
+              //       const Color(0xFF135CC5),
+              //       const Color(0xFF010280),
+              //     ],
+              //     begin: const FractionalOffset(0.0, 0.0),
+              //     end: const FractionalOffset(1.0, 0.0),
+              //     stops: [0.0, 0.5, 0.8],
+              //     tileMode: TileMode.mirror),
+            ),
+            child: TabBarView(
+              children: [
+                // FIRST TabBarView
+                CustomScrollView(
+                  slivers: [
+                    SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          SizedBox(
+                            height: 10,
+                          ), //space
+                          SizedBox(
+                            height: 140.0,
+                            child: Card(
+                                elevation: 5,
+                                color: Colors.white,
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                        padding: EdgeInsets.only(top: 5.0, left: 5.0),
                                         child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Column(
-                                              children: [
-                                                Text("acute inhaler: ", style: TextStyle(
-                                                    fontSize: 12, color: Colors.white),),
-                                                Text("146", style: TextStyle(
-                                                    fontSize: 12, color: Colors.white, fontWeight: FontWeight.bold),)
-                                                ]
-                                          ),
-                                          Column(
-                                              children: [
-                                                Text("Routine inhaler: ",style: TextStyle(
-                                                    fontSize: 12, color: Colors.white),),
-                                                Text("25", style: TextStyle(
-                                                    fontSize: 12, color: Colors.white, fontWeight: FontWeight.bold),)
-                                              ]
-                                          )
-                                        ],
-
-                                      ),
-                                      )
-                                    ],
-                                  )
-                                ), //dozes remaining
-
-                                SizedBox(
-                                  height: 5.0,
-                                  width: size.width,
-                                ),// space
-
-                                SizedBox(
-                                height: 250.0,
-                                width: size.width,
-                                child: Card(
-                                  elevation: 3.5,
-                                  child: GroupedStackedBarChart(GroupedStackedBarChart.createSampleData()),
-                                  shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                      color: Theme.of(context).colorScheme.outline,
-                                    ),
-                                    borderRadius: const BorderRadius.all(Radius.circular(12)),
-                                  ),
-                                 ),
-                                ),// bar chart inhaler uses per month
-
-                                SizedBox(
-                                  height: 10,
-                                  width: size.width,
-                                ), //space
-
-                                SizedBox(
-                                    height: 87.0,
-                                    width: size.width,
-                                    child: Card(
-                                      elevation: 3.5,
-                                        color: Colors.white,
-                                        child: Column(
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(top: 5.0),
-                                            child: Text("Average number of squeezes/rotations per usage: ",style: TextStyle(
-                                                fontSize: 15, color: Colors.black),),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(left: 70.0,right: 70.0, top: 10),
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Column(
-                                                    children: [
-                                                      Text("acute inhaler: ", style: TextStyle(
-                                                          fontSize: 12, color: Colors.black),),
-                                                      Text("1.4", style: TextStyle(
-                                                          fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold),)
-                                                    ]
-                                                ),
-                                                Column(
-                                                    children: [
-                                                      Text("Routine inhaler: ",style: TextStyle(
-                                                          fontSize: 12, color: Colors.black),),
-                                                      Text("1.1", style: TextStyle(
-                                                          fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold),)
-                                                    ]
-                                                )
-                                            ],
-                                          ),
+                                            children: [
+                                              Icon(CustomIcons.inhalator__1_, color: Colors.orange, size: 15.0),
+                                              Padding(
+                                                  padding: EdgeInsets.only(top: 5.0, left: 11.0),
+                                                  child: Text("Symbicort", style: TextStyle(fontSize: 19, color: Colors.black),)
+                                              )
+                                            ]
                                         )
-                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 13,
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 9.0),
+                                      child: Row(
+                                          children:[
+                                            Text("2 doses per AM & PM", style: TextStyle(fontSize: 13, color: Colors.black),),
+                                          ]
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 14,
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 30.0,right: 30.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            height: 41.0,
+                                            width: 150.0,
+                                            decoration: BoxDecoration(
+                                                color: Colors.lightGreen.withOpacity(0.3),
+                                                border: Border.all(
+                                                  color: Colors.lightGreen.withOpacity(0.3),
+                                                ),
+                                                borderRadius: BorderRadius.all(Radius.circular(14))
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(10.0),
+                                              child: Row(
+                                                  children: [
+                                                    Icon(Icons.alarm, color: Color(0xFF006400), size:20.0),
+                                                    Text("  AM dose taken", style: TextStyle(
+                                                        fontSize: 12, color: Color(0xFF006400), fontWeight: FontWeight.bold),)
+                                                  ]
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 12,
+                                          ),
+                                          Container(
+                                            height: 41.0,
+                                            width: 150.0,
+                                            decoration: BoxDecoration(
+                                                color: Colors.cyan.withOpacity(0.3),
+                                                border: Border.all(
+                                                  color: Colors.cyan.withOpacity(0.3),
+                                                ),
+                                                borderRadius: BorderRadius.all(Radius.circular(14))
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(10.0),
+                                              child: Row(
+                                                  children: [
+                                                    Icon(Icons.alarm, color: Color(0xFF006400), size:20.0),
+                                                    Text("  PM dose 18:00", style: TextStyle(
+                                                        fontSize: 12, color: Color(0xFF006400), fontWeight: FontWeight.bold),)
+                                                  ]
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     )
-                                  ),
-                                ), //average number of squeezes per use
-
-                                SizedBox(
-                                  height: 10,
-                                  width: size.width,
-                                ), // space
-
-                                SizedBox(
-                                  height: 250.0,
-                                  width: size.width,
-                                  child: Card(
-                                    elevation: 3.5,
-                                    child: PieChart(
-                                      dataMap: dataMap,
-                                      animationDuration: Duration(milliseconds: 1500),
-                                      chartLegendSpacing: 40,
-                                      chartRadius: MediaQuery.of(context).size.width / 3.3,
-                                      colorList: colorList,
-                                      initialAngleInDegree: 0,
-                                      chartType: ChartType.ring,
-                                      ringStrokeWidth: 32,
-                                      centerText: "Symptoms\n before\n attacks",
-                                      legendOptions: LegendOptions(
-                                        showLegendsInRow: false,
-                                        legendPosition: LegendPosition.right,
-                                        showLegends: true,
-                                        //legendShape: _BoxShape.circle,
-                                        legendTextStyle: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      chartValuesOptions: ChartValuesOptions(
-                                        showChartValueBackground: true,
-                                        showChartValues: true,
-                                        showChartValuesInPercentage: true,
-                                        showChartValuesOutside: true,
-                                        decimalPlaces: 1,
-                                      ),
-                                        gradientList: gradientList,
-                                      // emptyColorGradient: ---Empty Color gradient---
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      side: BorderSide(
-                                        color: Theme.of(context).colorScheme.outline,
-                                      ),
-                                      borderRadius: const BorderRadius.all(Radius.circular(12)),
-                                    ),
-                                  ),
-                                ), // pie chart symptoms before asthma attacks
-
-                                SizedBox(
-                                  height: 10,
-                                  width: size.width,
-                                ),
-
-                                SizedBox(
-                                  height: 250.0,
-                                  width: size.width,
-                                  child: Card(
-                                    elevation: 3.5,
-                                    shape: RoundedRectangleBorder(
-                                      side: BorderSide(
-                                        color: Theme.of(context).colorScheme.outline,
-                                      ),
-                                      borderRadius: const BorderRadius.all(Radius.circular(12)),
-                                    ),
-                                    child: SimpleScatterPlotChart(SimpleScatterPlotChart._createSampleData(),),
-                                    ),
-                                  ),
-                              ],
+                                  ],
+                                )
+                            ),
                           ),
-                        ),
-                    );
-                  },
-                  childCount: 1,
+                          SizedBox(
+                            height: 5,
+                          ), //space
+                          SizedBox(
+                            height: 140.0,
+                            child: Card(
+                                elevation: 5,
+                                color: Colors.white,
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                        padding: EdgeInsets.only(top: 5.0, left: 5.0),
+                                        child: Row(
+                                            children: [
+                                              Icon(CustomIcons.inhalator__1_, color: Colors.indigo, size: 15.0),
+                                              Padding(
+                                                  padding: EdgeInsets.only(top: 5.0, left: 11.0),
+                                                  child: Text("Ventolin", style: TextStyle(fontSize: 19, color: Colors.black),)
+                                              )
+                                            ]
+                                        )
+                                    ),
+                                    SizedBox(
+                                      height: 13,
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 9.0),
+                                      child: Row(
+                                          children:[
+                                            Text("2 doses when needed", style: TextStyle(fontSize: 13, color: Colors.black),),
+                                          ]
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 14,
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 30.0,right: 30.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            height: 41.0,
+                                            width: 170.0,
+                                            decoration: BoxDecoration(
+                                                color: Colors.cyan.withOpacity(0.3),
+                                                border: Border.all(
+                                                  color: Colors.cyan.withOpacity(0.3),
+                                                ),
+                                                borderRadius: BorderRadius.all(Radius.circular(14))
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(10.0),
+                                              child: Row(
+                                                  children: [
+                                                    Icon(Icons.alarm, color: Color(0xFF006400), size:20.0),
+                                                    Text("  Last taken 3 days ago", style: TextStyle(
+                                                        fontSize: 12, color: Color(0xFF006400), fontWeight: FontWeight.bold),)
+                                                  ]
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                )
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-        ]
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: OverflowBar(
-            alignment: MainAxisAlignment.spaceEvenly,
-            overflowAlignment: OverflowBarAlignment.center,
-            children: <Widget>[
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  IconButton(
-                    icon: const Icon(Icons.person_outlined),
-                    onPressed: () {_pushProfile();},
-                    tooltip: "medicine settings",
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  IconButton(
-                      icon: const Icon(_SliverAppBarExampleState.alarm),
-                      onPressed: () {_pushSetMedicineAlarm();},
-                      tooltip: "Set medicine alarm",
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  IconButton(
-                    icon: const Icon(_SliverAppBarExampleState.home_outlined),
-                    onPressed: () {_pushHomePage();},
-                    tooltip: "Go to home page",
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  IconButton(
-                    icon: const Icon(_SliverAppBarExampleState.bar_chart),
-                    onPressed: () {_pushMedicineStatistics();},
-                    tooltip: "Medicines statistics",
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  IconButton(
-                    icon: const Icon(Icons.sick_outlined),
-                    onPressed: () {},
-                    tooltip: "add symptom entry",
-                  ),
-                ],
-              ),
-            ],
+
+                // SECOND TabBarView
+                CustomScrollView(
+                  slivers: [
+                    SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                  color: Colors.white,
+                                  width: double.infinity,
+                                  child: Image.network('https://cdn.britannica.com/24/58624-050-73A7BF0B/valley-Atlas-Mountains-Morocco.jpg',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                  color: Colors.white,
+                                  width: double.infinity,
+                                  child: Text('text'),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -2561,8 +2741,8 @@ class _MoboAppState extends State<MoboApp> with SingleTickerProviderStateMixin {
                 bottom: TabBar(
                   unselectedLabelColor: Color(0xFFE0A1A1),
                   tabs: <Widget>[
-                    Tab(icon: Icon(_SliverAppBarExampleState.home, color: Colors.indigo),),
-                    Tab(icon: Icon(_SliverAppBarExampleState.warning, color: Colors.indigo),)
+                    Tab(icon: Icon(CustomIcons.inhalator__1_,size:20, color: Colors.white)),
+                    Tab(icon: Icon(_SliverAppBarExampleState.warning, color: Colors.white),)
                   ],
                 ),
                 expandedHeight: 200.0,
@@ -2590,7 +2770,24 @@ class _MoboAppState extends State<MoboApp> with SingleTickerProviderStateMixin {
           },
           body: Container(
             //color: Color(0xffffdead),
-            color: Colors.white70,
+            //color: Colors.white70,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [Colors.blue, Colors.red,],
+                )
+              // gradient: LinearGradient(
+              //     colors: [
+              //       const Color(0xFF010280),
+              //       const Color(0xFF135CC5),
+              //       const Color(0xFF010280),
+              //     ],
+              //     begin: const FractionalOffset(0.0, 0.0),
+              //     end: const FractionalOffset(1.0, 0.0),
+              //     stops: [0.0, 0.5, 0.8],
+              //     tileMode: TileMode.mirror),
+            ),
             child: TabBarView(
               children: [
                 // FIRST TabBarView
