@@ -113,18 +113,25 @@ class _AlarmPageState extends State<AlarmPage> {
                   final DocumentSnapshot documentSnapshot =
                   streamSnapshot.data!.docs[index];
 
-                  return Container(
+                  return Card(
+                  elevation: 0,
+                  borderOnForeground: ,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+
+                  ),
+                  child: Container(
                     //////////////////////////////////////////////////////////////////////
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                    margin: EdgeInsets.all(10),
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+                    margin: EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
                         gradient: LinearGradient(colors: [Colors.blue, Colors.blueGrey], begin: Alignment.centerLeft, end: Alignment.centerRight),
 
                        // gradient: LinearGradient(colors: [const Color(0xFF010280), const Color(0xFF135CC5), const Color(0xFF010280),],
                           //  begin: const FractionalOffset(0.0, 0.0), end: const FractionalOffset(1.0, 0.0), stops: [0.0, 0.5, 0.8], tileMode: TileMode.mirror),
 
-                        boxShadow: [BoxShadow(color: Colors.black26, spreadRadius: 5, blurRadius: 2, offset: Offset(3, 3))]
+                        boxShadow: [BoxShadow(color: Colors.black26, spreadRadius: 5, blurRadius: 2, )]
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,7 +142,7 @@ class _AlarmPageState extends State<AlarmPage> {
                             Row(
                               children: [
                                 SizedBox(width: 10),
-                                Icon(Icons.label_important, color: Colors.grey.shade700),
+                                Icon(Icons.label_important, color: Colors.white),
                                 SizedBox(width: 10),
                                 Text(documentSnapshot['title'], style: TextStyle(color: Colors.white, fontSize: 20),),],
                             ),
@@ -157,7 +164,8 @@ class _AlarmPageState extends State<AlarmPage> {
                         ),
                       ],
                     ),
-                  ); //////////////////////////////////////////////////////////////////////////////////////////
+                  ), //////////////////////////////////////////////////////////////////////////////////////////
+                  );
 
 
                 },
