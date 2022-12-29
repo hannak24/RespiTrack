@@ -49,7 +49,7 @@ class _SymptomsPageState extends State<SymptomsPage> {
     child: Container(
 
       child: Column(
-        children: [
+        children:[
           SizedBox(height: 40),
           Card(
             elevation: 0,
