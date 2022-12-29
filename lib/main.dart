@@ -7,8 +7,18 @@ import 'package:pie_chart/pie_chart.dart';
 import 'setMedicineAlarm.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'custom_icons_icons.dart';
+//import 'setMedicineAlarmPage.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'setSymptoms.dart';
 
-void main() => runApp(const AppBarApp());
+
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const AppBarApp());
+}
+//void main() => runApp(const AppBarApp());
 
 
 class AppBarApp extends StatelessWidget {
@@ -1082,14 +1092,13 @@ class _SliverAppBarExampleState extends State<SliverAppBarExample> {
     }));
   }
 
-  void _pushHomePage(){
+  void _pushSymptoms(){
     Navigator.of(context).push(MaterialPageRoute(builder: (_){
-      return  homePage();
+      return  SymptomsPage();
     }));
   }
 
-
-  void _pushProfile() {
+  void _pushMedicineSettings() {
     Navigator.of(context).push(
         MaterialPageRoute<void>(
             builder: (context) {
