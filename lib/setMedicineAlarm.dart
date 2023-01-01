@@ -115,7 +115,7 @@ class _AlarmPageState extends State<AlarmPage> {
 
                   return Card(
                   elevation: 0,
-                  borderOnForeground: ,
+                  borderOnForeground: true,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
 
