@@ -147,7 +147,25 @@ class _ProfilePageState extends State<ProfilePage> {
                                         onPressed: () {},
                                       ),
                                     ]
-                                ), //i
+                                ),
+                                SizedBox(height: 10),
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("email",style: TextStyle(color: Colors.black.withOpacity(0.6)),),
+                                          Text("pippiLongSocking@gmail.com")
+                                        ],
+                                      ),
+                                      IconButton(
+                                        icon: Icon(create),
+                                        onPressed: () {},
+                                      ),
+                                    ]
+                                ),//i
                               ]
                           )
                       ),
