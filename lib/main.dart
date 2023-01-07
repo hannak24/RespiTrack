@@ -91,7 +91,7 @@ class _RespiTrackState extends State<RespiTrack> {
                                   child: Column(
                                       children: [
                                         const Text(
-                                          "Welcome to RespiTrack, your smart inhalor app! please log in!",
+                                          "Welcome to RespiTrack, your smart inhaler app! please log in!",
                                           style: TextStyle(fontSize: 13),
                                         ),
                                         TextField(
