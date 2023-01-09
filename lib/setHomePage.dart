@@ -53,12 +53,13 @@ class HomePageState extends State<HomePage>
                   ),
                   titlePadding: EdgeInsets.only(bottom: 48.0, left: 12.0),
                   background: Padding(
-                      padding: const EdgeInsets.only(
-                          bottom: 50.0, left: 6.0, top: 2.0),
-                      child: const Image(
-                        image: NetworkImage(
-                            "https://cdn.pixabay.com/photo/2019/04/27/01/46/asthma-4159147_1280.png"),
-                      )
+                      padding:  EdgeInsets.only(
+                          bottom: 40.0, left: 60.0, top: 2.0),
+                      child:  Image(
+                      //   image: NetworkImage(
+                      //       "https://cdn.pixabay.com/photo/2019/04/27/01/46/asthma-4159147_1280.png"),
+                      // )
+                       image: AssetImage('images/our_inhaler.png',),opacity: const AlwaysStoppedAnimation(.8)),
                   ),
                 ),
               ),
