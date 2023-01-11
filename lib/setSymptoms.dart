@@ -17,10 +17,10 @@ class SymptomsPage extends StatefulWidget {
 
 class _SymptomsPageState extends State<SymptomsPage> {
   List<Symptom> childSymptoms =  [
-    Symptom("Cough", "description..", false),
-    Symptom("Whizzing", "description..", false),
-    Symptom("Sputum discharge", "description..", false),
-    Symptom("Short breath", "description..", false),
+    Symptom("Cough", "", false),
+    Symptom("Whizzing", "", false),
+    Symptom("Sputum discharge", "", false),
+    Symptom("Short breath", "", false),
     Symptom("Else / Additional Info", "describe in comment", false),
 
   ];

@@ -51,7 +51,9 @@ dependencies:
   pie_chart: ^5.3.2
   syncfusion_flutter_datepicker: ^20.3.59
   cloud_firestore: ^4.2.0
-
+  firebase_storage: ^11.0.10
+  image_picker: ^0.8.6
+  pdf: ^3.8.4
 
 
 
