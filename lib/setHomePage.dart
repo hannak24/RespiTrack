@@ -10,6 +10,20 @@ import 'custom_icons_icons.dart';
 import 'pdfMobile.dart';
 import 'pdf_api.dart';
 
+
+
+String parse (String s){
+  String returned="";
+  String date = s;
+  String year = date.substring(0,4);
+  String month = date.substring(5,7);
+  String day = date.substring(8,10);
+  String hour = date.substring(11,16);
+
+  returned =  day + "/" + month + "/" +year  + " at " + hour;
+  return returned;
+}
+
 class HomePage extends StatefulWidget {
   @override
   HomePageState createState() => HomePageState();
@@ -56,8 +70,8 @@ class HomePageState extends State<HomePage>
                         int i = 1;
                         if (snap.data?.docs != null){
                           for ( var doc in snap.data!.docs){
-                            DateTime date = doc['date'].toDate();
-                            symptomsList = symptomsList + i.toString() +'. '+ date.toString().substring(0,16) + "  -";
+                            String parsedDate = parse( doc['date'].toDate().toString());
+                            symptomsList = symptomsList + i.toString() +'. '+ parsedDate + "  -";
                             symptomsList = "$symptomsList\n";
                             symptomsList = symptomsList + doc['symptoms'] + "." ;
                             symptomsList = "$symptomsList\n";
@@ -475,35 +489,5 @@ class HomePageState extends State<HomePage>
 
   }
 
-  Future<void> _createPDF(String childName,String birthday,String IDnumber,String routineMed, String prescriptedDose) async {
-    PdfDocument document = PdfDocument();
-    final page = document.pages.add();
-
-
-    page.graphics.drawString('Medical Summary',
-        PdfStandardFont(PdfFontFamily.helvetica, 30));
-    page.graphics.drawString( 'Name' +childName,
-        PdfStandardFont(PdfFontFamily.helvetica, 30));
-
-    List<int> bytes = await document.save();
-    document.dispose();
-    saveAndLaunchFile(bytes, 'Output.pdf');
-  }
-
-
-  Future<void> _sendPDFByMail() async{
-    final path = (await getExternalStorageDirectory())?.path;
-    var attachment = File('$path/Output.pdf').path;
-    final Email email = Email(
-      body: 'Medical update',
-      subject: 'Flutter Studio',
-      recipients: ['tayaharshuk@gmail.com'],
-      attachmentPaths: [attachment],
-      isHTML: false,
-    );
-    
-    await FlutterEmailSender.send(email);
-
-  }
 
 }

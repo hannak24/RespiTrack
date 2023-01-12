@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,6 +7,7 @@ import 'text_dialog.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
+import 'login_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -23,6 +25,12 @@ class _ProfilePageState extends State<ProfilePage> {
     setState((){
       image = img as File;
     });
+  }
+
+  void _pushLogin() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_){
+      return LoginPage();
+    }));
   }
 
   @override
@@ -108,7 +116,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {FirebaseAuth.instance.signOut();},
                                 child: Column(
                                   children: const <Widget>[
                                     Text("Log out"),

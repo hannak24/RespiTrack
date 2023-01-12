@@ -1,32 +1,22 @@
 
-import 'dart:ffi';
+import 'package:flutter/services.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
 import 'pdfMobile.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 import 'package:pdf/pdf.dart';
 
 
+String parse (){
+  String returned="";
+  String date = DateTime.now().toString();
+  String year = date.substring(0,4);
+  String month = date.substring(5,7);
+  String day = date.substring(8,10);
+  String hour = date.substring(11,16);
 
-/*String loadSymptoms(){
-  final CollectionReference symptoms = FirebaseFirestore.instance.collection('Symptoms');
-  String s ="de";
-  symptoms.get().then((QuerySnapshot snapshot) {
-    for (var doc in snapshot.docs) {
-      s = s + doc.data.toString();
-      s = s + doc['date'];
-     // s = '$s\n';
-      s = 'fff';
-    }
-  });
-  return s;
+  returned =  day + "/" + month + "/" +year  + " at " + hour;
+  return returned;
 }
-*/
-
 
 class PdfApi{
 
@@ -37,7 +27,7 @@ class PdfApi{
        build: (context) => <Widget>[
          Container(
            alignment: Alignment.centerRight,
-           child: Text(DateTime.now().toString()),
+           child: Text(parse()),
          ),
          SizedBox(height: 20),
          Row( children: [
