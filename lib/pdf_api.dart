@@ -14,7 +14,7 @@ String parse (){
   String day = date.substring(8,10);
   String hour = date.substring(11,16);
 
-  returned =  day + "/" + month + "/" +year  + " at " + hour;
+  returned =  day + "/" + month + "/" +year  + ", " + hour;
   return returned;
 }
 

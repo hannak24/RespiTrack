@@ -20,7 +20,7 @@ String parse (String s){
   String day = date.substring(8,10);
   String hour = date.substring(11,16);
 
-  returned =  day + "/" + month + "/" +year  + " at " + hour;
+  returned =  day + "/" + month + "/" +year  + " , " + hour;
   return returned;
 }
 
@@ -75,7 +75,7 @@ class HomePageState extends State<HomePage>
                             symptomsList = "$symptomsList\n";
                             symptomsList = symptomsList + doc['symptoms'] + "." ;
                             symptomsList = "$symptomsList\n";
-                            symptomsList = symptomsList + "Additional infomation: " +doc['info'] + ".\n";
+                            symptomsList = symptomsList + "Additional information: " +doc['info'] + ".\n";
                            // symptomsList = "$symptomsList\n";
                             i++;
                           }//symptomsList = symptomsList + doc['date'].toString();
