@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import "GroupedStackedBarChart.dart";
+import 'MedicineIntakeTimeChart.dart';
 import "icons.dart";
 import 'PieChart.dart';
 import "SimpleScatterPlotChart.dart";
@@ -104,7 +105,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                           .of(context)
                           .size;
                       return Container(
-                        height: 1000 - MediaQuery
+                        height: 1400 - MediaQuery
                             .of(context)
                             .viewInsets
                             .bottom,
@@ -350,6 +351,30 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                   ),
                                   child: SimpleScatterPlotChart(
                                     SimpleScatterPlotChart.createSampleData(),),
+                                ),
+                              ),
+
+                              SizedBox(
+                                height: 10,
+                                width: size.width,
+                              ),
+
+                              SizedBox(
+                                height: 360.0,
+                                width: size.width,
+                                child: Card(
+                                  elevation: 3.5,
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                      color: Theme
+                                          .of(context)
+                                          .colorScheme
+                                          .outline,
+                                    ),
+                                    borderRadius: const BorderRadius
+                                        .all(Radius.circular(12)),
+                                  ),
+                                  child: MedicineIntakeTimeChart(),
                                 ),
                               ),
                             ],
