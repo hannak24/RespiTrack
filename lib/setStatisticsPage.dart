@@ -105,7 +105,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                           .of(context)
                           .size;
                       return Container(
-                        height: 1400 - MediaQuery
+                        height: 1800 - MediaQuery
                             .of(context)
                             .viewInsets
                             .bottom,
@@ -360,7 +360,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                               ),
 
                               SizedBox(
-                                height: 360.0,
+                                height: 250.0,
                                 width: size.width,
                                 child: Card(
                                   elevation: 3.5,
@@ -373,6 +373,30 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                     ),
                                     borderRadius: const BorderRadius
                                         .all(Radius.circular(12)),
+                                  ),
+                                  child: SimpleScatterPlotChartDB(),
+                                ),
+                              ),
+
+                              SizedBox(
+                                height: 10,
+                                width: size.width,
+                              ),
+
+                              SizedBox(
+                                height: 370.0,
+                                width: size.width,
+                                child: Card(
+                                  elevation: 3.5,
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                      color: Theme
+                                          .of(context)
+                                          .colorScheme
+                                          .outline,
+                                    ),
+                                    borderRadius: const BorderRadius
+                                        .all(Radius.circular(20)),
                                   ),
                                   child: MedicineIntakeTimeChart(),
                                 ),

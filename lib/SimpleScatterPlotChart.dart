@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:flutter/material.dart';
 
 class SimpleScatterPlotChart extends StatelessWidget {
 
@@ -36,7 +38,7 @@ class SimpleScatterPlotChart extends StatelessWidget {
   }
 
   /// Create one series with sample hard coded data.
-   static List<charts.Series<medicineIntake, int>> createSampleData() {
+  static List<charts.Series<medicineIntake, int>> createSampleData() {
     final onTime = [
       medicineIntake(DateTime.parse('2022-11-01 10:00:04Z'),"onTime"),
       medicineIntake(DateTime.parse('2022-11-02 20:09:04Z'),"onTime"),
@@ -131,3 +133,139 @@ class medicineIntake {
   }
 
 }
+
+class SimpleScatterPlotChartDB extends StatefulWidget {
+  const SimpleScatterPlotChartDB({Key? key}) : super(key: key);
+
+  @override
+  State<SimpleScatterPlotChartDB> createState() => _SimpleScatterPlotChartDBState();
+}
+
+class _SimpleScatterPlotChartDBState extends State<SimpleScatterPlotChartDB> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: StreamBuilder<void>(
+          stream: FirebaseFirestore.instance.collection('Routine').snapshots(),
+          builder: (BuildContext context, AsyncSnapshot snapshot1) {
+            return StreamBuilder(
+              stream: FirebaseFirestore.instance.collection('alarms').snapshots(),
+              builder: (BuildContext context, AsyncSnapshot snapshot2) {
+                var firstAlarm = "10:00:00";
+                var secondAlarm = "18:00:00";
+                if(snapshot2.hasData){
+                  DocumentSnapshot documentSnapshot = snapshot2.data?.docs[0];
+                  firstAlarm =  snapshot2.data?.docs[0]["time"].split(":");
+                  secondAlarm = snapshot2.data?.docs[1]["time"].split(":");
+                }
+                Widget widget = Container();
+                List<charts.Series<medicineIntake, int>> chartData = <charts.Series<medicineIntake, int>>[];
+                if (snapshot1.hasData) {
+                  List<medicineIntake> onTime = <medicineIntake>[];
+                  for (int index = 0; index < snapshot1.data?.docs.length; index++) {
+                    DocumentSnapshot documentSnapshot = snapshot1.data?.docs[index];
+                    var initialTime = documentSnapshot["dateTime"].replaceAll(".","-");
+                    var temp = initialTime.split(" ");
+                    var temp2 = temp[1].split("-");
+                    var fixedDate = temp2[2] + "-" + temp2[1] + "-" + temp2[0];
+                    var fixedTime = fixedDate +" "+ temp[0]+"Z";
+                    DateTime pushTime = DateTime.parse(fixedTime);
+
+                    medicineIntake intakeTime = medicineIntake(pushTime,"onTime");
+                    onTime.add(intakeTime);
+                  }
+                  chartData = [new charts.Series<medicineIntake, int>(
+                    id: 'In time',
+                    // Providing a color function is optional.
+                    colorFn: (medicineIntake medicineTime, _) {
+                      return charts.MaterialPalette.blue.shadeDefault;
+                    },
+                    domainFn: (medicineIntake times, _) => times.dateTime.day,
+                    measureFn: (medicineIntake times, _) => times.dateTime.hour,
+                    // // Providing a radius function is optional.
+                    data: onTime,
+                  )];
+                  widget = new charts.ScatterPlotChart(
+                    chartData,
+                    animate: true,
+                    primaryMeasureAxis: new charts.NumericAxisSpec(
+                        tickProviderSpec:
+                        new charts.BasicNumericTickProviderSpec(zeroBound: false, desiredMaxTickCount: 24)),
+                    secondaryMeasureAxis: new charts.NumericAxisSpec(
+                        tickProviderSpec:
+                        new charts.BasicNumericTickProviderSpec(zeroBound: false, desiredMaxTickCount: 24)),
+                    behaviors: [
+                      new charts.ChartTitle('Routine inhaler use time',
+                          behaviorPosition: charts.BehaviorPosition.top,
+                          titleOutsideJustification: charts.OutsideJustification.middleDrawArea,
+                          innerPadding: 18),
+                      new charts.SeriesLegend(position: charts.BehaviorPosition.bottom, entryTextStyle:  charts.TextStyleSpec(
+                          color: charts.Color(r: 127, g: 63, b: 191),
+                          fontFamily: 'Georgia',
+                          fontSize: 11),),
+                    ],);
+                }
+                return widget;
+              });
+          }
+        ));
+  }
+}
+
+
+
+// Widget build(BuildContext context) {
+//   return Scaffold(
+//       body: StreamBuilder<void>(
+//         stream: FirebaseFirestore.instance.collection('Routine').snapshots(),
+//         builder: (BuildContext context, AsyncSnapshot snapshot) {
+//           Widget widget = Container();
+//           List<charts.Series<medicineIntake, int>> chartData = <charts.Series<medicineIntake, int>>[];
+//           if (snapshot.hasData) {
+//             List<medicineIntake> onTime = <medicineIntake>[];
+//             for (int index = 0; index < snapshot.data.documents.length; index++) {
+//               DocumentSnapshot documentSnapshot = snapshot.data.documents[index];
+//               // here we are storing the data into a list which is used for chart’s data source
+//               //chartData.add(medicineIntake.fromMap(documentSnapshot.data as Map<String, dynamic>) );
+//               DateTime pushTime = DateTime.parse(documentSnapshot as String);
+//               medicineIntake intakeTime = medicineIntake(pushTime,"onTime");
+//               onTime.add(intakeTime);
+//             }
+//             chartData = [new charts.Series<medicineIntake, int>(
+//               id: 'In time',
+//               // Providing a color function is optional.
+//               colorFn: (medicineIntake medicineTime, _) {
+//                 return charts.MaterialPalette.blue.shadeDefault;
+//               },
+//               domainFn: (medicineIntake times, _) => times.dateTime.day,
+//               measureFn: (medicineIntake times, _) => times.dateTime.hour,
+//               // // Providing a radius function is optional.
+//               data: onTime,
+//             )];
+//             widget = new charts.ScatterPlotChart(
+//               chartData,
+//               animate: true,
+//               primaryMeasureAxis: new charts.NumericAxisSpec(
+//                   tickProviderSpec:
+//                   new charts.BasicNumericTickProviderSpec(zeroBound: false, desiredMaxTickCount: 24)),
+//               secondaryMeasureAxis: new charts.NumericAxisSpec(
+//                   tickProviderSpec:
+//                   new charts.BasicNumericTickProviderSpec(zeroBound: false, desiredMaxTickCount: 24)),
+//               behaviors: [
+//                 new charts.ChartTitle('Routine inhaler use time',
+//                     behaviorPosition: charts.BehaviorPosition.top,
+//                     titleOutsideJustification: charts.OutsideJustification.middleDrawArea,
+//                     innerPadding: 18),
+//                 new charts.SeriesLegend(position: charts.BehaviorPosition.bottom, entryTextStyle:  charts.TextStyleSpec(
+//                     color: charts.Color(r: 127, g: 63, b: 191),
+//                     fontFamily: 'Georgia',
+//                     fontSize: 11),),
+//               ],);
+//           }
+//           return widget;
+//         },
+//       ));
+// }
+
+
+
