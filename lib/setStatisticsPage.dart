@@ -314,7 +314,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                 width: size.width,
                                 child: Card(
                                   elevation: 3.5,
-                                  child: pieChart(),
+                                  child: pieChartDB(),
                                   shape: RoundedRectangleBorder(
                                     side: BorderSide(
                                       color: Theme
@@ -329,30 +329,30 @@ class _StatisticsPageState extends State<StatisticsPage> {
                               ),
                               // pie chart symptoms before asthma attacks
 
-                              SizedBox(
-                                height: 10,
-                                width: size.width,
-                              ),
-
-                              SizedBox(
-                                height: 250.0,
-                                width: size.width,
-                                child: Card(
-                                  elevation: 3.5,
-                                  shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                      color: Theme
-                                          .of(context)
-                                          .colorScheme
-                                          .outline,
-                                    ),
-                                    borderRadius: const BorderRadius
-                                        .all(Radius.circular(12)),
-                                  ),
-                                  child: SimpleScatterPlotChart(
-                                    SimpleScatterPlotChart.createSampleData(),),
-                                ),
-                              ),
+                              // SizedBox(
+                              //   height: 10,
+                              //   width: size.width,
+                              // ),
+                              //
+                              // SizedBox(
+                              //   height: 250.0,
+                              //   width: size.width,
+                              //   child: Card(
+                              //     elevation: 3.5,
+                              //     shape: RoundedRectangleBorder(
+                              //       side: BorderSide(
+                              //         color: Theme
+                              //             .of(context)
+                              //             .colorScheme
+                              //             .outline,
+                              //       ),
+                              //       borderRadius: const BorderRadius
+                              //           .all(Radius.circular(12)),
+                              //     ),
+                              //     child: SimpleScatterPlotChart(
+                              //       SimpleScatterPlotChart.createSampleData(),),
+                              //   ),
+                              // ),
 
                               SizedBox(
                                 height: 10,
@@ -784,7 +784,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                 width: size.width,
                                 child: Card(
                                   elevation: 3.5,
-                                  child: pieChart(),
+                                  child: pieChartDB(),
                                   shape: RoundedRectangleBorder(
                                     side: BorderSide(
                                       color: Theme
