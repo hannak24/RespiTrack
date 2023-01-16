@@ -48,49 +48,6 @@ final gradientList = <List<Color>>[
 ];
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class pieChartDB extends StatefulWidget {
   const pieChartDB({Key? key}) : super(key: key);
 
