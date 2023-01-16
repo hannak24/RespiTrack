@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'AvgNumberOfPushes.dart';
 import "GroupedStackedBarChart.dart";
 import 'MedicineIntakeTimeChart.dart';
 import 'doses_remaining.dart';
@@ -155,76 +156,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                               ),
                               //space
 
-                              SizedBox(
-                                height: 87.0,
-                                width: size.width,
-                                child: Card(
-                                    elevation: 3.5,
-                                    color: Colors.white,
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              top: 5.0),
-                                          child: Text(
-                                            "Average number of squeezes/rotations per usage: ",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                color: Colors
-                                                    .black),),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 70.0,
-                                              right: 70.0,
-                                              top: 10),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment
-                                                .spaceBetween,
-                                            mainAxisSize: MainAxisSize
-                                                .max,
-                                            children: [
-                                              Column(
-                                                  children: [
-                                                    Text(
-                                                      "acute inhaler: ",
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          color: Colors
-                                                              .black),),
-                                                    Text("1.4",
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          color: Colors
-                                                              .black,
-                                                          fontWeight: FontWeight
-                                                              .bold),)
-                                                  ]
-                                              ),
-                                              Column(
-                                                  children: [
-                                                    Text(
-                                                      "Routine inhaler: ",
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          color: Colors
-                                                              .black),),
-                                                    Text("1.1",
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          color: Colors
-                                                              .black,
-                                                          fontWeight: FontWeight
-                                                              .bold),)
-                                                  ]
-                                              )
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                ),
-                              ),
+                               AvgNumOfPushes(size.width),
                               //average number of squeezes per use
 
                               SizedBox(
