@@ -195,62 +195,15 @@ class _SimpleScatterPlotChartDBState extends State<SimpleScatterPlotChartDB> {
                     var farAlarm =
                     (pushTime.isAfter(alarm1Time) || pushTime.isAtSameMomentAs(alarm1Time)) && pushTime.isBefore(alarm2Time)?
                     alarm2Time: alarm1Time;
-
-
+                    var status = "late";
 
 
                     if(index == 0){
                       lastAlarm = closestAlarm;
                     }
                     else{
-                      // if(closestAlarm.hour == lastAlarm.hour){
-                      //   var missedAlarm = farAlarm;
-                      //   if(closestAlarm.hour < 14) {
-                      //     missedAlarm = farAlarm.subtract(const Duration(days: 1));
-                      //   }
-                      //
-                      //   status = "missed";
-                      //   medicineIntake intakeTime = medicineIntake(missedAlarm,status);
-                      //   missed.add(intakeTime);
-                      // }
-                      // if(closestAlarm.hour > lastAlarm.hour && lastAlarm.day != closestAlarm.day){
-                      //
-                      //   status = "missed";
-                      //   medicineIntake intakeTime = medicineIntake(farAlarm,status);
-                      //   missed.add(intakeTime);
-                      // }
                       lastAlarm = closestAlarm;
                     }
-
-
-
-
-                    var missedAlarm1 = closestAlarm.subtract(const Duration(days: 1));
-                    var missedAlarm2 = farAlarm.subtract(const Duration(days: 1));
-                    // print("lastPushed");
-                    // print(lastPushDate);
-                    // print("missedAlarm1");
-                    // print(missedAlarm1);
-                    // print("missedAlarm2");
-                    // print(missedAlarm2);
-                    // while(lastPushDate.isBefore(missedAlarm1)){
-                    //   print("putting missed1");
-                    //   status = "missed";
-                    //   medicineIntake intakeTime = medicineIntake(missedAlarm1,status);
-                    //   missed.add(intakeTime);
-                    //   missedAlarm1 = missedAlarm1.subtract(const Duration(days: 1));
-                    // }
-                    //
-                    // while(lastPushDate.isBefore(missedAlarm2)){
-                    //   print("putting missed2");
-                    //   status = "missed";
-                    //   medicineIntake intakeTime = medicineIntake(missedAlarm2,status);
-                    //   missed.add(intakeTime);
-                    //   missedAlarm2 = missedAlarm2.subtract(const Duration(days: 1));
-                    // }
-
-
-
 
                     //checking status
 
@@ -318,82 +271,56 @@ class _SimpleScatterPlotChartDBState extends State<SimpleScatterPlotChartDB> {
                         morning = 0;
                       }
                     }
-                    // print("lastPushDate");
-                    // print(lastPushDate);
-
                   }
 
-                  var dateToCheck = firstPushDate;
+
                   pushes.sort((a,b) {
                     return a.compareTo(b);
                   });
-                  print(pushes);
-
-                  var initialFirstAlarm = firstClosestAlarm;
-                  var initialSecondAlarm = firstFarAlarm;
-
-                  // for(var i=1;i<pushes.length;i++) {
-                  //     while (pushes[i].difference(firstClosestAlarm).inHours > 24) {
-                  //       if (morning == 0) {
-                  //         firstFarAlarm.add(const Duration(days: 1));
-                  //       }
-                  //       status = "missed";
-                  //       medicineIntake intakeTime = medicineIntake(
-                  //           firstFarAlarm, status);
-                  //       missed.add(intakeTime);
-                  //       if (morning == 1) {
-                  //         firstFarAlarm = firstFarAlarm.add(const Duration(days: 1));
-                  //       }
-                  //       firstClosestAlarm = firstClosestAlarm.add(const Duration(days: 1));
-                  //     }
-                  //   firstClosestAlarm = pushes[i].add(const Duration(days: 1));
-                  //   firstFarAlarm = pushes[i].add(const Duration(days: 1));
-                  // }
-
-                  // for(var i=1;i<pushes.length;i++) {
-                  //   while (pushes[i].difference(firstClosestAlarm).inHours > 24) {
-                  //
-                  //     status = "missed";
-                  //     medicineIntake intakeTime = medicineIntake(
-                  //         firstFarAlarm, status);
-                  //     missed.add(intakeTime);
-                  //
-                  //     //firstClosestAlarm = firstClosestAlarm.add(const Duration(days: 1));
-                  //   }
-                  //   if(pushes[i].difference(firstClosestAlarm).inHours > 0) {
-                  //     firstFarAlarm = pushes[i].add(const Duration(days: 1));
-                  //     firstClosestAlarm =
-                  //         pushes[i].add(const Duration(days: 1));
-                  //   }
-                  // }
-
-                  firstClosestAlarm = initialFirstAlarm;
-                  firstFarAlarm = initialSecondAlarm;
-
-                  // for(var i=1;i<pushes.length;i++) {
-                  //   while (pushes[i].difference(firstFarAlarm).inHours > 24) {
-                  //     if (morning == 1) {
-                  //       firstClosestAlarm.add(const Duration(days: 1));
-                  //     }
-                  //     status = "missed";
-                  //     medicineIntake intakeTime = medicineIntake(
-                  //         firstClosestAlarm, status);
-                  //     missed.add(intakeTime);
-                  //     if (morning == 1) {
-                  //       firstClosestAlarm = firstClosestAlarm.add(const Duration(days: 1));
-                  //     }
-                  //     firstFarAlarm = firstFarAlarm.add(const Duration(days: 1));
-                  //   }
-                  //   firstFarAlarm = pushes[i].add(const Duration(days: 1));
-                  //   firstClosestAlarm = pushes[i].add(const Duration(days: 1));
-                  // }
 
 
+                  var morningAlarm = firstClosestAlarm;
+                  var eveningAlarm = firstFarAlarm;
+
+                  if(morningAlarm.hour > 15){
+                    var temp = morningAlarm;
+                    morningAlarm = eveningAlarm;
+                    eveningAlarm = temp;
+                  }
+                  var eveningMorningDiff = eveningAlarm.hour - morningAlarm.hour;
+                  var morningEveningDiff = (morningAlarm.hour + 24 - eveningAlarm.hour);
+
+                  var i = 0;
+                  var status = "missed";
+                  for(;i < (pushes.length);){
+
+                    while(pushes[i].difference(morningAlarm).inHours < 0){
+                      i++;
+                    }
+
+                    if(pushes[i].difference(morningAlarm).inHours >= eveningMorningDiff){
+                      medicineIntake intakeTime = medicineIntake(morningAlarm, status);
+                      missed.add(intakeTime);
+                    }
+                    else{
+                      i++;
+                    };
+
+                    while( i <  pushes.length && pushes[i].difference(eveningAlarm).inHours < 0){
+                      i++;
+                    }
 
 
+                    if(i <  pushes.length && pushes[i].difference(eveningAlarm).inHours >= morningEveningDiff){
+                      medicineIntake intakeTime = medicineIntake(eveningAlarm, status);
+                      missed.add(intakeTime);
+                    }
+                    else{i++;};
 
+                    morningAlarm = morningAlarm.add(const Duration(days: 1));
+                    eveningAlarm = eveningAlarm.add(const Duration(days: 1));
 
-
+                  }
 
 
                   chartData = [
@@ -472,64 +399,8 @@ class _SimpleScatterPlotChartDBState extends State<SimpleScatterPlotChartDB> {
                 return widget;
               });
           }
-        ));
+        )
+    );
   }
 }
-
-
-
-// Widget build(BuildContext context) {
-//   return Scaffold(
-//       body: StreamBuilder<void>(
-//         stream: FirebaseFirestore.instance.collection('Routine').snapshots(),
-//         builder: (BuildContext context, AsyncSnapshot snapshot) {
-//           Widget widget = Container();
-//           List<charts.Series<medicineIntake, int>> chartData = <charts.Series<medicineIntake, int>>[];
-//           if (snapshot.hasData) {
-//             List<medicineIntake> onTime = <medicineIntake>[];
-//             for (int index = 0; index < snapshot.data.documents.length; index++) {
-//               DocumentSnapshot documentSnapshot = snapshot.data.documents[index];
-//               // here we are storing the data into a list which is used for chart’s data source
-//               //chartData.add(medicineIntake.fromMap(documentSnapshot.data as Map<String, dynamic>) );
-//               DateTime pushTime = DateTime.parse(documentSnapshot as String);
-//               medicineIntake intakeTime = medicineIntake(pushTime,"onTime");
-//               onTime.add(intakeTime);
-//             }
-//             chartData = [new charts.Series<medicineIntake, int>(
-//               id: 'In time',
-//               // Providing a color function is optional.
-//               colorFn: (medicineIntake medicineTime, _) {
-//                 return charts.MaterialPalette.blue.shadeDefault;
-//               },
-//               domainFn: (medicineIntake times, _) => times.dateTime.day,
-//               measureFn: (medicineIntake times, _) => times.dateTime.hour,
-//               // // Providing a radius function is optional.
-//               data: onTime,
-//             )];
-//             widget = new charts.ScatterPlotChart(
-//               chartData,
-//               animate: true,
-//               primaryMeasureAxis: new charts.NumericAxisSpec(
-//                   tickProviderSpec:
-//                   new charts.BasicNumericTickProviderSpec(zeroBound: false, desiredMaxTickCount: 24)),
-//               secondaryMeasureAxis: new charts.NumericAxisSpec(
-//                   tickProviderSpec:
-//                   new charts.BasicNumericTickProviderSpec(zeroBound: false, desiredMaxTickCount: 24)),
-//               behaviors: [
-//                 new charts.ChartTitle('Routine inhaler use time',
-//                     behaviorPosition: charts.BehaviorPosition.top,
-//                     titleOutsideJustification: charts.OutsideJustification.middleDrawArea,
-//                     innerPadding: 18),
-//                 new charts.SeriesLegend(position: charts.BehaviorPosition.bottom, entryTextStyle:  charts.TextStyleSpec(
-//                     color: charts.Color(r: 127, g: 63, b: 191),
-//                     fontFamily: 'Georgia',
-//                     fontSize: 11),),
-//               ],);
-//           }
-//           return widget;
-//         },
-//       ));
-// }
-
-
 

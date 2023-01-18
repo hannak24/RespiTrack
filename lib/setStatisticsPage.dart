@@ -119,7 +119,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                 height: 7.0,
                                 width: size.width,
                               ),
-                              dosesRemaining(size.width),
+                               dosesRemaining(size.width),
                               //dozes remaining
 
                               SizedBox(
@@ -183,32 +183,8 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                   ),
                                 ),
                               ),
-                              // pie chart symptoms before asthma attacks
+                              //pie chart symptoms before asthma attacks
 
-                              // SizedBox(
-                              //   height: 10,
-                              //   width: size.width,
-                              // ),
-                              //
-                              // SizedBox(
-                              //   height: 250.0,
-                              //   width: size.width,
-                              //   child: Card(
-                              //     elevation: 3.5,
-                              //     shape: RoundedRectangleBorder(
-                              //       side: BorderSide(
-                              //         color: Theme
-                              //             .of(context)
-                              //             .colorScheme
-                              //             .outline,
-                              //       ),
-                              //       borderRadius: const BorderRadius
-                              //           .all(Radius.circular(12)),
-                              //     ),
-                              //     child: SimpleScatterPlotChart(
-                              //       SimpleScatterPlotChart.createSampleData(),),
-                              //   ),
-                              // ),
 
                               SizedBox(
                                 height: 10,

@@ -53,7 +53,7 @@ class _AvgNumOfPushesState extends State<AvgNumOfPushes> {
                 pushesCount.add(count);
               }
               var routineAvgPushesNumInt = pushesCount.average;
-              routineAvgPushesNum = routineAvgPushesNumInt.toString();
+              routineAvgPushesNum = routineAvgPushesNumInt.toStringAsFixed(2);
           }
 
           return Card(
