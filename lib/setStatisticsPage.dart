@@ -129,13 +129,11 @@ class _StatisticsPageState extends State<StatisticsPage> {
                               // space
 
                               SizedBox(
-                                height: 250.0,
+                                height: 290.0,
                                 width: size.width,
                                 child: Card(
                                   elevation: 3.5,
-                                  child: GroupedStackedBarChart(
-                                      GroupedStackedBarChart
-                                          .createSampleData()),
+                                  child: GroupedStackedBarChartDB(),
                                   shape: RoundedRectangleBorder(
                                     side: BorderSide(
                                       color: Theme
