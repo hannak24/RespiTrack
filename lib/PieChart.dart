@@ -5,14 +5,6 @@ import 'package:pie_chart/pie_chart.dart';
 import 'package:flutter/cupertino.dart';
 
 
-
-
-
-
-
-
-
-
 final legendLabels = <String, String>{
   "Flutter": "Flutter legend",
   "React": "React legend",

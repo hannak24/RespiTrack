@@ -7,6 +7,7 @@ import 'doses_remaining.dart';
 import "icons.dart";
 import 'PieChart.dart';
 import "SimpleScatterPlotChart.dart";
+import 'inhalerTimeTakingDistribution.dart';
 
 
 
@@ -46,7 +47,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                           .of(context)
                           .size;
                       return Container(
-                        height: 1800 - MediaQuery
+                        height: 2100 - MediaQuery
                             .of(context)
                             .viewInsets
                             .bottom,
@@ -67,40 +68,6 @@ class _StatisticsPageState extends State<StatisticsPage> {
                               ),
                               // space
 
-                              SizedBox(
-                                height: 290.0,
-                                width: size.width,
-                                child: Card(
-                                  elevation: 3.5,
-                                  child: GroupedStackedBarChartDB(),
-                                  shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                      color: Theme
-                                          .of(context)
-                                          .colorScheme
-                                          .outline,
-                                    ),
-                                    borderRadius: const BorderRadius
-                                        .all(Radius.circular(12)),
-                                  ),
-                                ),
-                              ),
-                              // bar chart inhaler uses per month
-
-                              SizedBox(
-                                height: 10,
-                                width: size.width,
-                              ),
-                              //space
-
-                               AvgNumOfPushes(size.width),
-                              //average number of squeezes per use
-
-                              SizedBox(
-                                height: 10,
-                                width: size.width,
-                              ),
-                              // space
 
                               SizedBox(
                                 height: 250.0,
@@ -119,8 +86,42 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                         .all(Radius.circular(12)),
                                   ),
                                 ),
+                              ), //pie chart symptom distribution
+
+                              SizedBox(
+                                height: 10,
+                                width: size.width,
                               ),
-                              //pie chart symptoms before asthma attacks
+                              //space
+
+                               AvgNumOfPushes(size.width),
+                              //average number of squeezes per use
+
+                              SizedBox(
+                                height: 10,
+                                width: size.width,
+                              ),
+                              // space
+
+                          SizedBox(
+                            height: 290.0,
+                            width: size.width,
+                            child: Card(
+                              elevation: 3.5,
+                              child: GroupedStackedBarChartDB(),
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                  color: Theme
+                                      .of(context)
+                                      .colorScheme
+                                      .outline,
+                                ),
+                                borderRadius: const BorderRadius
+                                    .all(Radius.circular(12)),
+                              ),
+                            ),
+                          ),
+                              //inhaler uses per month stacked group chart
 
 
                               SizedBox(
@@ -144,6 +145,30 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                         .all(Radius.circular(12)),
                                   ),
                                   child: SimpleScatterPlotChartDB(),
+                                ),
+                              ),
+
+                              SizedBox(
+                                height: 10,
+                                width: size.width,
+                              ),
+
+                              SizedBox(
+                                height: 250.0,
+                                width: size.width,
+                                child: Card(
+                                  elevation: 3.5,
+                                  child: InhalerTimeTakingDistribution(),
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                      color: Theme
+                                          .of(context)
+                                          .colorScheme
+                                          .outline,
+                                    ),
+                                    borderRadius: const BorderRadius
+                                        .all(Radius.circular(12)),
+                                  ),
                                 ),
                               ),
 

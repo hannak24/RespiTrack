@@ -214,15 +214,17 @@ class _MedicineIntakeTimeChartDBState extends State<MedicineIntakeTimeChartDB> {
                           i++;
                         }
 
+                        if (i >= pushes.length){
+                          break;
+                        }
 
 
-                        while (pushes[i]
-                            .difference(eveningAlarm)
-                            .inHours < 0) {
+
+                        while (i < pushes.length && pushes[i].difference(eveningAlarm).inHours < 0) {
                           i++;
                         }
 
-                        if (pushes[i]
+                        if (i < pushes.length && pushes[i]
                             .difference(eveningAlarm)
                             .inHours >= morningEveningDiff) {
                           data.add(DateTimeRange(
