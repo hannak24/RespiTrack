@@ -145,14 +145,6 @@ List<charts.Series<medicineTaken, String>> createSampleData() {
   ];
 
   return [
-    // new charts.Series<medicineTaken, String>(
-    //   id: 'routine Inhalor',
-    //   seriesCategory: 'routine',
-    //   domainFn: (medicineTaken count, _) => count.month,
-    //   measureFn: (medicineTaken count, _) => count.count,
-    //   data: routine_Inhalor,
-    //   colorFn: (medicineTaken count, _) => lightBlue[1],
-    // ),
     new charts.Series<medicineTaken, String>(
       id: 'acute Inhalor',
       seriesCategory: 'acute',
@@ -165,7 +157,8 @@ List<charts.Series<medicineTaken, String>> createSampleData() {
 }
 
 class GroupedStackedBarChartDB extends StatefulWidget {
-  const GroupedStackedBarChartDB({Key? key}) : super(key: key);
+  final bool justRoutine;
+  const GroupedStackedBarChartDB(this.justRoutine);
 
   @override
   State<GroupedStackedBarChartDB> createState() => _GroupedStackedBarChartDBState();
@@ -182,16 +175,18 @@ class _GroupedStackedBarChartDBState extends State<GroupedStackedBarChartDB> {
           var months = List.filled(13, 0, growable: false);
           final lightBlue = charts.MaterialPalette.blue.makeShades(2);
           final blue = charts.MaterialPalette.indigo.makeShades(22);
-          if(snapshot1.hasData){
+          if (snapshot1.hasData) {
             for (int index = 0; index < snapshot1.data?.docs.length; index++) {
-              DocumentSnapshot documentSnapshot = snapshot1.data?.docs[index];
-              var initialTime = documentSnapshot["dateTime"].replaceAll(".","-");
-              var temp = initialTime.split(" ");
-              var temp2 = temp[1].split("-");
-              var fixedDate = temp2[2] + "-" + temp2[1] + "-" + temp2[0];
-              var fixedTime = fixedDate +" "+ temp[0]+"Z";
-              DateTime pushTime = DateTime.parse(fixedTime);
-              months[pushTime.month] = months[pushTime.month] + 1;
+                DocumentSnapshot documentSnapshot = snapshot1.data?.docs[index];
+                var initialTime = documentSnapshot["dateTime"].replaceAll(
+                ".", "-");
+                var temp = initialTime.split(" ");
+                var temp2 = temp[1].split("-");
+                var fixedDate = temp2[2] + "-" + temp2[1] + "-" + temp2[0];
+                var fixedTime = fixedDate + " " + temp[0] + "Z";
+                DateTime pushTime = DateTime.parse(fixedTime);
+                months[pushTime.month] = months[pushTime.month] + 1;
+                }
 
 
               final routine_Inhalor = [
@@ -236,24 +231,26 @@ class _GroupedStackedBarChartDBState extends State<GroupedStackedBarChartDB> {
 
               seriesList = [];
               seriesList.add(routine_series);
-              seriesList.add(acute_series);
-
+              if (widget.justRoutine == false) {
+                seriesList.add(acute_series);
+              }
             }
-          }
 
-          return new charts.BarChart(
-            seriesList,
-            animate: true,
-            barGroupingType: charts.BarGroupingType.groupedStacked,
-            behaviors: [
-              new charts.ChartTitle('Inhaler uses per month',
-                  behaviorPosition: charts.BehaviorPosition.top,
-                  titleOutsideJustification: charts.OutsideJustification.middleDrawArea,
-                  innerPadding: 18),
-              new charts.SeriesLegend(position: charts.BehaviorPosition.bottom,),
-            ],
-          );
-        }
+            return new charts.BarChart(
+              seriesList,
+              animate: true,
+              barGroupingType: charts.BarGroupingType.groupedStacked,
+              behaviors: [
+                new charts.ChartTitle('Inhaler uses per month',
+                    behaviorPosition: charts.BehaviorPosition.top,
+                    titleOutsideJustification: charts.OutsideJustification
+                        .middleDrawArea,
+                    innerPadding: 18),
+                new charts.SeriesLegend(
+                  position: charts.BehaviorPosition.bottom,),
+              ],
+            );
+          }
       )
     );
   }

@@ -166,10 +166,7 @@ class _MedicineIntakeTimeChartDBState extends State<MedicineIntakeTimeChartDB> {
 
                       firstClosestAlarm = DateTime(pushes[0].year,pushes[0].month,pushes[0].day,firstClosestAlarm.hour, firstClosestAlarm.minute);
                       firstFarAlarm = DateTime(pushes[0].year,pushes[0].month,pushes[0].day,firstFarAlarm.hour, firstFarAlarm.minute);
-                      print("firstClosestAlarm");
-                      print(firstClosestAlarm);
-                      print("firstFarAlarm");
-                      print(firstFarAlarm);
+
 
                       var morningAlarm = firstClosestAlarm;
                       var eveningAlarm = firstFarAlarm;
@@ -190,10 +187,7 @@ class _MedicineIntakeTimeChartDBState extends State<MedicineIntakeTimeChartDB> {
                         while (pushes[i].difference(morningAlarm).inHours < 0) {
                           i++;
                         }
-                        print("pushes[i]");
-                        print(pushes[i]);
-                        print("morningAlarm");
-                        print(morningAlarm);
+
                         if (pushes[i].difference(morningAlarm).inHours >= eveningMorningDiff) {
                           data.add(DateTimeRange(
                             start: DateTime(morningAlarm.year, morningAlarm.month, morningAlarm.day, morningAlarm.hour, morningAlarm.minute),
@@ -201,7 +195,7 @@ class _MedicineIntakeTimeChartDBState extends State<MedicineIntakeTimeChartDB> {
                           ));
                         }
                         else {
-                          print("I'm here");
+
                           data.add(DateTimeRange(
                             start: DateTime(
                                 morningAlarm.year, morningAlarm.month,
@@ -260,7 +254,6 @@ class _MedicineIntakeTimeChartDBState extends State<MedicineIntakeTimeChartDB> {
                       for(int j = pushes.length - 1; j > -1; j--){
                         finalData.add(data[j]);
                       }
-                      print(finalData);
                     }
                     return Padding(
                         padding: const EdgeInsets.all(16.0),
