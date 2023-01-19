@@ -24,67 +24,6 @@ class _StatisticsPageState extends State<StatisticsPage> {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
-        // bottomNavigationBar: BottomAppBar(
-        //   child: Padding(
-        //     padding: const EdgeInsets.all(8),
-        //     child: OverflowBar(
-        //       alignment: MainAxisAlignment.spaceEvenly,
-        //       overflowAlignment: OverflowBarAlignment.center,
-        //       children: <Widget>[
-        //         Row(
-        //           mainAxisSize: MainAxisSize.min,
-        //           children: <Widget>[
-        //             IconButton(
-        //               icon: const Icon(Icons.person_outlined),
-        //               onPressed: () {_pushProfile();},
-        //               tooltip: "medicine settings",
-        //             ),
-        //           ],
-        //         ),
-        //         Row(
-        //           mainAxisSize: MainAxisSize.min,
-        //           children: <Widget>[
-        //             IconButton(
-        //               icon: const Icon(_SliverAppBarExampleState.alarm),
-        //               onPressed: () {_pushSetMedicineAlarm();},
-        //               tooltip: "Set medicine alarm",
-        //             ),
-        //           ],
-        //         ),
-        //         Row(
-        //           mainAxisSize: MainAxisSize.min,
-        //           children: <Widget>[
-        //             IconButton(
-        //               icon: const Icon(_SliverAppBarExampleState.home_outlined),
-        //               onPressed: () {Navigator.of(context).popUntil((route) => route.isFirst);},
-        //               tooltip: "Back to home page",
-        //             ),
-        //           ],
-        //         ),
-        //         Row(
-        //           mainAxisSize: MainAxisSize.min,
-        //           children: <Widget>[
-        //             IconButton(
-        //               icon: const Icon(_SliverAppBarExampleState.bar_chart),
-        //               onPressed: () {_pushMedicineStatistics();},
-        //               tooltip: "Medicines statistics",
-        //             ),
-        //           ],
-        //         ),
-        //         Row(
-        //           mainAxisSize: MainAxisSize.min,
-        //           children: <Widget>[
-        //             IconButton(
-        //               icon: const Icon(Icons.sick_outlined),
-        //               onPressed: () {},
-        //               tooltip: "add symptom entry",
-        //             ),
-        //           ],
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
         appBar: AppBar(
           bottom:  TabBar(
             tabs: [
@@ -228,7 +167,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                     borderRadius: const BorderRadius
                                         .all(Radius.circular(20)),
                                   ),
-                                  child: MedicineIntakeTimeChart(),
+                                  child: MedicineIntakeTimeChartDB(),
                                 ),
                               ),
                             ],
