@@ -331,6 +331,7 @@ class _SimpleScatterPlotChartDBState extends State<SimpleScatterPlotChartDB> {
                       colorFn: (medicineIntake medicineTime, _) {
                         return charts.MaterialPalette.lime.shadeDefault;
                       },
+                      radiusPxFn: (medicineIntake medicineTime, _) => 4.5,
                       domainFn: (medicineIntake times, _) => times.dateTime.day,
                       measureFn: (medicineIntake times, _) => times.dateTime.hour,
                       // // Providing a radius function is optional.
@@ -353,6 +354,7 @@ class _SimpleScatterPlotChartDBState extends State<SimpleScatterPlotChartDB> {
                 colorFn: (medicineIntake medicineTime, _) {
                 return charts.MaterialPalette.red.shadeDefault;
                 },
+                radiusPxFn: (medicineIntake medicineTime, _) => 5.5,
                 domainFn: (medicineIntake times, _) => times.dateTime.day,
                 measureFn: (medicineIntake times, _) => times.dateTime.hour,
                 // // Providing a radius function is optional.
@@ -364,7 +366,7 @@ class _SimpleScatterPlotChartDBState extends State<SimpleScatterPlotChartDB> {
                 colorFn: (medicineIntake medicineTime, _) {
                 return charts.MaterialPalette.black;
                 },
-
+                radiusPxFn: (medicineIntake medicineTime, _) => 6.0,
                 domainFn: (medicineIntake times, _) => times.dateTime.day,
                 measureFn: (medicineIntake times, _) => times.dateTime.hour,
                 // // Providing a radius function is optional.
