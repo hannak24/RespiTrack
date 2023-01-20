@@ -1,8 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'custom_icons_icons.dart';
 import 'text_dialog.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
+import 'login_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -12,11 +17,27 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  File? image;
+  late String imgURL;
+
+  Future _getImage() async{
+    var img = await ImagePicker().pickImage(source: ImageSource.gallery);
+    setState((){
+      image = img as File;
+    });
+  }
+
+  void _pushLogin() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_){
+      return LoginPage();
+    }));
+  }
 
   @override
 
   Widget build(BuildContext context) {
     IconData create = IconData(0xe19d, fontFamily: 'MaterialIcons');
+
     return Scaffold(
       body: Center(
         child: StreamBuilder(
@@ -52,17 +73,20 @@ class _ProfilePageState extends State<ProfilePage> {
                                     Positioned(
                                       bottom: 0,
                                       left: 0,
-                                      child: CircleAvatar(
-                                        radius: 100,
-                                        backgroundImage: NetworkImage(
-                                            "https://www.aaaai.org/Aaaai/media/MediaLibraryRedesign/Tools%20for%20the%20Public/Conditions%20Library/Library%20-%20Asthma/skd238387sdc-mother-daugh-inhaler-cropped.jpg"),
+                                      child: InkWell(
+                                        onTap: (){_getImage();},
+                                        child: CircleAvatar(
+                                          radius: 100,
+                                          backgroundImage: (image!= null)?FileImage(image!): NetworkImage(
+                                              "https://www.aaaai.org/Aaaai/media/MediaLibraryRedesign/Tools%20for%20the%20Public/Conditions%20Library/Library%20-%20Asthma/skd238387sdc-mother-daugh-inhaler-cropped.jpg") as ImageProvider ,
+                                        ),
                                       ),
                                     ),
                                     Positioned(
                                       bottom: 0,
                                       left: -15,
                                       child: RawMaterialButton(
-                                        onPressed: () {},
+                                        onPressed: () {_getImage;},
                                         elevation: 5.0,
                                         fillColor: Color(0xFFF5F6F9),
                                         child: Icon(Icons.camera_alt_outlined,
@@ -92,7 +116,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {FirebaseAuth.instance.signOut();},
                                 child: Column(
                                   children: const <Widget>[
                                     Text("Log out"),
