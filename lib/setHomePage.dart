@@ -1,6 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:respi_track/utils.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
@@ -9,7 +12,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'custom_icons_icons.dart';
 import 'pdfMobile.dart';
 import 'pdf_api.dart';
-
+import 'setStatisticsPage.dart';
+import 'variables.dart' as globals;
 
 
 String parse (String s){
@@ -34,7 +38,6 @@ class HomePageState extends State<HomePage>
   late TabController _tabController;
 
 
-
   @override
   void initState() {
     _tabController = new TabController(length: 2, vsync: this);
@@ -57,40 +60,13 @@ class HomePageState extends State<HomePage>
                 return DefaultTabController(
                   length: 2,
                   child: Scaffold(
-                    floatingActionButton: FloatingActionButton(
-                      tooltip: 'Send report to doctor',
-                      onPressed: () {
-                        String childName = snapshot.data?.docs[3]['Name'] ?? '';
-                        String birthday = snapshot.data?.docs[3]['Date of Birth'] ?? '';
-                        String IDnumber = snapshot.data?.docs[3]['ID number'] ?? '';
-                        String routineMed = snapshot.data?.docs[1]['medicine name'] ?? '';
-                        String prescriptedDose = snapshot.data?.docs[1]['Prescripted Dose'] ?? '';
-
-                        String symptomsList = "";
-                        int i = 1;
-                        if (snap.data?.docs != null){
-                          for ( var doc in snap.data!.docs){
-                            String parsedDate = parse( doc['date'].toDate().toString());
-                            symptomsList = symptomsList + i.toString() +'. '+ parsedDate + "  -";
-                            symptomsList = "$symptomsList\n";
-                            symptomsList = symptomsList + doc['symptoms'] + "." ;
-                            symptomsList = "$symptomsList\n";
-                            symptomsList = symptomsList + "Additional information: " +doc['info'] + ".\n";
-                           // symptomsList = "$symptomsList\n";
-                            i++;
-                          }//symptomsList = symptomsList + doc['date'].toString();
-                        }
-                        PdfApi.createPDF(childName,birthday,IDnumber,routineMed,prescriptedDose, symptomsList);},
-                      backgroundColor: Colors.blue,
-                      child: const Icon(Icons.send),
-                    ),
 
                     body: NestedScrollView(
                       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                         return <Widget>[
                           SliverAppBar(
                             bottom: TabBar(
-                              indicatorColor: Colors.red,
+                              indicatorColor: Colors.blue,
                               unselectedLabelColor: Color(0xFFE0A1A1),
                               tabs: <Widget>[
                                 Tab(icon: Icon(CustomIcons.inhalator__1_,size:20, color: Colors.white)),
@@ -98,12 +74,13 @@ class HomePageState extends State<HomePage>
                               ],
                             ),
                             expandedHeight: 200.0,
-                            backgroundColor: Colors.blue,
+                            backgroundColor: Color(0xFFE3F2FD),
                             flexibleSpace: const FlexibleSpaceBar(
                               title: Text(
                                   'RespiTrack',
                                   style: TextStyle(
                                     fontSize: 19,
+                                    color: Color(0xFF1A237E),
                                   )
                               ),
                               titlePadding: EdgeInsets.only(bottom: 48.0, left: 12.0),
@@ -120,13 +97,15 @@ class HomePageState extends State<HomePage>
                         ];
                       },
                       body: Container(
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topRight,
-                              end: Alignment.bottomLeft,
-                              colors: [Colors.blue, Colors.red,],
-                            )
-                        ),
+                        decoration: BoxDecoration( gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              Color(0xFFE3F2FD),
+                              Color(0xFF2196F3),
+                              Color(0xFF1A237E),
+                            ]
+                        )),
                         child: TabBarView(
                           children: [
                             // FIRST TabBarView
@@ -236,7 +215,8 @@ class HomePageState extends State<HomePage>
                                         ),
                                         SizedBox(
                                           height: 5,
-                                        ), //space
+                                        ),
+
                                         SizedBox(
                                           height: 140.0,
                                           child: Card(
@@ -489,5 +469,7 @@ class HomePageState extends State<HomePage>
 
   }
 
+  Widget buildImage(Uint8List bytes) => bytes != null ?
+  Image.memory(bytes) : Container();
 
 }

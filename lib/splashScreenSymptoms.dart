@@ -26,10 +26,8 @@ class StartState extends State<SplashScreen> {
   }
 
   route() {
-    Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (context) => SymptomsPage()
-    )
-    );
+    int count = 0;
+    Navigator.of(context).popUntil((_) => count++ >= 2);
   }
 
   initScreen(BuildContext context) {
@@ -63,7 +61,7 @@ class StartState extends State<SplashScreen> {
             ),
             SizedBox(height: 10),
             Text(
-              "Hope you feel well!",
+              "Hope your child feels better!",
               style: TextStyle(
                   fontSize: 25.0,
                   fontWeight: FontWeight.w400,

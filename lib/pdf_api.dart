@@ -18,11 +18,13 @@ String parse (){
   return returned;
 }
 
+
+
 class PdfApi{
 
-   static Future<void> createPDF(String childName,String birthday,String IDnumber,String routineMed, String prescriptedDose, String symptoms) async {
+   static Future<void> createPDF(String childName,String birthday,String IDnumber,String routineMed, String prescriptedDose, String symptoms,Uint8List bytes1,
+       Uint8List bytes2,Uint8List bytes3,Uint8List bytes4,Uint8List bytes5) async {
    final pdf = Document();
-
    pdf.addPage(MultiPage(
        build: (context) => <Widget>[
          Container(
@@ -43,14 +45,31 @@ class PdfApi{
          Bullet(text: "Routine medicine: " + routineMed,bulletColor: PdfColors.blue,style: TextStyle( fontSize: 15)),
          Bullet(text: "Prescripted Dose: " + prescriptedDose,bulletColor: PdfColors.blue,style: TextStyle( fontSize: 15)),
          SizedBox(height: 20),
+         Text('General statistics:', style: TextStyle(fontSize: 15, color: PdfColors.blue800,decoration: TextDecoration.underline)),
+         Image(MemoryImage(bytes1)),
+         SizedBox(height: 20),
+         Image(MemoryImage(bytes2)),
+         SizedBox(height: 20),
+         Image(MemoryImage(bytes3)),
+         SizedBox(height: 20),
+         Image(MemoryImage(bytes4)),
+         SizedBox(height: 10),
+         Image(MemoryImage(bytes5),width: 400, height: 400),
+         SizedBox(height: 30),
          Text('Symptoms history:', style: TextStyle(fontSize: 15, color: PdfColors.blue800,decoration: TextDecoration.underline)),
          Text(symptoms),
+        // Text('Acute inhaler statistics:', style: TextStyle(fontSize: 15, color: PdfColors.blue800,decoration: TextDecoration.underline)),
+
+
+
+
 
    ],
      footer: (context) {
          final text  = 'Page ${context.pageNumber} of ${context.pagesCount}';
 
          return Container(
+
            //margin: EdgeInsets.only(top: 1*PdfPageFormat.cm),
            alignment: Alignment.centerRight,
            child: Text(text, style: TextStyle(color: PdfColors.black))

@@ -33,9 +33,8 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _pushLogin() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_){
-      return LoginPage();
-    }));
+    int count = 0;
+    Navigator.of(context).popUntil((_) => count++ == 1);
   }
 
   @override
