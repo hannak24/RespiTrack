@@ -1,5 +1,6 @@
 import 'dart:typed_data';
-
+import 'package:csv/csv.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
@@ -14,7 +15,8 @@ import 'pdfMobile.dart';
 import 'pdf_api.dart';
 import 'setStatisticsPage.dart';
 import 'variables.dart' as globals;
-
+import 'package:permission_handler/permission_handler.dart';
+import 'package:external_path/external_path.dart';
 
 String parse (String s){
   String returned="";
@@ -43,11 +45,64 @@ class HomePageState extends State<HomePage>
     _tabController = new TabController(length: 2, vsync: this);
     super.initState();
   }
+  final CollectionReference _routine = FirebaseFirestore.instance.collection('Routine');
 
   @override
   Widget build(BuildContext context) {
   IconData warning = IconData(0xe6cb, fontFamily: 'MaterialIcons');
   return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        tooltip: 'Send report to doctor',
+        onPressed: () async {
+          /*
+          await _routine.add({ "dateTime": "10:05 02.01.2023" , "inhalerNum": 1});
+          await _routine.add({ "dateTime": "20:10 02.01.2023" , "inhalerNum": 1});
+          await _routine.add({ "dateTime": "10:08 03.01.2023" , "inhalerNum": 1});
+          await _routine.add({ "dateTime": "20:01 03.01.2023" , "inhalerNum": 1});
+          await _routine.add({ "dateTime": "10:15 04.01.2023" , "inhalerNum": 1});
+          await _routine.add({ "dateTime": "23:35 04.01.2023" , "inhalerNum": 1});
+          await _routine.add({ "dateTime": "10:17 05.01.2023" , "inhalerNum": 1});
+          await _routine.add({ "dateTime": "20:01 05.01.2023" , "inhalerNum": 1});
+          await _routine.add({ "dateTime": "20:05 06.01.2023" , "inhalerNum": 1});
+          await _routine.add({ "dateTime": "10:05 07.01.2023" , "inhalerNum": 1});
+          await _routine.add({ "dateTime": "20:05 07.01.2023" , "inhalerNum": 1});*/
+
+          Map<Permission, PermissionStatus> statuses = await [
+            Permission.storage,
+          ].request();
+
+          List<List<String>> data = [
+          ['Subject', 'Start Day', 'Start Time', 'End Date', 'End Time', 'All day event','Description','Location'],
+          ['bla','bla','bla','bla','bla','bla','bla','bla',],
+          ];
+          String csvData = ListToCsvConverter().convert(data);
+          //String directory = (await getApplicationSupportDirectory()).path;
+
+          String dir = await ExternalPath.getExternalStoragePublicDirectory(
+              ExternalPath.DIRECTORY_DOWNLOADS);
+         // final path = "$directory/csv-alert-data.csv";
+          //File file = File(path);
+          // await file.writeAsString(csvData);
+          String file = "$dir";
+          File f = File(file + "/filename.csv");
+
+          f.writeAsString(csvData);
+          //f.openRead();
+          print("file saved");
+          print(csvData.length);
+         /* Navigator.of(context).push(
+          MaterialPageRoute(
+          builder: (_) {
+          return MyCSVDisplayScreen(csvFilePath: filePath);
+          },
+          ),
+          );*/
+
+        },
+        backgroundColor: Colors.blue,
+        child: const Icon(Icons.download),
+      ),
+
     body: Center(
       child: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('Settings').snapshots(),

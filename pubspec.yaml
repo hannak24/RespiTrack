@@ -56,6 +56,10 @@ dependencies:
   pdf: ^3.8.4
   google_fonts:
   firebase_auth: ^4.2.5
+  csv: ^5.0.0
+  file_picker: ^4.1.4
+  permission_handler: ^10.2.0
+  external_path: ^1.0.3
 
 
 
