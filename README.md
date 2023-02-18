@@ -8,13 +8,13 @@ Project members: Eden Ayaso, Hanna Keller and Taya Harshuk.
 
 
 ### Git directories
-Lib - the application code. It contains the coming directories:
-  Login- 
-  Alarm- 
-  Symptoms-
-  MedicalPDF-
-  *** Hanna's screens - how she would like to divied into directories
-UnitTest - 
+- Lib - the application code. It contains the coming directories:
+   - Login- 
+   - Alarm- 
+  - Symptoms-
+   - MedicalPDF-
+   - *** Hanna's screens - how she would like to divied into directories
+- UnitTest - 
 
 ### How to install and run the project
 
