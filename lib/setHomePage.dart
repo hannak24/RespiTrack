@@ -66,7 +66,7 @@ class HomePageState extends State<HomePage>
                         return <Widget>[
                           SliverAppBar(
                             bottom: TabBar(
-                              indicatorColor: Colors.blue,
+                              indicatorColor: Color(0xFF1A237E),
                               unselectedLabelColor: Color(0xFFE0A1A1),
                               tabs: <Widget>[
                                 Tab(icon: Icon(CustomIcons.inhalator__1_,size:20, color: Colors.white)),
@@ -74,23 +74,32 @@ class HomePageState extends State<HomePage>
                               ],
                             ),
                             expandedHeight: 200.0,
-                            backgroundColor: Color(0xFFE3F2FD),
-                            flexibleSpace: const FlexibleSpaceBar(
+                            //backgroundColor: Color(0xFF2196F3),
+                            backgroundColor: Colors.lightBlue,
+                            flexibleSpace:  FlexibleSpaceBar(
                               title: Text(
                                   'RespiTrack',
                                   style: TextStyle(
                                     fontSize: 19,
-                                    color: Color(0xFF1A237E),
+                                    color: Colors.white,
                                   )
                               ),
                               titlePadding: EdgeInsets.only(bottom: 48.0, left: 12.0),
                               background: Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: 50.0, left: 6.0, top: 2.0),
-                                  child: const Image(
-                                    image: NetworkImage(
-                                        "https://cdn.pixabay.com/photo/2019/04/27/01/46/asthma-4159147_1280.png"),
+                                  padding:  EdgeInsets.only(
+                                      bottom: 50.0, left: 40.0, top: 2.0),
+                                      child:CircleAvatar(
+                                          backgroundColor: Colors.white54,
+                                          radius: 200,
+                                            child: Image.asset(
+                                                'images/final_logo.png',
+                                                  scale: 0.1
                                   )
+                                      ),
+                                  // const Image(
+                                  //   image: NetworkImage(
+                                  //       "https://cdn.pixabay.com/photo/2019/04/27/01/46/asthma-4159147_1280.png"),
+                                  // )
                               ),
                             ),
                           ),
@@ -98,11 +107,11 @@ class HomePageState extends State<HomePage>
                       },
                       body: Container(
                         decoration: BoxDecoration( gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
                             colors: [
-                              Color(0xFFE3F2FD),
-                              Color(0xFF2196F3),
+                              //Color(0xFFE3F2FD),
+                              Colors.lightBlue,
                               Color(0xFF1A237E),
                             ]
                         )),

@@ -54,7 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Tab(icon: Icon(CustomIcons.stethoscope),text: "Doctor"),
                     ],
                   ),
-                  title: const Text("Pippi's profile"),
+                  title: const Text("Alon's profile"),
                 ),
                 body: TabBarView(
                   children: [
@@ -78,7 +78,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                         child: CircleAvatar(
                                           radius: 100,
                                           backgroundImage: (image!= null)?FileImage(image!): NetworkImage(
-                                              "https://www.aaaai.org/Aaaai/media/MediaLibraryRedesign/Tools%20for%20the%20Public/Conditions%20Library/Library%20-%20Asthma/skd238387sdc-mother-daugh-inhaler-cropped.jpg") as ImageProvider ,
+                                              //"https://www.aaaai.org/Aaaai/media/MediaLibraryRedesign/Tools%20for%20the%20Public/Conditions%20Library/Library%20-%20Asthma/skd238387sdc-mother-daugh-inhaler-cropped.jpg") as ImageProvider ,
+                                            "https://img.freepik.com/free-photo/portrait-smiling-little-kid-standing_171337-7107.jpg?w=900&t=st=1674519886~exp=1674520486~hmac=dd5daadce50841abb6e606bd21a96036f6332ed4e5f8b77e226743ecb21d9ec7") as ImageProvider ,
                                         ),
                                       ),
                                     ),
