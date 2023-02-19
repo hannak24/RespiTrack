@@ -37,7 +37,7 @@ class _AvgNumOfPushesState extends State<AvgNumOfPushes> {
               }
 
               pushes.sort((a,b) {return a.compareTo(b);});
-              for(int i=0; i< pushes.length - 1; i++){
+              for(int i=0; i< pushes.length - 2; i++){
                 var count = 1;
                 var inTheLoop = 0;
                 while((pushes[i+1].difference(pushes[i]).inMinutes < 10) && i < pushes.length - 1){

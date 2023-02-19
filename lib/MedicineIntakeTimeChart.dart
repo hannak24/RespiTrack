@@ -254,8 +254,8 @@ class _MedicineIntakeTimeChartDBState extends State<MedicineIntakeTimeChartDB> {
                             eveningAlarm.add(const Duration(days: 1));
                       }
 
-                      for(int j = pushes.length - 1; j > -1; j--){
-                        finalData.add(data[j]);
+                      for(int j = data.length - 1; j > -1; j--){
+                          finalData.add(data[j]);
                       }
                     }
                     return Padding(
