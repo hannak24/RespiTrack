@@ -119,6 +119,20 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                           isMoriningMedicineTaken = "missed";
                         }
 
+                        var colorMorning = Colors.cyan.withOpacity(0.3); //future clock color
+                        var colorEvening = Colors.cyan.withOpacity(0.3); //future clock color
+
+                        if(isMoriningMedicineTaken == "taken"){
+                          colorMorning = Colors.lightGreen.withOpacity(0.3);
+                        }
+                        else if(isMoriningMedicineTaken == "missed"){
+                          colorMorning = Colors.redAccent.withOpacity(0.7);
+                        }
+
+                        if(isEveningMedicineTaken == "taken"){
+                          colorEvening = Colors.lightGreen.withOpacity(0.3);
+                        }
+
 
                         widget = Card(
                             shape: RoundedRectangleBorder(
@@ -173,13 +187,9 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                                         height: 41.0,
                                         width: 150.0,
                                         decoration: BoxDecoration(
-                                            color: Colors.lightGreen
-                                                .withOpacity(
-                                                0.3),
+                                            color:  colorMorning,
                                             border: Border.all(
-                                              color: Colors.lightGreen
-                                                  .withOpacity(
-                                                  0.3),
+                                              color: colorMorning,
                                             ),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(14))
@@ -208,10 +218,9 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                                         height: 41.0,
                                         width: 150.0,
                                         decoration: BoxDecoration(
-                                            color: Colors.cyan.withOpacity(0.3),
+                                            color: colorEvening,
                                             border: Border.all(
-                                              color: Colors.cyan.withOpacity(
-                                                  0.3),
+                                              color: colorEvening,
                                             ),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(14))
