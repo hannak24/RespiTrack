@@ -110,16 +110,6 @@ class _RespiTrackState extends State<RespiTrack> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   IconButton(
-                    icon: const Icon(_RespiTrackState.home_outlined),
-                    onPressed: () {_pushHome();},
-                    tooltip: "Back to home page",
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  IconButton(
                     icon: const Icon(_RespiTrackState.bar_chart),
                     onPressed: () {_pushMedicineStatistics();},
                     tooltip: "Medicines statistics",
