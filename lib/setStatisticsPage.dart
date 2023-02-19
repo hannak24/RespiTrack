@@ -457,49 +457,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                                   width: size.width,
                                                 ),
 
-                                                Container(
-                                                    height: 70.0,
-                                                    width: size.width,
-                                                    //color: Color(0xFF010280),
-                                                    decoration: BoxDecoration(
-                                                      gradient: LinearGradient(
-                                                          colors: [
-                                                            const Color(0xFF010280),
-                                                            const Color(0xFF135CC5),
-                                                            const Color(0xFF010280),
-                                                          ],
-                                                          begin: const FractionalOffset(0.0, 0.0),
-                                                          end: const FractionalOffset(1.0, 0.0),
-                                                          stops: [0.0, 0.5, 0.8],
-                                                          tileMode: TileMode.mirror),
-                                                    ),
-                                                    child: Column(
-                                                      children: [
-                                                        Padding(
-                                                          padding: EdgeInsets.only(top: 8.0),
-                                                          child: Text(
-                                                            "Doses remaining ",
-                                                            style: TextStyle(
-                                                                fontSize: 15,
-                                                                color: Colors.white),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding: EdgeInsets.only(
-                                                              left: 50.0, right: 50.0),
-                                                          child: Center(
-                                                              child: Column(children: [
-                                                                Text(
-                                                                  "146",
-                                                                  style: TextStyle(
-                                                                      fontSize: 20,
-                                                                      color: Colors.white,
-                                                                      fontWeight: FontWeight.bold),
-                                                                )
-                                                              ])),
-                                                        )
-                                                      ],
-                                                    )), //doses remaining
+                                                dosesRemainingAcute(size.width), //doses remaining
 
                                                 SizedBox(
                                                   height: 5.0,
@@ -532,38 +490,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                                 ),
                                                 //space
 
-                                                SizedBox(
-                                                  height: 87.0,
-                                                  width: size.width,
-                                                  child: Card(
-                                                      elevation: 3.5,
-                                                      color: Colors.white,
-                                                      child: Column(children: [
-                                                        Padding(
-                                                          padding: EdgeInsets.only(top: 5.0),
-                                                          child: Text(
-                                                            "Average number of squeezes per usage: ",
-                                                            style: TextStyle(
-                                                                fontSize: 15,
-                                                                color: Colors.black),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding: EdgeInsets.only(
-                                                              left: 70.0, right: 70.0, top: 10),
-                                                          child: Center(
-                                                              child: Column(children: [
-                                                                Text(
-                                                                  "1.4",
-                                                                  style: TextStyle(
-                                                                      fontSize: 20,
-                                                                      color: Colors.black,
-                                                                      fontWeight: FontWeight.bold),
-                                                                )
-                                                              ])),
-                                                        ),
-                                                      ])),
-                                                ), //average number of squeezes per use
+                                                AvgNumOfPushesAcute(size.width), //average number of squeezes per use
                                               ],
                                             ),
                                           ),
