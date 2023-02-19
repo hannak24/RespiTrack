@@ -159,8 +159,8 @@ List<charts.Series<medicineTaken, String>> createSampleData() {
 
 
 class GroupedStackedBarChartDB extends StatefulWidget {
-  final bool justRoutine;
-  const GroupedStackedBarChartDB(this.justRoutine);
+  final String whichInhaler;
+  const GroupedStackedBarChartDB(this.whichInhaler);
 
   @override
   State<GroupedStackedBarChartDB> createState() => _GroupedStackedBarChartDBState();
@@ -172,90 +172,125 @@ class _GroupedStackedBarChartDBState extends State<GroupedStackedBarChartDB> {
     return Scaffold(
         body: StreamBuilder<void>(
         stream: FirebaseFirestore.instance.collection('Routine').orderBy('dateTime').snapshots(),
-        builder: (BuildContext context, AsyncSnapshot snapshot1) {
-          var seriesList = createSampleData();
-          var months = List.filled(13, 0, growable: false);
-          final lightBlue = charts.MaterialPalette.blue.makeShades(2);
-          final blue = charts.MaterialPalette.indigo.makeShades(22);
-          if (snapshot1.hasData) {
-            for (int index = 0; index < snapshot1.data?.docs.length; index++) {
-                DocumentSnapshot documentSnapshot = snapshot1.data?.docs[index];
-                var initialTime = documentSnapshot["dateTime"].replaceAll(
-                ".", "-");
-                var temp = initialTime.split(" ");
-                var temp2 = temp[1].split("-");
-                var fixedDate = temp2[2] + "-" + temp2[1] + "-" + temp2[0];
-                var fixedTime = fixedDate + " " + temp[0] + "Z";
-                DateTime pushTime = DateTime.parse(fixedTime);
-                months[pushTime.month] = months[pushTime.month] + 1;
+         builder: (BuildContext context, AsyncSnapshot snapshot1) {
+        return StreamBuilder(
+            stream: FirebaseFirestore.instance.collection('Acute').orderBy('dateTime').snapshots(),
+            builder: (BuildContext context, AsyncSnapshot snapshot2) {
+              var seriesList = createSampleData();
+              var monthsRoutine = List.filled(13, 0, growable: false);
+              var monthsAcute = List.filled(13, 0, growable: false);
+              final lightBlue = charts.MaterialPalette.blue.makeShades(2);
+              final blue = charts.MaterialPalette.indigo.makeShades(22);
+              if (snapshot1.hasData && snapshot2.hasData) {
+                for (int index = 0; index < snapshot1.data?.docs.length; index++) {
+                    DocumentSnapshot documentSnapshot = snapshot1.data?.docs[index];
+                    var initialTime = documentSnapshot["dateTime"].replaceAll(
+                    ".", "-");
+                    var temp = initialTime.split(" ");
+                    var temp2 = temp[1].split("-");
+                    var fixedDate = temp2[2] + "-" + temp2[1] + "-" + temp2[0];
+                    var fixedTime = fixedDate + " " + temp[0] + "Z";
+                    DateTime pushTime = DateTime.parse(fixedTime);
+                    monthsRoutine[pushTime.month] = monthsRoutine[pushTime.month] + 1;
+                    }
+
+                for (int index = 0; index < snapshot2.data?.docs.length; index++) {
+                  DocumentSnapshot documentSnapshot = snapshot2.data?.docs[index];
+                  var initialTime = documentSnapshot["dateTime"].replaceAll(
+                      ".", "-");
+                  var temp = initialTime.split(" ");
+                  var temp2 = temp[1].split("-");
+                  var fixedDate = temp2[2] + "-" + temp2[1] + "-" + temp2[0];
+                  var fixedTime = fixedDate + " " + temp[0] + "Z";
+                  DateTime pushTime = DateTime.parse(fixedTime);
+                  monthsAcute[pushTime.month] = monthsAcute[pushTime.month] + 1;
                 }
 
+                  final routine_Inhalor = [
+                    new medicineTaken('1', monthsRoutine[1]),
+                    new medicineTaken('2', monthsRoutine[2]),
+                    new medicineTaken('3', monthsRoutine[3]),
+                    new medicineTaken('4', monthsRoutine[4]),
+                    new medicineTaken('5', monthsRoutine[5]),
+                    new medicineTaken('6', monthsRoutine[6]),
+                    new medicineTaken('7', monthsRoutine[7]),
+                    new medicineTaken('8', monthsRoutine[8]),
+                    new medicineTaken('9', monthsRoutine[9]),
+                    new medicineTaken('10', monthsRoutine[10]),
+                    new medicineTaken('11', monthsRoutine[11]),
+                    new medicineTaken('12', monthsRoutine[12]),
+                  ];
 
-              final routine_Inhalor = [
-                new medicineTaken('1', months[1]),
-                new medicineTaken('2', months[2]),
-                new medicineTaken('3', months[3]),
-                new medicineTaken('4', months[4]),
-                new medicineTaken('5', months[5]),
-                new medicineTaken('6', months[6]),
-                new medicineTaken('7', months[7]),
-                new medicineTaken('8', months[8]),
-                new medicineTaken('9', months[9]),
-                new medicineTaken('10', months[10]),
-                new medicineTaken('11', months[11]),
-                new medicineTaken('12', months[12]),
-              ];
+                  final acute_Inhalor = [
+                    new medicineTaken('1', monthsAcute[1]),
+                    new medicineTaken('2', monthsAcute[2]),
+                    new medicineTaken('3', monthsAcute[3]),
+                    new medicineTaken('4', monthsAcute[4]),
+                    new medicineTaken('5', monthsAcute[5]),
+                    new medicineTaken('6', monthsAcute[6]),
+                    new medicineTaken('7', monthsAcute[7]),
+                    new medicineTaken('8', monthsAcute[8]),
+                    new medicineTaken('9', monthsAcute[9]),
+                    new medicineTaken('10', monthsAcute[10]),
+                    new medicineTaken('11', monthsAcute[11]),
+                    new medicineTaken('12', monthsAcute[12]),
+                  ];
 
-              final acute_Inhalor = [
-                new medicineTaken('12', 2),
-                new medicineTaken('10', 8),
-                new medicineTaken('11', 4),
-              ];
+                  var routine_series = new charts.Series<medicineTaken, String>(
+                    id: 'routine Inhalor',
+                    seriesCategory: 'routine',
+                    domainFn: (medicineTaken count, _) => count.month,
+                    measureFn: (medicineTaken count, _) => count.count,
+                    data: routine_Inhalor,
+                    colorFn: (medicineTaken count, _) => lightBlue[1],
+                  );
 
-              var routine_series = new charts.Series<medicineTaken, String>(
-                id: 'routine Inhalor',
-                seriesCategory: 'routine',
-                domainFn: (medicineTaken count, _) => count.month,
-                measureFn: (medicineTaken count, _) => count.count,
-                data: routine_Inhalor,
-                colorFn: (medicineTaken count, _) => lightBlue[1],
-              );
-
-              var acute_series = new charts.Series<medicineTaken, String>(
-                id: 'acute Inhalor',
-                seriesCategory: 'acute',
-                domainFn: (medicineTaken sales, _) => sales.month,
-                measureFn: (medicineTaken sales, _) => sales.count,
-                data: acute_Inhalor,
-                colorFn: (medicineTaken count, _) => blue[1],
-              );
+                  var acute_series = new charts.Series<medicineTaken, String>(
+                    id: 'acute Inhalor',
+                    seriesCategory: 'acute',
+                    domainFn: (medicineTaken sales, _) => sales.month,
+                    measureFn: (medicineTaken sales, _) => sales.count,
+                    data: acute_Inhalor,
+                    colorFn: (medicineTaken count, _) => blue[1],
+                  );
 
 
-              seriesList = [];
-              seriesList.add(routine_series);
-              if (widget.justRoutine == false) {
-                seriesList.add(acute_series);
-              }
-            }
+                  seriesList = [];
+                  if (widget.whichInhaler == "both") {
+                    seriesList.add(routine_series);
+                    seriesList.add(acute_series);
+                  }
+                  if(widget.whichInhaler == "routine"){
+                    seriesList.add(routine_series);
+                  }
+                  if(widget.whichInhaler == "acute"){
+                    seriesList.add(acute_series);
+                  }
+                }
 
-            return new charts.BarChart(
-              seriesList,
-              animate: true,
-              barGroupingType: charts.BarGroupingType.groupedStacked,
-              behaviors: [
-                new charts.ChartTitle('Inhaler uses per month',
-                    behaviorPosition: charts.BehaviorPosition.top,
-                    titleOutsideJustification: charts.OutsideJustification
-                        .middleDrawArea,
-                    innerPadding: 18),
-                new charts.SeriesLegend(
-                  position: charts.BehaviorPosition.bottom,),
-              ],
-            );
-          }
-      )
-    );
-  }
-}
+                return new charts.BarChart(
+                  seriesList,
+                  animate: true,
+                  barGroupingType: charts.BarGroupingType.groupedStacked,
+                  behaviors: [
+                    new charts.ChartTitle('Inhaler uses per month',
+                        behaviorPosition: charts.BehaviorPosition.top,
+                        titleOutsideJustification: charts.OutsideJustification
+                            .middleDrawArea,
+                        innerPadding: 18),
+                    new charts.SeriesLegend(
+                      position: charts.BehaviorPosition.bottom,),
+                  ],
+                );
+              });
+         }
+          )
+        );
+      }
+    }
+
+
+
+
 
 
