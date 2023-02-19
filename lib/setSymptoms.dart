@@ -29,6 +29,8 @@ class _SymptomsPageState extends State<SymptomsPage> {
   final TextEditingController _titleController = TextEditingController();
   final CollectionReference _symptoms = FirebaseFirestore.instance.collection('Symptoms');
   DateTime dateTime = DateTime.now();
+  String dateTimeMin = DateTime.now().minute.toString();
+
 
   void _pushSplashScreen(){
     Navigator.of(context).push(MaterialPageRoute(builder: (_){
@@ -87,7 +89,14 @@ class _SymptomsPageState extends State<SymptomsPage> {
                   final updatedDateTime = DateTime(newDate.year,newDate.month,newDate.day,newTime.hour, newTime.minute,);
                   setState(() {
                   dateTime = updatedDateTime;
-                  });
+                  if(updatedDateTime.minute < 10){
+                  dateTimeMin = '0'+ updatedDateTime.minute.toString();
+                  }
+                  else{
+                    dateTimeMin = updatedDateTime.minute.toString();
+                  }
+                  }
+                  );
                   },
                 child: Row(
                   children: [
@@ -98,7 +107,7 @@ class _SymptomsPageState extends State<SymptomsPage> {
                       height: 50, margin: EdgeInsets.all(5),
                         child: Row(
                           children: [
-                            Text('${dateTime.day}/${dateTime.month}/${dateTime.year} - ${dateTime.hour+2}:${dateTime.minute}', style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),),
+                            Text('${dateTime.day}/${dateTime.month}/${dateTime.year} - ${dateTime.hour+2}:${dateTimeMin}', style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),),
 
                           ],
                         ),

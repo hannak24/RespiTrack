@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:respi_track/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'splashScreenRegister.dart';
 
 class RegisterPage extends StatefulWidget {
 
@@ -21,6 +22,13 @@ class _RegisterPageState extends State<RegisterPage> {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _emailController.text.trim(), password: _passwordController.text.trim());
     }
+    _pushSplashScreen();
+  }
+
+  void _pushSplashScreen(){
+    Navigator.of(context).push(MaterialPageRoute(builder: (_){
+      return  SplashScreen();
+    }));
 
   }
 
