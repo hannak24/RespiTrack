@@ -156,6 +156,8 @@ List<charts.Series<medicineTaken, String>> createSampleData() {
   ];
 }
 
+
+
 class GroupedStackedBarChartDB extends StatefulWidget {
   final bool justRoutine;
   const GroupedStackedBarChartDB(this.justRoutine);
@@ -255,3 +257,5 @@ class _GroupedStackedBarChartDBState extends State<GroupedStackedBarChartDB> {
     );
   }
 }
+
+
