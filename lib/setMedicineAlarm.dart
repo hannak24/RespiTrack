@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'clockView.dart';
-import 'data.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 //import 'package:respi_track/constants/theme_data.dart';
 
@@ -19,13 +16,12 @@ class AlarmPage extends StatefulWidget {
 class _AlarmPageState extends State<AlarmPage> {
 
   DateTime? _alarmTime;
-  late String _alarmTimeString = DateFormat('HH:mm').format(DateTime.now());
-  bool _isRepeatSelected = false;
+  late String _alarmTimeString = DateFormat('HH:mm').format(DateTime.now().add(Duration(hours: 2)));
   final CollectionReference _alarms = FirebaseFirestore.instance.collection('alarms');
   final TextEditingController _titleController = TextEditingController();
 
   Future<void> _create([DocumentSnapshot? documentSnapshot]) async{
-  //_alarmTimeString = DateFormat('HH:mm').format(DateTime.now());
+
   await showModalBottomSheet(useRootNavigator: true, context: context, clipBehavior: Clip.antiAlias,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24),),),
     builder: (BuildContext ctx) {
@@ -37,7 +33,7 @@ class _AlarmPageState extends State<AlarmPage> {
                   onPressed: () async {
                     var selectedTime = await showTimePicker(
                       context: context,
-                      initialTime: TimeOfDay.now(),
+                      initialTime: TimeOfDay.fromDateTime(DateTime.now().add(new Duration(hours: 2))),
                     );
                     if (selectedTime != null) {
                       final now = DateTime.now();
@@ -50,18 +46,10 @@ class _AlarmPageState extends State<AlarmPage> {
                   },
                   child: Text(
                     _alarmTimeString,
-                    style: TextStyle(fontSize: 50),
+                    style: TextStyle(fontSize: 60),
                   ),
                 ),
-                ListTile(
-                  title: Text('Repeat'),
-                  trailing: Switch(
-                    onChanged: (value) {
-                        _isRepeatSelected = value;
-                    },
-                    value: _isRepeatSelected,
-                  ),
-                ),
+
                 TextField(
                   controller: _titleController,
                   decoration: const InputDecoration(labelText: 'Title'),
@@ -139,14 +127,14 @@ class _AlarmPageState extends State<AlarmPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+
                             Row(
                               children: [
-                                SizedBox(width: 10),
+                                SizedBox(height: 40),
                                 Icon(Icons.label_important, color: Colors.white),
                                 SizedBox(width: 10),
                                 Text(documentSnapshot['title'], style: TextStyle(color: Colors.white, fontSize: 20),),],
                             ),
-                            Switch(activeColor: Colors.white, value: true, onChanged: (bool value) {},)
                           ],
                         ),
                         Text(documentSnapshot['time'].toString().substring(0,5) , style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w600)),

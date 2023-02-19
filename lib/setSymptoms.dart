@@ -80,7 +80,7 @@ class _SymptomsPageState extends State<SymptomsPage> {
                   if (newDate == null){
                   return;
                   }
-                  TimeOfDay? newTime = await showTimePicker(context: context, initialTime: TimeOfDay(hour: dateTime.hour, minute: dateTime.minute));
+                  TimeOfDay? newTime = await showTimePicker(context: context, initialTime: TimeOfDay(hour: dateTime.hour+2, minute: dateTime.minute));
                   if (newTime == null){
                   return;
                   }
@@ -98,7 +98,7 @@ class _SymptomsPageState extends State<SymptomsPage> {
                       height: 50, margin: EdgeInsets.all(5),
                         child: Row(
                           children: [
-                            Text('${dateTime.day}/${dateTime.month}/${dateTime.year} - ${dateTime.hour}:${dateTime.minute}', style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),),
+                            Text('${dateTime.day}/${dateTime.month}/${dateTime.year} - ${dateTime.hour+2}:${dateTime.minute}', style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),),
 
                           ],
                         ),
