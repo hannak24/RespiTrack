@@ -54,18 +54,6 @@ class HomePageState extends State<HomePage>
       floatingActionButton: FloatingActionButton(
         tooltip: 'Send report to doctor',
         onPressed: () async {
-          /*
-          await _routine.add({ "dateTime": "10:05 02.01.2023" , "inhalerNum": 1});
-          await _routine.add({ "dateTime": "20:10 02.01.2023" , "inhalerNum": 1});
-          await _routine.add({ "dateTime": "10:08 03.01.2023" , "inhalerNum": 1});
-          await _routine.add({ "dateTime": "20:01 03.01.2023" , "inhalerNum": 1});
-          await _routine.add({ "dateTime": "10:15 04.01.2023" , "inhalerNum": 1});
-          await _routine.add({ "dateTime": "23:35 04.01.2023" , "inhalerNum": 1});
-          await _routine.add({ "dateTime": "10:17 05.01.2023" , "inhalerNum": 1});
-          await _routine.add({ "dateTime": "20:01 05.01.2023" , "inhalerNum": 1});
-          await _routine.add({ "dateTime": "20:05 06.01.2023" , "inhalerNum": 1});
-          await _routine.add({ "dateTime": "10:05 07.01.2023" , "inhalerNum": 1});
-          await _routine.add({ "dateTime": "20:05 07.01.2023" , "inhalerNum": 1});*/
 
           Map<Permission, PermissionStatus> statuses = await [
             Permission.storage,
@@ -151,10 +139,6 @@ class HomePageState extends State<HomePage>
                                                   scale: 0.1
                                   )
                                       ),
-                                  // const Image(
-                                  //   image: NetworkImage(
-                                  //       "https://cdn.pixabay.com/photo/2019/04/27/01/46/asthma-4159147_1280.png"),
-                                  // )
                               ),
                             ),
                           ),
