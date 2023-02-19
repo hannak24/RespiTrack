@@ -209,7 +209,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                                       key2 = key;
                                                       return Card(
                                                         elevation: 3.5,
-                                                        child: GroupedStackedBarChartDB(false),
+                                                        child: GroupedStackedBarChartDB("both"),
                                                         shape: RoundedRectangleBorder(
                                                           side: BorderSide(
                                                             color: Theme.of(context)
@@ -343,7 +343,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                                   width: size.width,
                                                   child: Card(
                                                     elevation: 3.5,
-                                                    child: GroupedStackedBarChartDB(true),
+                                                    child: GroupedStackedBarChartDB("routine"),
                                                     shape: RoundedRectangleBorder(
                                                       side: BorderSide(
                                                         color:
@@ -470,9 +470,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                                   width: size.width,
                                                   child: Card(
                                                     elevation: 3.5,
-                                                    child: GroupedStackedBarChart(
-                                                        GroupedStackedBarChart
-                                                            .createSampleDataAcute()),
+                                                    child: GroupedStackedBarChartDB("acute"),
                                                     shape: RoundedRectangleBorder(
                                                       side: BorderSide(
                                                         color:
