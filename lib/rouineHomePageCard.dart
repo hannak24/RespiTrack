@@ -107,6 +107,7 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                           return a.compareTo(b);
                         });
 
+
                         DateTime current_date = DateTime.now();
                         var todayMorningAlarm = DateTime(
                             current_date.year, current_date.month,
@@ -119,9 +120,12 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
 
                         String isMoriningMedicineTaken = "future";
                         String isEveningMedicineTaken = "future";
-                        print("pushes.length - 2");
-                        print(pushes.length - 2);
-                        var previousPush = pushes[pushes.length - 2];
+                        var previousPush = pushes.last;
+                        if(pushes.length > 1) {
+                          previousPush = pushes[pushes.length - 2];
+                        }
+
+
 
                         if (isSameDate(pushes.last, todayEveningAlarm)) {
                           if ((pushes.last).isAfter(todayEveningAlarm) ||
@@ -134,12 +138,19 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                                         todayMorningAlarm)))) {
                               isMoriningMedicineTaken = "taken";
                             }
+                            if (!isSameDate(previousPush, todayMorningAlarm)) {
+                              isMoriningMedicineTaken = "missed";
+                            }
+                          }
+                          if (pushes.last.isBefore(todayEveningAlarm) &&
+                              ((pushes.last.isAfter(todayMorningAlarm)) ||
+                                  (pushes.last.isAtSameMomentAs(
+                                      todayMorningAlarm)))) {
+                            isMoriningMedicineTaken = "taken";
                           }
                         }
 
-                        if (!isSameDate(previousPush, todayMorningAlarm)) {
-                          isMoriningMedicineTaken = "missed";
-                        }
+
 
                         var colorMorning = Colors.cyan.withOpacity(0.3); //future clock color
                         var colorEvening = Colors.cyan.withOpacity(0.3); //future clock color
