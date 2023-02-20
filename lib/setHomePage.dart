@@ -54,9 +54,12 @@ class HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
   IconData warning = IconData(0xe6cb, fontFamily: 'MaterialIcons');
+  print("calling the scroll build");
+
+
+
   return Scaffold(
       floatingActionButton: FloatingActionButton(
-        tooltip: 'Send report to doctor',
         onPressed: () async {
 
           Map<Permission, PermissionStatus> statuses = await [
@@ -107,7 +110,6 @@ class HomePageState extends State<HomePage>
                 return DefaultTabController(
                   length: 2,
                   child: Scaffold(
-
                     body: NestedScrollView(
                       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                         return <Widget>[
@@ -171,98 +173,6 @@ class HomePageState extends State<HomePage>
                                         SizedBox(
                                           height: 10,
                                         ), //space
-
-
-                                          // child: Card(
-                                          //     shape: RoundedRectangleBorder(
-                                          //       borderRadius: BorderRadius.circular(15.0),
-                                          //     ),
-                                          //     elevation: 5,
-                                          //     color: Colors.white,
-                                          //     child: Column(
-                                          //       children: [
-                                          //         Padding(
-                                          //             padding: EdgeInsets.only(top: 5.0, left: 5.0),
-                                          //             child: Row(
-                                          //                 children: [
-                                          //                   Icon(CustomIcons.inhalator__1_, color: Colors.orange, size: 15.0),
-                                          //                   Padding(
-                                          //                       padding: EdgeInsets.only(top: 5.0, left: 11.0),
-                                          //                       child: Text("Symbicort", style: TextStyle(fontSize: 19, color: Colors.black),)
-                                          //                   )
-                                          //                 ]
-                                          //             )
-                                          //         ),
-                                          //         SizedBox(
-                                          //           height: 13,
-                                          //         ),
-                                          //         Padding(
-                                          //           padding: EdgeInsets.only(left: 9.0),
-                                          //           child: Row(
-                                          //               children:[
-                                          //                 Text("2 doses per AM & PM", style: TextStyle(fontSize: 13, color: Colors.black),),
-                                          //               ]
-                                          //           ),
-                                          //         ),
-                                          //         SizedBox(
-                                          //           height: 14,
-                                          //         ),
-                                          //         Padding(
-                                          //           padding: EdgeInsets.only(left: 30.0,right: 30.0),
-                                          //           child: Row(
-                                          //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          //             children: [
-                                          //               Container(
-                                          //                 height: 41.0,
-                                          //                 width: 150.0,
-                                          //                 decoration: BoxDecoration(
-                                          //                     color: Colors.lightGreen.withOpacity(0.3),
-                                          //                     border: Border.all(
-                                          //                       color: Colors.lightGreen.withOpacity(0.3),
-                                          //                     ),
-                                          //                     borderRadius: BorderRadius.all(Radius.circular(14))
-                                          //                 ),
-                                          //                 child: Padding(
-                                          //                   padding: EdgeInsets.all(10.0),
-                                          //                   child: Row(
-                                          //                       children: [
-                                          //                         Icon(Icons.alarm, color: Color(0xFF006400), size:20.0),
-                                          //                         Text("  AM dose taken", style: TextStyle(
-                                          //                             fontSize: 12, color: Color(0xFF006400), fontWeight: FontWeight.bold),)
-                                          //                       ]
-                                          //                   ),
-                                          //                 ),
-                                          //               ),
-                                          //               SizedBox(
-                                          //                 width: 12,
-                                          //               ),
-                                          //               Container(
-                                          //                 height: 41.0,
-                                          //                 width: 150.0,
-                                          //                 decoration: BoxDecoration(
-                                          //                     color: Colors.cyan.withOpacity(0.3),
-                                          //                     border: Border.all(
-                                          //                       color: Colors.cyan.withOpacity(0.3),
-                                          //                     ),
-                                          //                     borderRadius: BorderRadius.all(Radius.circular(14))
-                                          //                 ),
-                                          //                 child: Padding(
-                                          //                   padding: EdgeInsets.all(10.0),
-                                          //                   child: Row(
-                                          //                       children: [
-                                          //                         Icon(Icons.alarm, color: Color(0xFF006400), size:20.0),
-                                          //                         Text("  PM dose 18:00", style: TextStyle(
-                                          //                             fontSize: 12, color: Color(0xFF006400), fontWeight: FontWeight.bold),)
-                                          //                       ]
-                                          //                   ),
-                                          //                 ),
-                                          //               ),
-                                          //             ],
-                                          //           ),
-                                          //         )
-                                          //       ],
-                                          //     )
-                                          // ),
 
                                           Container(
                                             color: Colors.transparent,
@@ -329,18 +239,13 @@ class HomePageState extends State<HomePage>
                                         // ),
                                         SizedBox(
                                           height: 5,
-                                        ), //space
-                                        Container(
-                                          height:heightRemainingDosesAlertRoutine,
-                                          child: dosesRemainingAlert("routine"),
                                         ),
+                                        //space
+                                        dosesRemainingAlert("routine"),
                                         SizedBox(
                                           height: heightRemainingDosesAlertRoutine! > 0 ? 5 : 0,
                                         ),
-                                        Container(
-                                          height:heightRemainingDosesAlertAcute,
-                                          child: dosesRemainingAlert("acute"),
-                                        ),
+                                        dosesRemainingAlert("acute"),
                                         SizedBox(
                                           height: heightRemainingDosesAlertAcute! > 0 ? 5 : 0,
                                         ),//space
