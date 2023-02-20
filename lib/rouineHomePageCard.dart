@@ -34,7 +34,10 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                   stream: FirebaseFirestore.instance.collection('alarms')
                       .snapshots(),
                   builder: (BuildContext context, AsyncSnapshot snapshot2) {
-                    
+                    return StreamBuilder(
+                    stream: FirebaseFirestore.instance.collection('Settings').snapshots(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot3) {
+                      
                     var firstAlarm = "10:00:00";
                     var secondAlarm = "18:00:00";
                     var status = "missed";
@@ -149,6 +152,15 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                           eveningText = "  PM dose taken";
                         }
 
+                        var nameOfMedicine = "Symbicort";
+                        var perscription = "2 doses per AM & PM";
+                        
+                        if(snapshot3.hasData){
+                          DocumentSnapshot documentSnapshot = snapshot3.data?.docs[1];
+                          nameOfMedicine = documentSnapshot["medicine name"];
+                          perscription = documentSnapshot["Prescripted Dose"];
+                        }
+
 
 
 
@@ -170,7 +182,7 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                                           Padding(
                                               padding: EdgeInsets.only(
                                                   top: 5.0, left: 11.0),
-                                              child: Text("Symbicort",
+                                              child: Text(nameOfMedicine,
                                                 style: TextStyle(fontSize: 19,
                                                     color: Colors.black),)
                                           )
@@ -184,7 +196,7 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                                   padding: EdgeInsets.only(left: 9.0),
                                   child: Row(
                                       children: [
-                                        Text("2 doses per AM & PM",
+                                        Text(perscription,
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: Colors.black),),
@@ -271,7 +283,9 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                   }
               );
             }
-        )
+        );
+      }
+     )
     );
   }
 }
