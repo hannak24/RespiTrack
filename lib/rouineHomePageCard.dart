@@ -150,8 +150,6 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                           }
                         }
 
-
-
                         var colorMorning = Colors.cyan.withOpacity(0.3); //future clock color
                         var colorEvening = Colors.cyan.withOpacity(0.3); //future clock color
 

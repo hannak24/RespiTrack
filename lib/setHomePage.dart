@@ -11,6 +11,7 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'acuteHomePageCard.dart';
 import 'custom_icons_icons.dart';
 import 'pdfMobile.dart';
 import 'pdf_api.dart';
@@ -274,72 +275,7 @@ class HomePageState extends State<HomePage>
                                         SizedBox(
 
                                           height: 140.0,
-                                          child: Card(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(15.0),
-                                              ),
-                                              elevation: 5,
-                                              color: Colors.white,
-                                              child: Column(
-                                                children: [
-                                                  Padding(
-                                                      padding: EdgeInsets.only(top: 5.0, left: 5.0),
-                                                      child: Row(
-                                                          children: [
-                                                            Icon(CustomIcons.inhalator__1_, color: Colors.indigo, size: 15.0),
-                                                            Padding(
-                                                                padding: EdgeInsets.only(top: 5.0, left: 11.0),
-                                                                child: Text("Ventolin", style: TextStyle(fontSize: 19, color: Colors.black),)
-                                                            )
-                                                          ]
-                                                      )
-                                                  ),
-                                                  SizedBox(
-                                                    height: 13,
-                                                  ),
-                                                  Padding(
-                                                    padding: EdgeInsets.only(left: 9.0),
-                                                    child: Row(
-                                                        children:[
-                                                          Text("2 doses when needed", style: TextStyle(fontSize: 13, color: Colors.black),),
-                                                        ]
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 14,
-                                                  ),
-                                                  Padding(
-                                                    padding: EdgeInsets.only(left: 30.0,right: 30.0),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Container(
-                                                          height: 41.0,
-                                                          width: 170.0,
-                                                          decoration: BoxDecoration(
-                                                              color: Colors.cyan.withOpacity(0.3),
-                                                              border: Border.all(
-                                                                color: Colors.cyan.withOpacity(0.3),
-                                                              ),
-                                                              borderRadius: BorderRadius.all(Radius.circular(14))
-                                                          ),
-                                                          child: Padding(
-                                                            padding: EdgeInsets.all(10.0),
-                                                            child: Row(
-                                                                children: [
-                                                                  Icon(Icons.alarm, color: Color(0xFF006400), size:20.0),
-                                                                  Text("  Last taken 3 days ago", style: TextStyle(
-                                                                      fontSize: 12, color: Color(0xFF006400), fontWeight: FontWeight.bold),)
-                                                                ]
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  )
-                                                ],
-                                              )
-                                          ),
+                                          child: acuteHomePageCard(),
                                         ),
                                       ],
                                     ),
