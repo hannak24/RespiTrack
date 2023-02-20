@@ -73,9 +73,7 @@ class _dosesRemainingAlertState extends State<dosesRemainingAlert> {
                       Widget returnedWidget = Container(height: widget.inhalerType == "routine"? heightRemainingDosesAlertRoutine: heightRemainingDosesAlertAcute,);
 
                       if (snapshot1.hasData && snapshot2.hasData ) {
-                        print("here45");
                         if (int.parse(dosesRemaining) <= 15) {
-                          print("here1");
                           if (widget.inhalerType == "routine") {
                             heightRemainingDosesAlertRoutine = 60.0;
                           }
@@ -117,8 +115,6 @@ class _dosesRemainingAlertState extends State<dosesRemainingAlert> {
                                 )
                             ),
                           );
-
-
                         }
                         else {
                           if (widget.inhalerType == "routine" ) {
@@ -131,10 +127,7 @@ class _dosesRemainingAlertState extends State<dosesRemainingAlert> {
                         }
                       }
                       else {
-                        print("here7");
                         returnedWidget = CircularProgressIndicator();
-                        print(heightRemainingDosesAlertRoutine);
-                        print(heightRemainingDosesAlertAcute);
                       }
                       return returnedWidget;
                     }

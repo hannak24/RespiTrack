@@ -54,10 +54,6 @@ class HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
   IconData warning = IconData(0xe6cb, fontFamily: 'MaterialIcons');
-  print("calling the scroll build");
-
-
-
   return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
