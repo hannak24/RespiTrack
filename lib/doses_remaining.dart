@@ -17,6 +17,7 @@ class _dosesRemainingState extends State<dosesRemaining> {
   @override
   Widget build(BuildContext context) {
     var routineDosesRemaining = "25";
+    var acuteDosesRemaining = "25";
     return SizedBox(
       height: 70.0,
       width: widget.width,
@@ -28,12 +29,27 @@ class _dosesRemainingState extends State<dosesRemaining> {
                 return StreamBuilder(
                     stream: FirebaseFirestore.instance.collection('Settings').snapshots(),
                     builder: (BuildContext context, AsyncSnapshot snapshot2) {
+                  return StreamBuilder(
+                  stream: FirebaseFirestore.instance.collection('Acute').snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot3) {
+                    var numOfIntakesAcute =  -1;
+                    if(snapshot3.hasData){
+                      numOfIntakesAcute =  snapshot3.data?.docs.length;
+                    }
                       if(snapshot2.hasData){
                         DocumentSnapshot documentSnapshot = snapshot2.data?.docs[1];
+                        DocumentSnapshot documentSnapshotAcute = snapshot2.data?.docs[2];
                         var numOfDoses =  documentSnapshot["Num of doses in bottle"];
+                        var numOfDosesAcute =  documentSnapshotAcute["Num of doses in bottle"];
                         numOfDoses = int.parse(numOfDoses);
+                        numOfDosesAcute = int.parse(numOfDosesAcute);
                         routineDosesRemaining = (numOfDoses-numOfIntakes).toString();
-
+                        if(numOfIntakesAcute == -1){
+                          acuteDosesRemaining = "-";
+                        }
+                        else {
+                          acuteDosesRemaining = (numOfDosesAcute - numOfIntakesAcute).toString();
+                        }
                       }
                       return Container(
                           height: 70.0,
@@ -81,7 +97,7 @@ class _dosesRemainingState extends State<dosesRemaining> {
                                                 fontSize: 12,
                                                 color: Colors
                                                     .white),),
-                                          Text("146",
+                                          Text(acuteDosesRemaining,
                                             style: TextStyle(
                                                 fontSize: 20,
                                                 color: Colors
@@ -115,6 +131,7 @@ class _dosesRemainingState extends State<dosesRemaining> {
                       );
                     }
                 );
+                  });
               }
           )
       ),
