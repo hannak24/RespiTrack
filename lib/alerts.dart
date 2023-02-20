@@ -16,8 +16,35 @@ class dosesRemainingAlert extends StatefulWidget {
 
 class _dosesRemainingAlertState extends State<dosesRemainingAlert> {
   @override
+
+  // Future<int> waitForIntakeNum(String inhalerType) async {
+  //   var snaps = await FirebaseFirestore.instance.collection(widget.inhalerType).get();
+  //   var numOfIntakes =  snaps.docs.length;
+  //   return numOfIntakes;
+  // }
+
+  // Future<String> waitForNumOfDoses() async {
+  //   var snaps = await FirebaseFirestore.instance.collection('Settings').get();
+  //   DocumentSnapshot documentSnapshot = snaps.docs.elementAt(1);
+  //   if (widget.inhalerType == "acute") {
+  //     documentSnapshot = snaps.docs.elementAt(2);
+  //   }
+  //   var numOfDoses = documentSnapshot["Num of doses in bottle"];
+  //   numOfDoses = int.parse(numOfDoses);
+  //   int numOfIntakes = await waitForIntakeNum(widget.inhalerType);
+  //   String dosesRemaining = (numOfDoses - numOfIntakes).toString();
+  //   return dosesRemaining;
+  // }
+  //
+  // Future<String> remainingDoses() async {
+  //   String dosesRemaining = await waitForNumOfDoses();
+  //   return dosesRemaining;
+  // }
+
   Widget build(BuildContext context) {
-    var dosesRemaining = "25";
+    var dosesRemaining = "200";
+
+
     return Container(
       //height: 70.0,
       child: Scaffold(
@@ -26,79 +53,90 @@ class _dosesRemainingAlertState extends State<dosesRemainingAlert> {
               stream: widget.inhalerType == "routine" ?  FirebaseFirestore.instance.collection('Routine').orderBy('dateTime').snapshots() : FirebaseFirestore.instance.collection('Acute').orderBy('dateTime').snapshots(),
               builder: (BuildContext context, AsyncSnapshot snapshot1) {
                 var numOfIntakes =  snapshot1.data?.docs.length;
-
                 return StreamBuilder(
                     stream: FirebaseFirestore.instance.collection('Settings').snapshots(),
                     builder: (BuildContext context, AsyncSnapshot snapshot2) {
-                      if(snapshot2.hasData){
+
+                      if (snapshot2.hasData) {
                         DocumentSnapshot documentSnapshot = snapshot2.data?.docs[1];
-                        if(widget.inhalerType == "acute"){
+                        if (widget.inhalerType == "acute") {
                           documentSnapshot = snapshot2.data?.docs[2];
                         }
-                        var numOfDoses =  documentSnapshot["Num of doses in bottle"];
+                        var numOfDoses = documentSnapshot["Num of doses in bottle"];
                         numOfDoses = int.parse(numOfDoses);
-                        dosesRemaining = (numOfDoses-numOfIntakes).toString();
+                        dosesRemaining = (numOfDoses - numOfIntakes).toString();
                       }
 
-                      var alertText = "Only " + dosesRemaining.toString() + " doses left in " + widget.inhalerType.toString() + " inhaler!";
+                      var alertText = "Only " + dosesRemaining.toString() +
+                          " doses left in " + widget.inhalerType.toString() +
+                          " inhaler!";
                       var inhalerColor = Colors.indigo;
-                      if(widget.inhalerType == "routine"){
+                      if (widget.inhalerType == "routine") {
                         inhalerColor = Colors.orange;
                       }
 
+                      Widget returnedWidget = Container();
 
-                      if(int.parse(dosesRemaining) <= 15) {
-                        if(widget.inhalerType == "routine") {
-                          heightRemainingDosesAlertRoutine = 60.0;
+                      if (snapshot1.hasData && snapshot2.hasData ) {
+                        print("here45");
+                        if (int.parse(dosesRemaining) <= 15) {
+                          print("here1");
+                          if (widget.inhalerType == "routine") {
+                            heightRemainingDosesAlertRoutine = 60.0;
+                          }
+                          else {
+                            heightRemainingDosesAlertAcute = 60.0;
+                          }
+                          returnedWidget = Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              elevation: 5,
+                              color: Colors.white,
+                              child: Column(
+                                children: [
+                                  Padding(
+                                      padding: EdgeInsets.only(
+                                          top: 5.0, left: 5.0),
+                                      child: Row(
+                                          children: [
+                                            Icon(CustomIcons.inhalator__1_,
+                                                color: inhalerColor,
+                                                size: 15.0),
+                                            Padding(
+                                                padding: EdgeInsets.only(
+                                                    top: 5.0, left: 11.0),
+                                                child: Text(alertText,
+                                                  style: TextStyle(fontSize: 19,
+                                                      color: Colors.black),)
+                                            )
+                                          ]
+                                      )
+                                  ),
+                                  SizedBox(
+                                    height: 13,
+                                  ),
+                                ],
+                              )
+                          );
                         }
-                        else{
-                          heightRemainingDosesAlertAcute = 60.0;
+                        else {
+                          if (widget.inhalerType == "routine" ) {
+                            heightRemainingDosesAlertRoutine = 0.0;
+                          }
+                          else {
+                            heightRemainingDosesAlertAcute = 0.0;
+                          }
+                          returnedWidget = CircularProgressIndicator();
                         }
-                        return Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            elevation: 5,
-                            color: Colors.white,
-                            child: Column(
-                              children: [
-                                Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 5.0, left: 5.0),
-                                    child: Row(
-                                        children: [
-                                          Icon(CustomIcons.inhalator__1_,
-                                              color: inhalerColor, size: 15.0),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: 5.0, left: 11.0),
-                                              child: Text(alertText,
-                                                style: TextStyle(fontSize: 19,
-                                                    color: Colors.black),)
-                                          )
-                                        ]
-                                    )
-                                ),
-                                SizedBox(
-                                  height: 13,
-                                ),
-                              ],
-                            )
-                        );
                       }
-                      else{
-                        if(widget.inhalerType == "routine") {
-                          heightRemainingDosesAlertRoutine = 0.0;
-                        }
-                        else{
-                          heightRemainingDosesAlertAcute = 0.0;
-                        }
-
-                        return SizedBox(
-                          height: 0,
-                        );
-
+                      else {
+                        print("here7");
+                        returnedWidget = CircularProgressIndicator();
+                        print(heightRemainingDosesAlertRoutine);
+                        print(heightRemainingDosesAlertAcute);
                       }
+                      return returnedWidget;
                     }
                 );
               }
