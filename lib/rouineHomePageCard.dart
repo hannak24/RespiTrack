@@ -26,6 +26,7 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.transparent,
         body: StreamBuilder<void>(
             stream: FirebaseFirestore.instance.collection('Routine').orderBy(
                 'dateTime').snapshots(),
@@ -37,10 +38,10 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                     return StreamBuilder(
                     stream: FirebaseFirestore.instance.collection('Settings').snapshots(),
                     builder: (BuildContext context, AsyncSnapshot snapshot3) {
-                      
+
                     var firstAlarm = "10:00:00";
                     var secondAlarm = "18:00:00";
-                    var status = "missed";
+
                     List<DateTime> pushes = [];
                     if (snapshot2.hasData) {
                       DocumentSnapshot documentSnapshot = snapshot2.data
@@ -48,7 +49,20 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                       firstAlarm = snapshot2.data?.docs[0]["time"];
                       secondAlarm = snapshot2.data?.docs[1]["time"];
                     }
-                    Widget widget = Container();
+
+
+                    Widget widget = SizedBox();
+
+                    var nameOfMedicine = "Symbicort";
+                    var perscription = "2 doses per AM & PM";
+
+                    if(snapshot3.hasData){
+                      DocumentSnapshot documentSnapshot = snapshot3.data?.docs[1];
+                      nameOfMedicine = documentSnapshot["medicine name"];
+                      perscription = documentSnapshot["Prescripted Dose"];
+                      }
+
+
                     if (snapshot1.hasData) {
                       DateTime lastAlarm = DateTime.parse(
                           '2022-11-03 18:00:04Z');
@@ -59,25 +73,27 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                       var lastPushDate = DateTime.parse('1000-11-03 18:00:04Z');
                       var firstPushDate = DateTime.parse(
                           '2222-11-03 18:00:04Z');
-                      for (int index = 0; index <
-                          snapshot1.data?.docs.length; index++) {
-                        DocumentSnapshot documentSnapshot = snapshot1.data
-                            ?.docs[index];
-                        var initialTime = documentSnapshot["dateTime"]
-                            .replaceAll(
+                      DateTime alarm1Time = DateTime.now();
+                      DateTime alarm2Time = DateTime.now();
+                      for (int index = 0; index < snapshot1.data?.docs.length; index++) {
+                            DocumentSnapshot documentSnapshot = snapshot1.data
+                                ?.docs[index];
+                            var initialTime = documentSnapshot["dateTime"]
+                                .replaceAll(
                             ".", "-");
-                        var temp = initialTime.split(" ");
-                        var temp2 = temp[1].split("-");
-                        var fixedDate = temp2[2] + "-" + temp2[1] + "-" +
+                            var temp = initialTime.split(" ");
+                            var temp2 = temp[1].split("-");
+                            var fixedDate = temp2[2] + "-" + temp2[1] + "-" +
                             temp2[0];
-                        var fixedTime = fixedDate + " " + temp[0] + "Z";
-                        DateTime pushTime = DateTime.parse(fixedTime);
+                            var fixedTime = fixedDate + " " + temp[0] + "Z";
+                            DateTime pushTime = DateTime.parse(fixedTime);
+                            var fixedAlarm1 = fixedDate + " " + firstAlarm + "Z";
+                            var fixedAlarm2 = fixedDate + " " + secondAlarm + "Z";
+                            alarm1Time = DateTime.parse(fixedAlarm1);
+                            alarm2Time = DateTime.parse(fixedAlarm2);
+                            pushes.add(pushTime);
+                            }
 
-
-                        var fixedAlarm1 = fixedDate + " " + firstAlarm + "Z";
-                        var fixedAlarm2 = fixedDate + " " + secondAlarm + "Z";
-                        DateTime alarm1Time = DateTime.parse(fixedAlarm1);
-                        DateTime alarm2Time = DateTime.parse(fixedAlarm2);
 
                         var morningAlarm = alarm1Time.isAfter(alarm2Time)
                             ? alarm2Time
@@ -103,6 +119,8 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
 
                         String isMoriningMedicineTaken = "future";
                         String isEveningMedicineTaken = "future";
+                        print("pushes.length - 2");
+                        print(pushes.length - 2);
                         var previousPush = pushes[pushes.length - 2];
 
                         if (isSameDate(pushes.last, todayEveningAlarm)) {
@@ -151,17 +169,6 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                         if(isEveningMedicineTaken == "taken"){
                           eveningText = "  PM dose taken";
                         }
-
-                        var nameOfMedicine = "Symbicort";
-                        var perscription = "2 doses per AM & PM";
-                        
-                        if(snapshot3.hasData){
-                          DocumentSnapshot documentSnapshot = snapshot3.data?.docs[1];
-                          nameOfMedicine = documentSnapshot["medicine name"];
-                          perscription = documentSnapshot["Prescripted Dose"];
-                        }
-
-
 
 
                         widget = Card(
@@ -214,7 +221,7 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                                     children: [
                                       Container(
                                         height: 41.0,
-                                        width: 140.0,
+                                        width: 150.0,
                                         decoration: BoxDecoration(
                                             color:  colorMorning,
                                             border: Border.all(
@@ -245,7 +252,7 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                                       ),
                                       Container(
                                         height: 41.0,
-                                        width: 140.0,
+                                        width: 150.0,
                                         decoration: BoxDecoration(
                                             color: colorEvening,
                                             border: Border.all(
@@ -277,7 +284,6 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                               ],
                             )
                         );
-                      }
                     }
                     return widget;
                   }
