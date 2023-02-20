@@ -34,6 +34,7 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                   stream: FirebaseFirestore.instance.collection('alarms')
                       .snapshots(),
                   builder: (BuildContext context, AsyncSnapshot snapshot2) {
+                    
                     var firstAlarm = "10:00:00";
                     var secondAlarm = "18:00:00";
                     var status = "missed";
@@ -133,6 +134,23 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                           colorEvening = Colors.lightGreen.withOpacity(0.3);
                         }
 
+                        var morningAlarmHour = morningAlarm.hour.toString() + ":" + morningAlarm.minute.toString();
+                        var morningText = "  AM dose " + morningAlarmHour;
+                        if(isMoriningMedicineTaken == "missed"){
+                          morningText = "  AM dose missed";
+                        }
+                        if(isMoriningMedicineTaken == "taken"){
+                          morningText = "  AM dose taken";
+                        }
+
+                        var eveningAlarmHour = eveningAlarm.hour.toString() + ":" + eveningAlarm.minute.toString();
+                        var eveningText = "  PM dose " + eveningAlarmHour;
+                        if(isEveningMedicineTaken == "taken"){
+                          eveningText = "  PM dose taken";
+                        }
+
+
+
 
                         widget = Card(
                             shape: RoundedRectangleBorder(
@@ -180,12 +198,11 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                                   padding: EdgeInsets.only(
                                       left: 30.0, right: 30.0),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment
-                                        .spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
                                         height: 41.0,
-                                        width: 150.0,
+                                        width: 140.0,
                                         decoration: BoxDecoration(
                                             color:  colorMorning,
                                             border: Border.all(
@@ -201,7 +218,7 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                                                 Icon(Icons.alarm,
                                                     color: Color(0xFF006400),
                                                     size: 20.0),
-                                                Text("  AM dose taken",
+                                                Text(morningText,
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       color: Color(0xFF006400),
@@ -216,7 +233,7 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                                       ),
                                       Container(
                                         height: 41.0,
-                                        width: 150.0,
+                                        width: 140.0,
                                         decoration: BoxDecoration(
                                             color: colorEvening,
                                             border: Border.all(
@@ -232,7 +249,7 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                                                 Icon(Icons.alarm,
                                                     color: Color(0xFF006400),
                                                     size: 20.0),
-                                                Text("  PM dose 18:00",
+                                                Text(eveningText,
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       color: Color(0xFF006400),
