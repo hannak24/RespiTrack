@@ -15,7 +15,7 @@ class routineHomePageCard extends StatefulWidget {
 }
 
 class _routineHomePageCardState extends State<routineHomePageCard> {
-  @override
+
   bool isSameDate(DateTime date1, DateTime date2) {
     if (date1.year == date2.year && date1.month == date2.month &&
         date1.day == date2.day) {
@@ -24,6 +24,7 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
     return false;
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.transparent,
@@ -149,6 +150,11 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                             isMoriningMedicineTaken = "taken";
                           }
                         }
+
+                      if (pushes.last.isBefore(todayMorningAlarm) &&
+                          (current_date.isAfter(todayEveningAlarm))) {
+                        isMoriningMedicineTaken = "missed";
+                      }
 
                         var colorMorning = Colors.cyan.withOpacity(0.3); //future clock color
                         var colorEvening = Colors.cyan.withOpacity(0.3); //future clock color

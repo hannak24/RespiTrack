@@ -12,7 +12,9 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'acuteHomePageCard.dart';
+import 'alerts.dart';
 import 'custom_icons_icons.dart';
+import 'globals.dart';
 import 'pdfMobile.dart';
 import 'pdf_api.dart';
 import 'setStatisticsPage.dart';
@@ -293,73 +295,55 @@ class HomePageState extends State<HomePage>
                                   sliver: SliverList(
                                     delegate: SliverChildListDelegate(
                                       [
-                                        SizedBox(
-                                          height: 10,
-                                        ), //space
-                                        SizedBox(
-                                          height: 60.0,
-                                          child: Card(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(15.0),
-                                              ),
-                                              elevation: 5,
-                                              color: Colors.white,
-                                              child: Column(
-                                                children: [
-                                                  Padding(
-                                                      padding: EdgeInsets.only(top: 5.0, left: 5.0),
-                                                      child: Row(
-                                                          children: [
-                                                            Icon(CustomIcons.inhalator__1_, color: Colors.orange, size: 15.0),
-                                                            Padding(
-                                                                padding: EdgeInsets.only(top: 5.0, left: 11.0),
-                                                                child: Text("Only 10% battery left in routine inhaler!", style: TextStyle(fontSize: 19, color: Colors.black),)
-                                                            )
-                                                          ]
-                                                      )
-                                                  ),
-                                                  SizedBox(
-                                                    height: 13,
-                                                  ),
-                                                ],
-                                              )
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ), //space
-                                        SizedBox(
-                                          height: 60.0,
-                                          child: Card(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(15.0),
-                                              ),
-                                              elevation: 5,
-                                              color: Colors.white,
-                                              child: Column(
-                                                children: [
-                                                  Padding(
-                                                      padding: EdgeInsets.only(top: 5.0, left: 5.0),
-                                                      child: Row(
-                                                          children: [
-                                                            Icon(CustomIcons.inhalator__1_, color: Colors.indigo, size: 15.0),
-                                                            Padding(
-                                                                padding: EdgeInsets.only(top: 5.0, left: 11.0),
-                                                                child: Text("Only 5 doses left in acute inhaler!", style: TextStyle(fontSize: 19, color: Colors.black),)
-                                                            )
-                                                          ]
-                                                      )
-                                                  ),
-                                                  SizedBox(
-                                                    height: 13,
-                                                  ),
-                                                ],
-                                              )
-                                          ),
-                                        ),
+                                        // SizedBox(
+                                        //   height: 10,
+                                        // ), //space
+                                        // SizedBox(
+                                        //   height: 60.0,
+                                        //   child: Card(
+                                        //       shape: RoundedRectangleBorder(
+                                        //         borderRadius: BorderRadius.circular(15.0),
+                                        //       ),
+                                        //       elevation: 5,
+                                        //       color: Colors.white,
+                                        //       child: Column(
+                                        //         children: [
+                                        //           Padding(
+                                        //               padding: EdgeInsets.only(top: 5.0, left: 5.0),
+                                        //               child: Row(
+                                        //                   children: [
+                                        //                     Icon(CustomIcons.inhalator__1_, color: Colors.orange, size: 15.0),
+                                        //                     Padding(
+                                        //                         padding: EdgeInsets.only(top: 5.0, left: 11.0),
+                                        //                         child: Text("Only 10% battery left in routine inhaler!", style: TextStyle(fontSize: 19, color: Colors.black),)
+                                        //                     )
+                                        //                   ]
+                                        //               )
+                                        //           ),
+                                        //           SizedBox(
+                                        //             height: 13,
+                                        //           ),
+                                        //         ],
+                                        //       )
+                                        //   ),
+                                        // ),
                                         SizedBox(
                                           height: 5,
                                         ), //space
+                                        Container(
+                                          height:heightRemainingDosesAlertRoutine,
+                                          child: dosesRemainingAlert("routine"),
+                                        ),
+                                        SizedBox(
+                                          height: heightRemainingDosesAlertRoutine! > 0 ? 5 : 0,
+                                        ),
+                                        Container(
+                                          height:heightRemainingDosesAlertAcute,
+                                          child: dosesRemainingAlert("acute"),
+                                        ),
+                                        SizedBox(
+                                          height: heightRemainingDosesAlertAcute! > 0 ? 5 : 0,
+                                        ),//space
                                         SizedBox(
                                           height: 60.0,
                                           child: Card(
