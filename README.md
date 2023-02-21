@@ -48,6 +48,11 @@ Project team: Eden Ayaso, Hanna Keller and Taya Harshuk.
 - nickgammon/Regexp@^0.1.0
 
 ### Installation
+1. Write the chosen wifi credentials in the Arduino code (of the watch).
+2. Upload the watch code to the watch.
+3. Upload the inhaler code to the inhaler.
+4. Upload the application Apk in your phone (Android only).
+
 
 
 
