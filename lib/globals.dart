@@ -1,4 +1,6 @@
 library my_prj.globals;
 
-double? heightRemainingDosesAlertAcute = 70.0;
-double? heightRemainingDosesAlertRoutine = 70.0;
+double? heightRemainingDosesAlertAcute = 60.0;
+double? heightRemainingDosesAlertRoutine = 60.0;
+double? heightExpiringAlertAcute = 60.0;
+double? heightExpiringAlertRoutine = 60.0;

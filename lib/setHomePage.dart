@@ -245,34 +245,13 @@ class HomePageState extends State<HomePage>
                                         SizedBox(
                                           height: heightRemainingDosesAlertAcute! > 0 ? 5 : 0,
                                         ),//space
+                                        expireAlert("routine"),
                                         SizedBox(
-                                          height: 60.0,
-                                          child: Card(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(15.0),
-                                              ),
-                                              elevation: 5,
-                                              color: Colors.white,
-                                              child: Column(
-                                                children: [
-                                                  Padding(
-                                                      padding: EdgeInsets.only(top: 5.0, left: 5.0),
-                                                      child: Row(
-                                                          children: [
-                                                            Icon(CustomIcons.inhalator__1_, color: Colors.indigo, size: 15.0),
-                                                            Padding(
-                                                                padding: EdgeInsets.only(top: 5.0, left: 11.0),
-                                                                child: Text("Acute inhaler expires in 2 days!", style: TextStyle(fontSize: 19, color: Colors.black),)
-                                                            )
-                                                          ]
-                                                      )
-                                                  ),
-                                                  SizedBox(
-                                                    height: 13,
-                                                  ),
-                                                ],
-                                              )
-                                          ),
+                                          height: heightExpiringAlertRoutine! > 0 ? 5 : 0,
+                                        ),
+                                        expireAlert("acute"),
+                                        SizedBox(
+                                          height: heightExpiringAlertAcute! > 0 ? 5 : 0,
                                         ),
                                         SizedBox(
                                           height: 5,

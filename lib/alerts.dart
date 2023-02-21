@@ -17,30 +17,6 @@ class dosesRemainingAlert extends StatefulWidget {
 class _dosesRemainingAlertState extends State<dosesRemainingAlert> {
   @override
 
-  // Future<int> waitForIntakeNum(String inhalerType) async {
-  //   var snaps = await FirebaseFirestore.instance.collection(widget.inhalerType).get();
-  //   var numOfIntakes =  snaps.docs.length;
-  //   return numOfIntakes;
-  // }
-
-  // Future<String> waitForNumOfDoses() async {
-  //   var snaps = await FirebaseFirestore.instance.collection('Settings').get();
-  //   DocumentSnapshot documentSnapshot = snaps.docs.elementAt(1);
-  //   if (widget.inhalerType == "acute") {
-  //     documentSnapshot = snaps.docs.elementAt(2);
-  //   }
-  //   var numOfDoses = documentSnapshot["Num of doses in bottle"];
-  //   numOfDoses = int.parse(numOfDoses);
-  //   int numOfIntakes = await waitForIntakeNum(widget.inhalerType);
-  //   String dosesRemaining = (numOfDoses - numOfIntakes).toString();
-  //   return dosesRemaining;
-  // }
-  //
-  // Future<String> remainingDoses() async {
-  //   String dosesRemaining = await waitForNumOfDoses();
-  //   return dosesRemaining;
-  // }
-
   Widget build(BuildContext context) {
     var dosesRemaining = "200";
     return Container(
@@ -138,310 +114,132 @@ class _dosesRemainingAlertState extends State<dosesRemainingAlert> {
   }
 }
 
-// class expiringAlert extends StatefulWidget {
-//   //const dosesRemaining({Key? key}) : super(key: key);
-//   final String inhalerType;
-//   const dosesRemainingAlert( this.inhalerType);
-//
-//   @override
-//   State<dosesRemainingAlert> createState() => _dosesRemainingAlertState();
-// }
-//
-// class _dosesRemainingAlertState extends State<dosesRemainingAlert> {
-//   @override
-//
-//   // Future<int> waitForIntakeNum(String inhalerType) async {
-//   //   var snaps = await FirebaseFirestore.instance.collection(widget.inhalerType).get();
-//   //   var numOfIntakes =  snaps.docs.length;
-//   //   return numOfIntakes;
-//   // }
-//
-//   // Future<String> waitForNumOfDoses() async {
-//   //   var snaps = await FirebaseFirestore.instance.collection('Settings').get();
-//   //   DocumentSnapshot documentSnapshot = snaps.docs.elementAt(1);
-//   //   if (widget.inhalerType == "acute") {
-//   //     documentSnapshot = snaps.docs.elementAt(2);
-//   //   }
-//   //   var numOfDoses = documentSnapshot["Num of doses in bottle"];
-//   //   numOfDoses = int.parse(numOfDoses);
-//   //   int numOfIntakes = await waitForIntakeNum(widget.inhalerType);
-//   //   String dosesRemaining = (numOfDoses - numOfIntakes).toString();
-//   //   return dosesRemaining;
-//   // }
-//   //
-//   // Future<String> remainingDoses() async {
-//   //   String dosesRemaining = await waitForNumOfDoses();
-//   //   return dosesRemaining;
-//   // }
-//
-//   Widget build(BuildContext context) {
-//     var dosesRemaining = "200";
-//
-//
-//     return Container(
-//       //height: 70.0,
-//       child: Scaffold(
-//           backgroundColor: Colors.transparent,
-//           body: StreamBuilder<void>(
-//               stream: widget.inhalerType == "routine" ?  FirebaseFirestore.instance.collection('Routine').orderBy('dateTime').snapshots() : FirebaseFirestore.instance.collection('Acute').orderBy('dateTime').snapshots(),
-//               builder: (BuildContext context, AsyncSnapshot snapshot1) {
-//                 var numOfIntakes =  snapshot1.data?.docs.length;
-//                 return StreamBuilder(
-//                     stream: FirebaseFirestore.instance.collection('Settings').snapshots(),
-//                     builder: (BuildContext context, AsyncSnapshot snapshot2) {
-//
-//                       if (snapshot2.hasData) {
-//                         DocumentSnapshot documentSnapshot = snapshot2.data?.docs[1];
-//                         if (widget.inhalerType == "acute") {
-//                           documentSnapshot = snapshot2.data?.docs[2];
-//                         }
-//                         var numOfDoses = documentSnapshot["Num of doses in bottle"];
-//                         numOfDoses = int.parse(numOfDoses);
-//                         dosesRemaining = (numOfDoses - numOfIntakes).toString();
-//                       }
-//
-//                       var alertText = "Only " + dosesRemaining.toString() +
-//                           " doses left in " + widget.inhalerType.toString() +
-//                           " inhaler!";
-//                       var inhalerColor = Colors.indigo;
-//                       if (widget.inhalerType == "routine") {
-//                         inhalerColor = Colors.orange;
-//                       }
-//
-//                       Widget returnedWidget = Container();
-//
-//                       if (snapshot1.hasData && snapshot2.hasData ) {
-//                         print("here45");
-//                         if (int.parse(dosesRemaining) <= 15) {
-//                           print("here1");
-//                           if (widget.inhalerType == "routine") {
-//                             heightRemainingDosesAlertRoutine = 60.0;
-//                           }
-//                           else {
-//                             heightRemainingDosesAlertAcute = 60.0;
-//                           }
-//                           returnedWidget = Card(
-//                               shape: RoundedRectangleBorder(
-//                                 borderRadius: BorderRadius.circular(15.0),
-//                               ),
-//                               elevation: 5,
-//                               color: Colors.white,
-//                               child: Column(
-//                                 children: [
-//                                   Padding(
-//                                       padding: EdgeInsets.only(
-//                                           top: 5.0, left: 5.0),
-//                                       child: Row(
-//                                           children: [
-//                                             Icon(CustomIcons.inhalator__1_,
-//                                                 color: inhalerColor,
-//                                                 size: 15.0),
-//                                             Padding(
-//                                                 padding: EdgeInsets.only(
-//                                                     top: 5.0, left: 11.0),
-//                                                 child: Text(alertText,
-//                                                   style: TextStyle(fontSize: 19,
-//                                                       color: Colors.black),)
-//                                             )
-//                                           ]
-//                                       )
-//                                   ),
-//                                   SizedBox(
-//                                     height: 13,
-//                                   ),
-//                                 ],
-//                               )
-//                           );
-//                         }
-//                         else {
-//                           if (widget.inhalerType == "routine" ) {
-//                             heightRemainingDosesAlertRoutine = 0.0;
-//                           }
-//                           else {
-//                             heightRemainingDosesAlertAcute = 0.0;
-//                           }
-//                           returnedWidget = CircularProgressIndicator();
-//                         }
-//                       }
-//                       else {
-//                         print("here7");
-//                         returnedWidget = CircularProgressIndicator();
-//                         print(heightRemainingDosesAlertRoutine);
-//                         print(heightRemainingDosesAlertAcute);
-//                       }
-//                       return returnedWidget;
-//                     }
-//                 );
-//               }
-//           )
-//       ),
-//     );
-//   }
-// }
 
-
-
-class dosesRemainingRoutine extends StatefulWidget {
-  final double width;
-  const dosesRemainingRoutine(this.width);
+class expireAlert extends StatefulWidget {
+  //const dosesRemaining({Key? key}) : super(key: key);
+  final String inhalerType;
+  const expireAlert( this.inhalerType);
 
   @override
-  State<dosesRemainingRoutine> createState() => _dosesRemainingRoutineState();
+  State<expireAlert> createState() => _expireAlertState();
 }
 
-class _dosesRemainingRoutineState extends State<dosesRemainingRoutine> {
+class _expireAlertState extends State<expireAlert> {
   @override
-  Widget build(BuildContext context) {
-    var routineDosesRemaining = "25";
-    return SizedBox(
-      height: 70.0,
-      width: widget.width,
-      child: Scaffold(
-          body: StreamBuilder<void>(
-              stream: FirebaseFirestore.instance.collection('Routine').orderBy('dateTime').snapshots(),
-              builder: (BuildContext context, AsyncSnapshot snapshot1) {
-                var numOfIntakes =  snapshot1.data?.docs.length;
-                return StreamBuilder(
-                    stream: FirebaseFirestore.instance.collection('Settings').snapshots(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot2) {
-                      if(snapshot2.hasData){
-                        DocumentSnapshot documentSnapshot = snapshot2.data?.docs[1];
-                        var numOfDoses =  documentSnapshot["Num of doses in bottle"];
-                        numOfDoses = int.parse(numOfDoses);
-                        routineDosesRemaining = (numOfDoses-numOfIntakes).toString();
 
+  int daysBetween(DateTime from, DateTime to) {
+    from = DateTime(from.year, from.month, from.day);
+    to = DateTime(to.year, to.month, to.day);
+    return (to.difference(from).inHours / 24).round();
+  }
+
+  Widget build(BuildContext context) {
+    var expirationDate = DateTime.parse('2026-02-03 18:00:04Z');
+    var daysToExpiration = 200;
+    return Container(
+        color: Colors.transparent,
+        child: StreamBuilder<void>(
+                  stream: FirebaseFirestore.instance.collection('Settings').snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot2) {
+                    if (snapshot2.hasData) {
+                      DocumentSnapshot documentSnapshot = snapshot2.data?.docs[1];
+                      if (widget.inhalerType == "acute") {
+                        documentSnapshot = snapshot2.data?.docs[2];
                       }
-                      return Container(
-                          height: 70.0,
-                          width: widget.width,
-                          //color: Color(0xFF010280),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                colors: [
-                                  const Color(0xFF010280),
-                                  const Color(0xFF135CC5),
-                                  const Color(0xFF010280),
-                                ],
-                                begin: const FractionalOffset(
-                                    0.0, 0.0),
-                                end: const FractionalOffset(
-                                    1.0, 0.0),
-                                stops: [0.0, 0.5, 0.8],
-                                tileMode: TileMode.mirror),
-                          ),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    top: 8.0),
-                                child: Text(
-                                  "Doses remaining ",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white),),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: 50.0, right: 50.0, top: 4.0),
-                                child: Text(routineDosesRemaining,
-                                  style: TextStyle(
-                                      fontSize: 22,
-                                      color: Colors
-                                          .white,
-                                      fontWeight: FontWeight
-                                          .bold),),
-                              )
-                            ],
-                          )
-                      );
+                      var expirationDateInitial = documentSnapshot["Expiration Date"];
+                      expirationDateInitial = expirationDateInitial.toString();
+                      var expirationDateParts = expirationDateInitial.split("/");
+                      for (int i = 0; i < 2; i++){
+                        if(expirationDateParts[i].length > 1 && expirationDateParts[i][0] == "0"){
+                          expirationDateParts[i] = expirationDateParts[i][expirationDateParts[i].length - 1];
+                        }
+                      }
+                      if(expirationDateParts[2].length == 2){
+                        expirationDateParts[2] = "20" + expirationDateParts[2];
+                      }
+                      print(expirationDateParts);
+                      var now = DateTime.now();
+                      expirationDate = DateTime(int.parse(expirationDateParts[2]),int.parse(expirationDateParts[1]), int.parse(expirationDateParts[0]),now.hour, now.minute);
+                      daysToExpiration = daysBetween(now, expirationDate);
+                      print("daysToExpiration");
+                      print(daysToExpiration);
                     }
-                );
-              }
-          )
-      ),
+
+                    var alertText = widget.inhalerType + " inhaler expires in " + daysToExpiration.toString() + " days!";
+                    var inhalerColor = Colors.indigo;
+                    if (widget.inhalerType == "routine") {
+                      inhalerColor = Colors.orange;
+                    }
+
+                    Widget returnedWidget = Container(height: widget.inhalerType == "routine"? heightRemainingDosesAlertRoutine: heightRemainingDosesAlertAcute,);
+
+                    if (snapshot2.hasData ) {
+
+                      if (daysToExpiration <= 14) {
+                        if(daysToExpiration <= 0){
+                          alertText = widget.inhalerType + " inhaler expired!";
+                        }
+                        if (widget.inhalerType == "routine") {
+                          heightExpiringAlertRoutine = 60.0;
+                        }
+                        else {
+                          heightExpiringAlertAcute = 60.0;
+                        }
+                        returnedWidget = Container(
+                          height: widget.inhalerType == "routine"? heightExpiringAlertRoutine: heightExpiringAlertAcute,
+                          child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              elevation: 5,
+                              color: Colors.white,
+                              child: Column(
+                                children: [
+                                  Padding(
+                                      padding: EdgeInsets.only(
+                                          top: 5.0, left: 5.0),
+                                      child: Row(
+                                          children: [
+                                            Icon(CustomIcons.inhalator__1_,
+                                                color: inhalerColor,
+                                                size: 15.0),
+                                            Padding(
+                                                padding: EdgeInsets.only(
+                                                    top: 5.0, left: 11.0),
+                                                child: Text(alertText,
+                                                  style: TextStyle(fontSize: 19,
+                                                      color: Colors.black),)
+                                            )
+                                          ]
+                                      )
+                                  ),
+                                  SizedBox(
+                                    height: 13,
+                                  ),
+                                ],
+                              )
+                          ),
+                        );
+                      }
+                      else {
+                        if (widget.inhalerType == "routine" ) {
+                          heightExpiringAlertRoutine = 0.0;
+                        }
+                        else {
+                          heightExpiringAlertAcute = 0.0;
+                        }
+                        returnedWidget = Container(height: widget.inhalerType == "routine"? heightExpiringAlertRoutine: heightExpiringAlertAcute);
+                      }
+                    }
+                    else {
+                      returnedWidget = CircularProgressIndicator();
+                    }
+                    return returnedWidget;
+                  }
+        )
     );
   }
 }
 
-class dosesRemainingAcute extends StatefulWidget {
-  final double width;
-  const dosesRemainingAcute(this.width);
 
-  @override
-  State<dosesRemainingAcute> createState() => _dosesRemainingAcuteState();
-}
-
-class _dosesRemainingAcuteState extends State<dosesRemainingAcute> {
-  @override
-  Widget build(BuildContext context) {
-    var routineDosesRemaining = "25";
-    return SizedBox(
-      height: 70.0,
-      width: widget.width,
-      child: Scaffold(
-          body: StreamBuilder<void>(
-              stream: FirebaseFirestore.instance.collection('Acute').orderBy('dateTime').snapshots(),
-              builder: (BuildContext context, AsyncSnapshot snapshot1) {
-                var numOfIntakes =  snapshot1.data?.docs.length;
-                return StreamBuilder(
-                    stream: FirebaseFirestore.instance.collection('Settings').snapshots(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot2) {
-                      if(snapshot2.hasData){
-                        DocumentSnapshot documentSnapshot = snapshot2.data?.docs[2];
-                        var numOfDoses =  documentSnapshot["Num of doses in bottle"];
-                        numOfDoses = int.parse(numOfDoses);
-                        routineDosesRemaining = (numOfDoses-numOfIntakes).toString();
-
-                      }
-                      return Container(
-                          height: 70.0,
-                          width: widget.width,
-                          //color: Color(0xFF010280),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                colors: [
-                                  const Color(0xFF010280),
-                                  const Color(0xFF135CC5),
-                                  const Color(0xFF010280),
-                                ],
-                                begin: const FractionalOffset(
-                                    0.0, 0.0),
-                                end: const FractionalOffset(
-                                    1.0, 0.0),
-                                stops: [0.0, 0.5, 0.8],
-                                tileMode: TileMode.mirror),
-                          ),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    top: 8.0),
-                                child: Text(
-                                  "Doses remaining ",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white),),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: 50.0, right: 50.0, top: 4.0),
-                                child: Text(routineDosesRemaining,
-                                  style: TextStyle(
-                                      fontSize: 22,
-                                      color: Colors
-                                          .white,
-                                      fontWeight: FontWeight
-                                          .bold),),
-                              )
-                            ],
-                          )
-                      );
-                    }
-                );
-              }
-          )
-      ),
-    );
-  }
-}
 
