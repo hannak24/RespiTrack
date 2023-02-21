@@ -1,4 +1,4 @@
-# Respitrack
+# RespiTrack
 An IOT project which is designed for asthmatic children, their parents and even their doctor.
 The RespiTrack kit includes smart watch, smart Inhalers(both routine and acute) and application. 
 The parents can set alarms in their kid's smart watch, track his inhaler usage, get friendly and informative statistics of the medicine intake 
