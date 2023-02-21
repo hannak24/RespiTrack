@@ -55,44 +55,44 @@ class HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
   IconData warning = IconData(0xe6cb, fontFamily: 'MaterialIcons');
   return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-
-          Map<Permission, PermissionStatus> statuses = await [
-            Permission.storage,
-          ].request();
-
-          List<List<String>> data = [
-          ['Subject', 'Start Day', 'Start Time', 'End Date', 'End Time', 'All day event','Description','Location'],
-          ['bla','bla','bla','bla','bla','bla','bla','bla',],
-          ];
-          String csvData = ListToCsvConverter().convert(data);
-          //String directory = (await getApplicationSupportDirectory()).path;
-
-          String dir = await ExternalPath.getExternalStoragePublicDirectory(
-              ExternalPath.DIRECTORY_DOWNLOADS);
-         // final path = "$directory/csv-alert-data.csv";
-          //File file = File(path);
-          // await file.writeAsString(csvData);
-          String file = "$dir";
-          File f = File(file + "/filename.csv");
-
-          f.writeAsString(csvData);
-          //f.openRead();
-          print("file saved");
-          print(csvData.length);
-         /* Navigator.of(context).push(
-          MaterialPageRoute(
-          builder: (_) {
-          return MyCSVDisplayScreen(csvFilePath: filePath);
-          },
-          ),
-          );*/
-
-        },
-        backgroundColor: Colors.blue,
-        child: const Icon(Icons.download),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () async {
+      //
+      //     Map<Permission, PermissionStatus> statuses = await [
+      //       Permission.storage,
+      //     ].request();
+      //
+      //     List<List<String>> data = [
+      //     ['Subject', 'Start Day', 'Start Time', 'End Date', 'End Time', 'All day event','Description','Location'],
+      //     ['bla','bla','bla','bla','bla','bla','bla','bla',],
+      //     ];
+      //     String csvData = ListToCsvConverter().convert(data);
+      //     //String directory = (await getApplicationSupportDirectory()).path;
+      //
+      //     String dir = await ExternalPath.getExternalStoragePublicDirectory(
+      //         ExternalPath.DIRECTORY_DOWNLOADS);
+      //    // final path = "$directory/csv-alert-data.csv";
+      //     //File file = File(path);
+      //     // await file.writeAsString(csvData);
+      //     String file = "$dir";
+      //     File f = File(file + "/filename.csv");
+      //
+      //     f.writeAsString(csvData);
+      //     //f.openRead();
+      //     print("file saved");
+      //     print(csvData.length);
+      //    /* Navigator.of(context).push(
+      //     MaterialPageRoute(
+      //     builder: (_) {
+      //     return MyCSVDisplayScreen(csvFilePath: filePath);
+      //     },
+      //     ),
+      //     );*/
+      //
+      //   },
+      //   backgroundColor: Colors.blue,
+      //   child: const Icon(Icons.download),
+      // ),
 
     body: Center(
       child: StreamBuilder(
@@ -147,6 +147,7 @@ class HomePageState extends State<HomePage>
                         ];
                       },
                       body: Container(
+                        height: 2000 - MediaQuery.of(context).viewInsets.bottom,
                         decoration: BoxDecoration( gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
@@ -255,50 +256,51 @@ class HomePageState extends State<HomePage>
                                         ),
                                         SizedBox(
                                           height: 5,
-                                        ), //space
-                                        SizedBox(
-                                          height: 100.0,
-                                          child: Card(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(15.0),
-                                              ),
-                                              elevation: 5,
-                                              color: Colors.white,
-                                              child: Column(
-                                                children: [
-                                                  Padding(
-                                                      padding: EdgeInsets.only(left: 5.0),
-                                                      child: Row(
-                                                          children: [
-                                                            Padding(
-                                                                padding: EdgeInsets.only(top: 5.0),
-                                                                child: Column(
-                                                                    children:[
-                                                                      Row(
-                                                                          children:[
-                                                                            Icon(CustomIcons.inhalator__1_, color: Colors.indigo, size: 15.0),
-                                                                            SizedBox(
-                                                                              width: 11,
-                                                                            ),
-                                                                            Text("The average time between the uses ", style: TextStyle(fontSize: 19, color: Colors.black),),
-                                                                          ]
-                                                                      ),
-                                                                      Text("of the acute inhaler is less than ", style: TextStyle(fontSize: 19, color: Colors.black),),
-                                                                      Text("4 hours. Better get checked!", style: TextStyle(fontSize: 19, color: Colors.black),)
-                                                                    ]
-                                                                )
-
-                                                            )
-                                                          ]
-                                                      )
-                                                  ),
-                                                  SizedBox(
-                                                    height: 13,
-                                                  ),
-                                                ],
-                                              )
-                                          ),
                                         ),
+                                        averageUseTimeAlert(),//space
+                                        // SizedBox(
+                                        //   height: 100.0,
+                                        //   child: Card(
+                                        //       shape: RoundedRectangleBorder(
+                                        //         borderRadius: BorderRadius.circular(15.0),
+                                        //       ),
+                                        //       elevation: 5,
+                                        //       color: Colors.white,
+                                        //       child: Column(
+                                        //         children: [
+                                        //           Padding(
+                                        //               padding: EdgeInsets.only(left: 5.0),
+                                        //               child: Row(
+                                        //                   children: [
+                                        //                     Padding(
+                                        //                         padding: EdgeInsets.only(top: 5.0),
+                                        //                         child: Column(
+                                        //                             children:[
+                                        //                               Row(
+                                        //                                   children:[
+                                        //                                     Icon(CustomIcons.inhalator__1_, color: Colors.indigo, size: 15.0),
+                                        //                                     SizedBox(
+                                        //                                       width: 11,
+                                        //                                     ),
+                                        //                                     Text("The average time between the uses ", style: TextStyle(fontSize: 19, color: Colors.black),),
+                                        //                                   ]
+                                        //                               ),
+                                        //                               Text("of the acute inhaler is less than ", style: TextStyle(fontSize: 19, color: Colors.black),),
+                                        //                               Text("4 hours. Better get checked!", style: TextStyle(fontSize: 19, color: Colors.black),)
+                                        //                             ]
+                                        //                         )
+                                        //
+                                        //                     )
+                                        //                   ]
+                                        //               )
+                                        //           ),
+                                        //           SizedBox(
+                                        //             height: 13,
+                                        //           ),
+                                        //         ],
+                                        //       )
+                                        //   ),
+                                        // ),
                                       ],
                                     ),
                                   ),

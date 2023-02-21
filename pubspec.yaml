@@ -60,6 +60,7 @@ dependencies:
   file_picker: ^4.1.4
   permission_handler: ^10.2.0
   external_path: ^1.0.3
+  intl: ^0.17.0
 
 
 
