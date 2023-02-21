@@ -117,7 +117,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ),
                                 ),
-                                onPressed: () {FirebaseAuth.instance.signOut();},
+                                onPressed: () {
+                                  setState(() {
+                                    FirebaseAuth.instance.signOut();
+                                  });
+                                  },
                                 child: Column(
                                   children: const <Widget>[
                                     Text("Log out"),
@@ -273,7 +277,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                           Column(
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: [
-                                                              Text("Prescripted Dose",style: TextStyle(color: Colors.black.withOpacity(0.6)),),
+                                                              Text("Prescription ",style: TextStyle(color: Colors.black.withOpacity(0.6)),),
                                                               Text(snapshot.data?.docs[1]['Prescripted Dose'] ?? '')
                                                             ],
                                                           ),
@@ -393,7 +397,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                           Column(
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: [
-                                                              Text("Prescripted Dose",style: TextStyle(color: Colors.black.withOpacity(0.6)),),
+                                                              Text("Prescription",style: TextStyle(color: Colors.black.withOpacity(0.6)),),
                                                               Text(snapshot.data?.docs[2]['Prescripted Dose'] ?? '')
                                                             ],
                                                           ),
@@ -571,7 +575,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future editPrescriptedDose_routine() async{
     final name = await showTextDialog(
       context,
-      title: 'Change Prescripted Dose',
+      title: 'Change Prescription',
       value: '',
       doc: 'Medications',
       field: 'Prescripted Dose',
@@ -581,7 +585,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future editPrescriptedDose_acute() async{
     final name = await showTextDialog(
       context,
-      title: 'Change Prescripted Dose',
+      title: 'Change Prescription',
       value: '',
       doc: 'Medications_acute',
       field: 'Prescripted Dose',
