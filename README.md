@@ -33,7 +33,7 @@ Project team: Eden Ayaso, Hanna Keller and Taya Harshuk.
    - Kid’s name, date of birth, ID number, email.
 
 - Inputs:
- - Set symptoms at a specific date and hour- if the kid had symptoms like short breath, whizzing or
+    - Set symptoms at a specific date and hour- if the kid had symptoms like short breath, whizzing or
      anything unusual, the parent can mark and submit them, so the doctor can be aware of them when
      they send him the medical pdf.
 
