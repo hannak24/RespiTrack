@@ -31,12 +31,15 @@ String date;
 String snooze = "";
 int i = 0;
 
-const char *ssid = "ICST";
-const char *password = "arduino123";
+const char *ssid = "Nardeen";
+const char *password = "ES458313";
 bool isWifiConnected = false;
-//int count = 18;
-int press = 13;
-int inhalerNum = 1;
+String syncTime = "02:00:00";
+int press_routine = 13;
+int inhalerNum_routine = 1;
+int press_acute = 13;
+int inhalerNum_acute = 1;
+bool isRoutine = true;
 
 FirebaseData fbdo;
 FirebaseAuth auth;
@@ -60,6 +63,26 @@ void match_callback(const char *match,         // matching string (not null-term
       appendFile(SPIFFS, "/alarms_log.txt", "\n");
     }
   }
+}
+
+void getAlarmsFromDatabase()
+{
+  deleteFile(SPIFFS, "/alarms_log.txt");
+  String collectionId = "alarms";
+  String mask = "time";
+  if (Firebase.Firestore.listDocuments(&fbdo, FIREBASE_PROJECT_ID, "", collectionId.c_str(), 50, "", "", mask, false))
+  {
+    Serial.printf("ok\n%s\n\n", fbdo.payload().c_str());
+    char *buf = new char[strlen(fbdo.payload().c_str()) + 1];
+    strcpy(buf, fbdo.payload().c_str());
+    MatchState ms(buf);
+    ms.GlobalMatch("([0-9]+:[0-9]+:[0-9]+)(\")", match_callback);
+    readFile(SPIFFS, "/alarms_log.txt");
+    delete[] buf;
+  }
+  else
+    Serial.println(fbdo.errorReason());
+  isWifiConnected = true;
 }
 
 void isTimeInAlarms(fs::FS &fs, String now_time)
@@ -109,15 +132,49 @@ void isTimeInAlarms(fs::FS &fs, String now_time)
   file.close();
 }
 
+void dailySync(String now_time)
+{
+  if (now_time == syncTime){
+    if (WiFi.status() == WL_CONNECTED)
+    {
+      isWifiConnected = true;
+      Serial.printf("Connected to %s ", ssid);
+      strcpy(wifiTime, buf);
+      if (WiFi.status() == WL_CONNECTED && Firebase.ready())
+      {
+        getAlarmsFromDatabase();
+      }
+    }
+  } 
+}
 void diaplayTime()
 {
   watch->power->adc1Enable(AXP202_VBUS_VOL_ADC1 | AXP202_VBUS_CUR_ADC1 | AXP202_BATT_CUR_ADC1 | AXP202_BATT_VOL_ADC1, true);
-  tft->setTextColor(TFT_BLUE, TFT_BLACK);
-  tft->drawString("Respi Track", 50, 50, 4);
-
-  if(isWifiConnected){
+  tft->setTextColor(TFT_BLACK);
+  //tft->drawString("Respi Track", 50, 50, 4);
+  tft->fillRoundRect(50, 50, 120, 30, 15, TFT_CYAN);
+  tft->drawString("Sync", 80, 55, 4);
+  int16_t x;
+  int16_t y;
+  if(watch->getTouch(x, y) == true){
+    if(x > 50 && x < 200 && y > 50 && y < 100){
+      Serial.println("hell yaaaaaaaaaaaaa");
+    if (WiFi.status() == WL_CONNECTED)
+    {
+      isWifiConnected = true;
+      Serial.printf("Connected to %s ", ssid);
+      strcpy(wifiTime, buf);
+      if (WiFi.status() == WL_CONNECTED && Firebase.ready())
+      {
+        getAlarmsFromDatabase();
+      }
+    }
+    }
+  }
+  if (isWifiConnected)
+  {
     tft->setTextColor(TFT_WHITE, TFT_BLACK);
-    tft->drawString("Last WIFI connection was at",  30, 183, 2);
+    tft->drawString("Last WIFI connection was at", 30, 183, 2);
     tft->drawString(wifiTime, 70, 205, 4);
   }
 
@@ -127,6 +184,7 @@ void diaplayTime()
   String now_time = watch->rtc->formatDateTime();
   snprintf(buf, sizeof(buf), "%s", now_time);
   tft->drawString(buf, 5, 110, 7);
+  dailySync(now_time);
   isTimeInAlarms(SPIFFS, now_time);
   if (rtcIrq)
   {
@@ -158,6 +216,79 @@ void diaplayTime()
   delay(1000);
 }
 
+void updateData(byte value, const char *log_name, String documentPath)
+{
+  if (isRoutine)
+    press_routine = (int)value + press_routine;
+  else
+    press_acute = (int)value + press_acute;
+  int press = isRoutine ? press_routine : press_acute;
+
+  Serial.print("counter from button: ");
+  Serial.println(press);
+  String dateTime = String(press) + " " + String(buf) + " " + date + "\n";
+  if (!SPIFFS.exists(log_name))
+  {
+    writeFile(SPIFFS, log_name, dateTime.c_str());
+    // isWifiConnected = false;
+  }
+  else
+    appendFile(SPIFFS, log_name, dateTime.c_str());
+  readFile(SPIFFS, log_name);
+  if (WiFi.status() == WL_CONNECTED)
+  {
+    isWifiConnected = true;
+    Serial.printf("Connected to %s ", ssid);
+    strcpy(wifiTime, buf);
+    if (WiFi.status() == WL_CONNECTED && Firebase.ready())
+    {
+      File file = SPIFFS.open(log_name);
+      if (!file)
+      {
+        Serial.println("Failed to open file for reading");
+        return;
+      }
+
+      while (file.available())
+      {
+        String pressNum = file.readStringUntil(' ');
+        String dateTime = file.readStringUntil('\n');
+        // String documentPath = inhaler_name;
+
+        FirebaseJson content;
+        content.set("fields/dateTime/stringValue", dateTime);
+
+        if (pressNum.toInt() % MAX_PRESSES == 0)
+        {
+          if (isRoutine)
+            inhalerNum_routine++;
+          else
+            inhalerNum_acute++;
+        }
+        int inhalerNum = isRoutine ? inhalerNum_routine : inhalerNum_acute;
+        content.set("fields/inhalerNum/stringValue", String(inhalerNum));
+
+        if (Firebase.Firestore.patchDocument(&fbdo, FIREBASE_PROJECT_ID, "", documentPath.c_str(), content.raw(), "dateTime,inhalerNum"))
+        {
+          Serial.printf("ok\n%s\n\n", fbdo.payload().c_str());
+        }
+        else
+          Serial.println(fbdo.errorReason());
+
+        if (Firebase.Firestore.createDocument(&fbdo, FIREBASE_PROJECT_ID, "", documentPath.c_str(), content.raw()))
+        {
+          Serial.printf("ok\n%s\n\n", fbdo.payload().c_str());
+        }
+        else
+          Serial.println(fbdo.errorReason());
+      }
+      file.close();
+      deleteFile(SPIFFS, log_name);
+      getAlarmsFromDatabase();
+    }
+  }
+}
+
 void setup()
 {
   Serial.begin(9600);
@@ -167,7 +298,8 @@ void setup()
     Serial.println("SPIFFS Mount Failed");
     return;
   }
-  deleteFile(SPIFFS, "/inhaler_log.txt");
+  // deleteFile(SPIFFS, "/routine_inhaler_log.txt");
+  // deleteFile(SPIFFS, "/acute_inhaler_log.txt");
   readFile(SPIFFS, "/alarms_log.txt");
   // deleteFile(SPIFFS, "/inhaler_log.txt");
   // deleteFile(SPIFFS, "/alarms_log.txt");
@@ -207,7 +339,8 @@ void setup()
   if (!BLE.begin())
   {
     Serial.println("starting Bluetooth® Low Energy module failed!");
-    while (1);
+    while (1)
+      ;
   }
 
   BLE.scanForUuid("19B10010-E8F2-537E-4F6C-D104768A1214");
@@ -226,7 +359,7 @@ void setup()
 void loop()
 {
   diaplayTime();
-  //watch->closeBL();
+  // watch->closeBL();
   BLEDevice peripheral = BLE.available();
   // Serial.print(peripheral);
   // Serial.println(" - we are disconnected");
@@ -244,6 +377,7 @@ void loop()
     if (selected_inhaler != RoutineInhaler && selected_inhaler != AcuteInhaler)
       return;
 
+    isRoutine = selected_inhaler != RoutineInhaler ? false : true;
     BLE.stopScan();
 
     Serial.println("Connecting ...");
@@ -296,81 +430,9 @@ void loop()
     {
     }
     buttonCharacteristic.readValue(value);
-    // peripheral.disconnect();
-    press = (int)value + press;
-    Serial.print("counter from button: ");
-    Serial.println(press);
-    String dateTime = String(press) + " " + String(buf) + " " + date + "\n";
-    if (!SPIFFS.exists("/inhaler_log.txt"))
-    {
-      writeFile(SPIFFS, "/inhaler_log.txt", dateTime.c_str());
-      //isWifiConnected = false;
-    }
-    else
-      appendFile(SPIFFS, "/inhaler_log.txt", dateTime.c_str());
-    readFile(SPIFFS, "/inhaler_log.txt");
-     if (WiFi.status() == WL_CONNECTED)
-    {
-      isWifiConnected = true;
-      Serial.printf("Connected to %s ", ssid);
-      strcpy(wifiTime, buf);
-      if (WiFi.status() == WL_CONNECTED && Firebase.ready())
-      {
-        File file = SPIFFS.open("/inhaler_log.txt");
-        if (!file)
-        {
-          Serial.println("Failed to open file for reading");
-          return;
-        }
-
-        while (file.available())
-        {
-          String pressNum = file.readStringUntil(' ');
-          String dateTime = file.readStringUntil('\n');
-          String documentPath = "Routine/" + pressNum;
-
-          FirebaseJson content;
-          content.set("fields/dateTime/stringValue", dateTime);
-          if (pressNum.toInt() % MAX_PRESSES == 0)
-            inhalerNum++;
-          content.set("fields/inhalerNum/stringValue", String(inhalerNum));
-
-          if (Firebase.Firestore.patchDocument(&fbdo, FIREBASE_PROJECT_ID, "", documentPath.c_str(), content.raw(), "dateTime,inhalerNum"))
-          {
-            Serial.printf("ok\n%s\n\n", fbdo.payload().c_str());
-          }
-          else
-            Serial.println(fbdo.errorReason());
-
-          if (Firebase.Firestore.createDocument(&fbdo, FIREBASE_PROJECT_ID, "", documentPath.c_str(), content.raw()))
-          {
-            Serial.printf("ok\n%s\n\n", fbdo.payload().c_str());
-          }
-          else
-            Serial.println(fbdo.errorReason());
-        }
-        file.close();
-        deleteFile(SPIFFS, "/inhaler_log.txt");
-        /*
-        deleteFile(SPIFFS, "/alarms_log.txt");
-        String collectionId = "alarms";
-        String mask = "time";
-        if (Firebase.Firestore.listDocuments(&fbdo, FIREBASE_PROJECT_ID, "", collectionId.c_str(), 50, "", "", mask, false))
-        {
-          Serial.printf("ok\n%s\n\n", fbdo.payload().c_str());
-          char *buf = new char[strlen(fbdo.payload().c_str()) + 1];
-          strcpy(buf, fbdo.payload().c_str());
-          MatchState ms(buf);
-          ms.GlobalMatch("([0-9]+:[0-9]+:[0-9]+)(\")", match_callback);
-          readFile(SPIFFS, "/alarms_log.txt");
-          delete[] buf;
-        }
-        else
-          Serial.println(fbdo.errorReason());
-        isWifiConnected = true;
-        */
-      }
-    }
+    const char *log_name = isRoutine ? "/routine_inhaler_log.txt" : "/acute_inhaler_log.txt";
+    String inhaler_name = isRoutine ? "Routine" : "Acute";
+    updateData(value, log_name, inhaler_name);
   }
   BLE.scanForUuid("19B10010-E8F2-537E-4F6C-D104768A1214");
 }
