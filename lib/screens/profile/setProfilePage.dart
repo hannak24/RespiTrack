@@ -21,10 +21,21 @@ class _ProfilePageState extends State<ProfilePage> {
   late String imgURL;
 
   Future _getImage() async{
-    var img = await ImagePicker().pickImage(source: ImageSource.gallery);
-    setState((){
-      image = img as File;
-    });
+    // var img = await ImagePicker().pickImage(source: ImageSource.gallery);
+    // setState((){
+    //   image = img as File;
+    // });
+    print("here");
+    PickedFile? pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        image = File(pickedFile.path);
+      });
+    }
   }
 
   void _pushLogin() {
@@ -87,7 +98,18 @@ class _ProfilePageState extends State<ProfilePage> {
                                       bottom: 0,
                                       left: -15,
                                       child: RawMaterialButton(
-                                        onPressed: () {_getImage;},
+                                        onPressed: () async {
+                                          PickedFile? pickedFile = await ImagePicker().getImage(
+                                            source: ImageSource.gallery,
+                                            maxWidth: 1800,
+                                            maxHeight: 1800,
+                                          );
+                                          if (pickedFile != null) {
+                                            setState(() {
+                                              image = File(pickedFile.path);
+                                            });
+                                          }
+                                        },
                                         elevation: 5.0,
                                         fillColor: Color(0xFFF5F6F9),
                                         child: Icon(Icons.camera_alt_outlined,
