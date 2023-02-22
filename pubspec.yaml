@@ -38,6 +38,7 @@ dependencies:
   flutter:
     sdk: flutter
   syncfusion_flutter_pdf: ^20.4.42
+  firebase_core: ^2.5.0
   path_provider: ^2.0.11
   flutter_email_sender: ^5.2.0
   time_chart: ^0.5.2
