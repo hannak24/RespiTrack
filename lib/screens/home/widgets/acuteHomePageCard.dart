@@ -80,6 +80,9 @@ class _acuteHomePageCardState extends State<acuteHomePageCard> {
                         if(difference == 0){
                           lastTaken = "  Last taken today";
                         }
+                      if(difference < 0){
+                        lastTaken = "  Last taken in the future";
+                      }
 
 
 
@@ -124,7 +127,7 @@ class _acuteHomePageCardState extends State<acuteHomePageCard> {
                                     children: [
                                       Container(
                                         height: 41.0,
-                                        width: 170.0,
+                                        width: 174.0,
                                         decoration: BoxDecoration(
                                             color: Colors.cyan.withOpacity(0.3),
                                             border: Border.all(

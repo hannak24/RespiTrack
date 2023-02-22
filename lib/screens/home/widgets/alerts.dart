@@ -172,6 +172,7 @@ class _expireAlertState extends State<expireAlert> {
 
                     if (snapshot2.hasData ) {
 
+
                       if (daysToExpiration <= 14) {
                         if(daysToExpiration <= 0){
                           alertText = widget.inhalerType + " inhaler expired!";
@@ -310,21 +311,11 @@ class _averageUseTimeAlertState extends State<averageUseTimeAlert> {
                     finalDates.add(DateFormat.yMd().format(illnessDates[illnessDates.length-1]));
                   }
 
-                print(finalDates);
-
-                int middleIndex = (finalDates.length / 2).round();
 
 
-                for(int i = 1; i < finalDates.length; i++){
-                  if(finalDates[i] == finalDates[0]){
-                    middleIndex = i;
-                    break;
-                  }
-                }
+                finalDates = finalDates.toSet().toList();
 
-                if(middleIndex != finalDates.length - 1) {
-                  finalDates = finalDates.sublist(0, middleIndex);
-                }
+
 
                 returnedWidget =  Container(
                     height: 110 + 27.0 * finalDates.length);
