@@ -1,19 +1,19 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'pdf_api.dart';
+import 'pdf_to_doctor/pdf_api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:respi_track/utils.dart';
-import 'AvgNumberOfPushes.dart';
-import "GroupedStackedBarChart.dart";
-import 'MedicineIntakeTimeChart.dart';
-import 'doses_remaining.dart';
-import "icons.dart";
-import 'PieChart.dart';
-import "SimpleScatterPlotChart.dart";
-import 'inhalerTimeTakingDistribution.dart';
-import 'widgetToImage.dart';
+import 'package:respi_track/utils/utils.dart';
+import 'widgets/AvgNumberOfPushes.dart';
+import 'charts/GroupedStackedBarChart.dart';
+import 'charts/MedicineIntakeTimeChart.dart';
+import 'widgets/doses_remaining.dart';
+import '../../icons/icons.dart';
+import 'charts/PieChart.dart';
+import 'charts/SimpleScatterPlotChart.dart';
+import 'charts/inhalerTimeTakingDistribution.dart';
+import 'widgets/widgetToImage.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:typed_data';
@@ -21,7 +21,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
-import 'variables.dart' as globals;
+import '../../globals/variables.dart' as globals;
 
 
 

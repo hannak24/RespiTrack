@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:respi_track/register_page.dart';
-import 'forgot_password_page.dart';
+import 'package:respi_track/screens/authentication/register/register_page.dart';
+import '../forgot_password/forgot_password_page.dart';
+
+
 
 class LoginPage extends StatefulWidget{
 
@@ -44,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Column(
         children: [
           Container(
-            height: 780,
+            height: 880,
             width: 400,
             decoration: BoxDecoration( gradient: LinearGradient(
               begin: Alignment.topLeft,

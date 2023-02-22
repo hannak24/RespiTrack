@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'custom_icons_icons.dart';
-import 'globals.dart';
+import '../../../icons/custom_icons_icons.dart';
+import '../../../globals/globals.dart';
 
 class dosesRemainingAlert extends StatefulWidget {
   //const dosesRemaining({Key? key}) : super(key: key);

@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'custom_icons_icons.dart';
+import '../../../icons/custom_icons_icons.dart';
 
 class routineHomePageCard extends StatefulWidget {
   const routineHomePageCard({Key? key}) : super(key: key);
@@ -236,7 +236,7 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                                     children: [
                                       Container(
                                         height: 41.0,
-                                        width: 150.0,
+                                        width: 142.0,
                                         decoration: BoxDecoration(
                                             color:  colorMorning,
                                             border: Border.all(

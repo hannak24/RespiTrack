@@ -1,12 +1,12 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'setMedicineAlarm.dart';
+import '../screens/alarm/setMedicineAlarm.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'setSymptoms.dart';
-import 'setStatisticsPage.dart';
-import 'setProfilePage.dart';
-import 'setHomePage.dart';
+import '../screens/symptomes/setSymptoms.dart';
+import '../screens/statistics/setStatisticsPage.dart';
+import '../screens/profile/setProfilePage.dart';
+import '../screens/home/setHomePage.dart';
 import 'main_page.dart';
 
 Future main() async {

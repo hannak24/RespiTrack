@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'custom_icons_icons.dart';
+import '../../../icons/custom_icons_icons.dart';
 
 class acuteHomePageCard extends StatefulWidget {
   const acuteHomePageCard({Key? key}) : super(key: key);
