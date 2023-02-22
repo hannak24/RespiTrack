@@ -316,12 +316,8 @@ class _SimpleScatterPlotChartDBState extends State<SimpleScatterPlotChartDB> {
                     return a.compareTo(b);
                   });
 
-
-
-                  print(pushes);
                   pushes.removeWhere((push) => push.isBefore(_start) || push.isAfter(_end));
-                  print("pushes");
-                  print(pushes);
+
 
                   if(firstClosestAlarm.isBefore(_start)){
                     firstClosestAlarm = DateTime(_start.year,_start.month, _start.day, firstClosestAlarm.hour,firstClosestAlarm.minute,);

@@ -556,7 +556,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                                             // space
 
                                                             SizedBox(
-                                                              height: 250.0,
+                                                              height: 400.0,
                                                               width: size.width,
                                                               child: Card(
                                                                 elevation: 3.5,
