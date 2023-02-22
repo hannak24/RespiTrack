@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 
 class SimpleScatterPlotChart extends StatelessWidget {
 
+
+
   final List<charts.Series<medicineIntake, int>> seriesList;
   //final bool animate;
   SimpleScatterPlotChart(this.seriesList,); //this.animate);
@@ -16,6 +18,7 @@ class SimpleScatterPlotChart extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
+
     return new charts.ScatterPlotChart(
       seriesList,
       animate: true,
@@ -37,6 +40,8 @@ class SimpleScatterPlotChart extends StatelessWidget {
       ],);
 
   }
+
+
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<medicineIntake, int>> createSampleData() {
@@ -136,15 +141,28 @@ class medicineIntake {
 }
 
 class SimpleScatterPlotChartDB extends StatefulWidget {
-  const SimpleScatterPlotChartDB({Key? key}) : super(key: key);
+  final DateTime start;
+  final DateTime end;
+
+  const SimpleScatterPlotChartDB(this.start, this.end);
 
   @override
   State<SimpleScatterPlotChartDB> createState() => _SimpleScatterPlotChartDBState();
 }
 
 class _SimpleScatterPlotChartDBState extends State<SimpleScatterPlotChartDB> {
+
+
+  DateTimeRange dateRange = DateTimeRange(
+    start: DateTime(2022, 11, 5),
+    end: DateTime(2022, 12, 24),
+  );
+
   @override
   Widget build(BuildContext context) {
+    var _start = widget.start;
+
+    var _end = widget.end.add(const Duration(days: 1));
     return Scaffold(
         body: StreamBuilder<void>(
           stream: FirebaseFirestore.instance.collection('Routine').orderBy('dateTime').snapshots(),
@@ -175,100 +193,120 @@ class _SimpleScatterPlotChartDBState extends State<SimpleScatterPlotChartDB> {
                   var morning = 1;
                   var firstPushDate = DateTime.parse('2222-11-03 18:00:04Z');
                   for (int index = 0; index < snapshot1.data?.docs.length; index++) {
-                    DocumentSnapshot documentSnapshot = snapshot1.data?.docs[index];
-                    var initialTime = documentSnapshot["dateTime"].replaceAll(".","-");
+                    DocumentSnapshot documentSnapshot = snapshot1.data
+                        ?.docs[index];
+                    var initialTime = documentSnapshot["dateTime"].replaceAll(
+                        ".", "-");
                     var temp = initialTime.split(" ");
                     var temp2 = temp[1].split("-");
                     var fixedDate = temp2[2] + "-" + temp2[1] + "-" + temp2[0];
-                    var fixedTime = fixedDate +" "+ temp[0]+"Z";
+                    var fixedTime = fixedDate + " " + temp[0] + "Z";
                     DateTime pushTime = DateTime.parse(fixedTime);
 
 
-                    var fixedAlarm1 = fixedDate +" "+ firstAlarm+"Z";
-                    var fixedAlarm2 = fixedDate +" "+ secondAlarm+"Z";
+
+                    if (!(pushTime.isAfter(_start) && pushTime.isBefore(_end))){
+                      continue;
+                    }
+
+
+                    var fixedAlarm1 = fixedDate + " " + firstAlarm + "Z";
+                    var fixedAlarm2 = fixedDate + " " + secondAlarm + "Z";
                     DateTime alarm1Time = DateTime.parse(fixedAlarm1);
                     DateTime alarm2Time = DateTime.parse(fixedAlarm2);
                     var closestAlarm =
-                    (pushTime.isAfter(alarm1Time) || pushTime.isAtSameMomentAs(alarm1Time)) && pushTime.isBefore(alarm2Time)?
-                    alarm1Time: alarm2Time;
+                    (pushTime.isAfter(alarm1Time) ||
+                        pushTime.isAtSameMomentAs(alarm1Time)) &&
+                        pushTime.isBefore(alarm2Time) ?
+                    alarm1Time : alarm2Time;
 
                     var farAlarm =
-                    (pushTime.isAfter(alarm1Time) || pushTime.isAtSameMomentAs(alarm1Time)) && pushTime.isBefore(alarm2Time)?
-                    alarm2Time: alarm1Time;
+                    (pushTime.isAfter(alarm1Time) ||
+                        pushTime.isAtSameMomentAs(alarm1Time)) &&
+                        pushTime.isBefore(alarm2Time) ?
+                    alarm2Time : alarm1Time;
                     var status = "late";
 
 
-                    if(index == 0){
+                    if (index == 0) {
                       lastAlarm = closestAlarm;
                     }
-                    else{
+                    else {
                       lastAlarm = closestAlarm;
                     }
 
                     //checking status
 
-                    if((pushTime.hour == closestAlarm.hour && pushTime.minute - alarm1Time.minute > 11)
-                        || pushTime.hour - closestAlarm.hour < 3){
-                      status = "late";
-                      medicineIntake intakeTime = medicineIntake(pushTime,status);
-                      late.add(intakeTime);
-                      pushes.add(pushTime);
-                      if(lastPushDate.isBefore(pushTime)){
-                        lastPushDate = pushTime;
-                      }
-                      if(firstPushDate.isAfter(pushTime)){
-                        firstPushDate = pushTime;
-                        firstClosestAlarm = closestAlarm;
-                        firstFarAlarm = farAlarm;
-                      }
-                      lastPushDate = pushTime;
-                      if(closestAlarm.hour < 14){
-                        morning = 1;
-                      }
-                      else{
-                        morning = 0;
-                      }
-                    }
-
-                    if((pushTime.hour == closestAlarm.hour) && (pushTime.minute - closestAlarm.minute < 11)){
-                        status = "onTime";
-                        medicineIntake intakeTime = medicineIntake(pushTime,status);
-                        onTime.add(intakeTime);
-                        //pushes.add(pushTime);
-                        if(lastPushDate.isBefore(pushTime)){
+                    if (pushTime.isAfter(_start) || pushTime.isBefore(_end)) {
+                      if ((pushTime.hour == closestAlarm.hour &&
+                          pushTime.minute - alarm1Time.minute > 11)
+                          || pushTime.hour - closestAlarm.hour < 3) {
+                        status = "late";
+                        medicineIntake intakeTime = medicineIntake(
+                            pushTime, status);
+                        late.add(intakeTime);
+                        pushes.add(pushTime);
+                        if (lastPushDate.isBefore(pushTime)) {
                           lastPushDate = pushTime;
                         }
-                        if(firstPushDate.isAfter(pushTime)){
+                        if (firstPushDate.isAfter(pushTime)) {
                           firstPushDate = pushTime;
                           firstClosestAlarm = closestAlarm;
                           firstFarAlarm = farAlarm;
                         }
-                        if(closestAlarm.hour < 14){
+                        lastPushDate = pushTime;
+                        if (closestAlarm.hour < 14) {
                           morning = 1;
                         }
-                        else{
+                        else {
                           morning = 0;
                         }
-                    }
+                      }
 
-                    if(pushTime.hour - closestAlarm.hour > 3 && pushTime.isBefore(farAlarm)){
-                      status = "veryLate";
-                      medicineIntake intakeTime = medicineIntake(pushTime,status);
-                      veryLate.add(intakeTime);
-                      pushes.add(pushTime);
-                      if(lastPushDate.isBefore(pushTime)){
-                        lastPushDate = pushTime;
+                      if ((pushTime.hour == closestAlarm.hour) &&
+                          (pushTime.minute - closestAlarm.minute < 11)) {
+                        status = "onTime";
+                        medicineIntake intakeTime = medicineIntake(
+                            pushTime, status);
+                        onTime.add(intakeTime);
+                        //pushes.add(pushTime);
+                        if (lastPushDate.isBefore(pushTime)) {
+                          lastPushDate = pushTime;
+                        }
+                        if (firstPushDate.isAfter(pushTime)) {
+                          firstPushDate = pushTime;
+                          firstClosestAlarm = closestAlarm;
+                          firstFarAlarm = farAlarm;
+                        }
+                        if (closestAlarm.hour < 14) {
+                          morning = 1;
+                        }
+                        else {
+                          morning = 0;
+                        }
                       }
-                      if(firstPushDate.isAfter(pushTime)){
-                        firstPushDate = pushTime;
-                        firstClosestAlarm = closestAlarm;
-                        firstFarAlarm = farAlarm;
-                      }
-                      if(closestAlarm.hour < 14){
-                        morning = 1;
-                      }
-                      else{
-                        morning = 0;
+
+                      if (pushTime.hour - closestAlarm.hour > 3 &&
+                          pushTime.isBefore(farAlarm)) {
+                        status = "veryLate";
+                        medicineIntake intakeTime = medicineIntake(
+                            pushTime, status);
+                        veryLate.add(intakeTime);
+                        pushes.add(pushTime);
+                        if (lastPushDate.isBefore(pushTime)) {
+                          lastPushDate = pushTime;
+                        }
+                        if (firstPushDate.isAfter(pushTime)) {
+                          firstPushDate = pushTime;
+                          firstClosestAlarm = closestAlarm;
+                          firstFarAlarm = farAlarm;
+                        }
+                        if (closestAlarm.hour < 14) {
+                          morning = 1;
+                        }
+                        else {
+                          morning = 0;
+                        }
                       }
                     }
                   }
@@ -277,6 +315,22 @@ class _SimpleScatterPlotChartDBState extends State<SimpleScatterPlotChartDB> {
                   pushes.sort((a,b) {
                     return a.compareTo(b);
                   });
+
+
+
+                  print(pushes);
+                  pushes.removeWhere((push) => push.isBefore(_start) || push.isAfter(_end));
+                  print("pushes");
+                  print(pushes);
+
+                  if(firstClosestAlarm.isBefore(_start)){
+                    firstClosestAlarm = DateTime(_start.year,_start.month, _start.day, firstClosestAlarm.hour,firstClosestAlarm.minute,);
+                    firstFarAlarm = DateTime(_start.year,_start.month, _start.day, firstFarAlarm.hour,firstFarAlarm.minute,);
+                  }
+
+
+
+
 
 
                   var morningAlarm = firstClosestAlarm;
@@ -299,8 +353,11 @@ class _SimpleScatterPlotChartDBState extends State<SimpleScatterPlotChartDB> {
                     }
 
                     if(pushes[i].difference(morningAlarm).inHours >= eveningMorningDiff){
-                      medicineIntake intakeTime = medicineIntake(morningAlarm, status);
-                      missed.add(intakeTime);
+                      if (pushes[i].isAfter(_start) || pushes[i].isBefore(_end)) {
+                        medicineIntake intakeTime = medicineIntake(
+                            morningAlarm, status);
+                        missed.add(intakeTime);
+                      }
                     }
                     else{
                       i++;
@@ -373,7 +430,8 @@ class _SimpleScatterPlotChartDBState extends State<SimpleScatterPlotChartDB> {
                 data: missed,
 
                 )];
-                  widget = new charts.ScatterPlotChart(
+                  widget =
+                  new charts.ScatterPlotChart(
                     chartData,
                     // customSeriesRenderers: [PointRendererConfig(radiusPx: 20
                     // ),PointRendererConfig(radiusPx: 20
@@ -403,6 +461,19 @@ class _SimpleScatterPlotChartDBState extends State<SimpleScatterPlotChartDB> {
           }
         )
     );
+  }
+
+  Future pickDateRange() async {
+    DateTimeRange? newDateRange = await showDateRangePicker(
+      context: context,
+      initialDateRange: dateRange,
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+    );
+
+    if (newDateRange == null) return; // pressed 'X'
+
+    setState(() => dateRange = newDateRange); // pressed 'SAVE'
   }
 }
 
