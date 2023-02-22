@@ -26,7 +26,6 @@ class _LoginPageState extends State<LoginPage> {
           email: _emailController.text.trim(),
           password: _passwordController.text.trim());
       if (user != null) {
-        print("here!");
         setState(() {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => MainPage()));
