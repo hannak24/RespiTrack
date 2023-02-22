@@ -1,4 +1,4 @@
-import 'alarmProps.dart';
+import '../widgets/alarmProps.dart';
 
 
 List<Alarm> alarms = [

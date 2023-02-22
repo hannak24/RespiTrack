@@ -1,13 +1,13 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'setMedicineAlarm.dart';
+import 'screens/alarm/setMedicineAlarm.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'setSymptoms.dart';
-import 'setStatisticsPage.dart';
-import 'setProfilePage.dart';
-import 'setHomePage.dart';
-import 'main_page.dart';
+import 'screens/symptomes/setSymptoms.dart';
+import 'screens/statistics/setStatisticsPage.dart';
+import 'screens/profile/setProfilePage.dart';
+import 'screens/home/setHomePage.dart';
+import 'main/main_page.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -103,16 +103,6 @@ class _RespiTrackState extends State<RespiTrack> {
                     icon: const Icon(_RespiTrackState.alarm),
                     onPressed: () {_pushSetMedicineAlarm();},
                     tooltip: "Set medicine alarm",
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  IconButton(
-                    icon: const Icon(_RespiTrackState.home_outlined),
-                    onPressed: () {_pushHome();},
-                    tooltip: "Back to home page",
                   ),
                 ],
               ),

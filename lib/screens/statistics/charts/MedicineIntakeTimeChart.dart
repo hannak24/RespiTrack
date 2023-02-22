@@ -231,16 +231,19 @@ class _MedicineIntakeTimeChartDBState extends State<MedicineIntakeTimeChartDB> {
                           ));
                         }
                         else {
-                          data.add(DateTimeRange(
-                            start: DateTime(
-                                eveningAlarm.year, eveningAlarm.month,
-                                eveningAlarm.day, eveningAlarm.hour,
-                                eveningAlarm.minute),
-                            end: DateTime(
-                                pushes[i].year, pushes[i].month, pushes[i].day,
-                                pushes[i].hour, pushes[i].minute),
-                          ));
-                          i++;
+                          if(i<pushes.length) {
+                            data.add(DateTimeRange(
+                              start: DateTime(
+                                  eveningAlarm.year, eveningAlarm.month,
+                                  eveningAlarm.day, eveningAlarm.hour,
+                                  eveningAlarm.minute),
+                              end: DateTime(
+                                  pushes[i].year, pushes[i].month,
+                                  pushes[i].day,
+                                  pushes[i].hour, pushes[i].minute),
+                            ));
+                            i++;
+                          }
                         }
 
                         //i++;
@@ -251,8 +254,8 @@ class _MedicineIntakeTimeChartDBState extends State<MedicineIntakeTimeChartDB> {
                             eveningAlarm.add(const Duration(days: 1));
                       }
 
-                      for(int j = pushes.length - 1; j > -1; j--){
-                        finalData.add(data[j]);
+                      for(int j = data.length - 1; j > -1; j--){
+                          finalData.add(data[j]);
                       }
                     }
                     return Padding(

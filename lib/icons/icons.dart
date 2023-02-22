@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:respi_track/custom_icons_icons.dart';
+import 'package:respi_track/icons/custom_icons_icons.dart';
 
 class GradientIcon extends StatelessWidget {
   GradientIcon(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'clockView.dart';
+import 'widgets/clockView.dart';
 
 class AlarmPage extends StatefulWidget{
   @override

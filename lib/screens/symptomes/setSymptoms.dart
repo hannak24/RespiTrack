@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'clockView.dart';
-import 'data.dart';
+import '../alarm/widgets/clockView.dart';
+import '../alarm/data/data.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'symptoms.dart';
-import 'splashScreenSymptoms.dart';
+import 'widgets/symptoms.dart';
+import 'widgets/splashScreenSymptoms.dart';
 
 
 class SymptomsPage extends StatefulWidget {
