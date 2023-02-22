@@ -82,8 +82,12 @@ class _LoginPageState extends State<LoginPage> {
       child: Column(
         children: [
           Container(
-            height: 880,
-            width: 400,
+            height: MediaQuery
+                .of(context)
+                .size.height,
+            width: MediaQuery
+                .of(context)
+                .size.width,
             decoration: BoxDecoration( gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
