@@ -17,7 +17,9 @@ Project team: Eden Ayaso, Hanna Keller and Taya Harshuk.
      
 - UnitTest - contains deep sleep tests and hardware sanity tests.
 - Watch - contains the smart watch code.
-
+- inhalers - contains the upcoming directories:
+   - acute_inhaler - contains the smart inhaler code.
+   - routine_inhaler - contains the smart inhaler code.
 
 ### User interface documentation:
 - Statuses: The applications alerts about:
