@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:respi_track/screens/authentication/login/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'splashScreenRegister.dart';
+import 'widgets/splashScreenRegister.dart';
 
 class RegisterPage extends StatefulWidget {
 

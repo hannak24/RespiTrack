@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'setSymptoms.dart';
+import '../../../symptomes/setSymptoms.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
