@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "897231848361",
+    "project_id": "respi-track",
+    "storage_bucket": "respi-track.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:897231848361:android:82a1e76bf9878469457ab8",
+        "android_client_info": {
+          "package_name": "com.example.respi_track"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "897231848361-dl9rpei4m9erd44l4t72pcfmtl42qc5v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkSVQ_DtGwgUFLb-a1js_61doXrEHXxPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "897231848361-dl9rpei4m9erd44l4t72pcfmtl42qc5v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

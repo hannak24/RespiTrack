@@ -53,3 +53,8 @@ Project team: Eden Ayaso, Hanna Keller and Taya Harshuk.
 2. Upload the watch code to the watch.
 3. Upload the inhaler code to the inhaler.
 4. Upload the application Apk in your phone (Android only).
+
+
+
+
+
