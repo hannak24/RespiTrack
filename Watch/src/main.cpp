@@ -31,10 +31,10 @@ String date;
 String snooze = "";
 int i = 0;
 
-//const char *ssid = "Pixel_3902";
-//const char *password = "a185a10c8f20";
-const char *ssid = "Snow";
-const char *password = "12345678";
+const char *ssid = "Pixel_3902";
+const char *password = "a185a10c8f20";
+//const char *ssid = "Snow";
+//const char *password = "12345678";
 bool isWifiConnected = false;
 String syncTime = "02:00:00";
 int press_routine = 13;
@@ -203,10 +203,7 @@ void diaplayTime()
   int16_t x;
   int16_t y;
   if(watch->getTouch(x, y) == true){
-    if(x > 50 && x < 200 && y > 50 && y < 100){
-      tft->fillRoundRect(50, 50, 120, 30, 15, TFT_RED);
-      tft->drawString("NO WiFi", 60, 55, 4);
-      delay(2000);
+    if(x > 50 && x < 250 && y > 30 && y < 120){
     if (WiFi.status() == WL_CONNECTED)
     {
       Serial.printf("Connected to %s ", ssid);
@@ -224,6 +221,11 @@ void diaplayTime()
         strcpy(wifiTime, buf);
         isWifiConnected = true;
       }
+    }
+    else{
+      tft->fillRoundRect(50, 50, 120, 30, 15, TFT_RED);
+      tft->drawString("NO WiFi", 60, 55, 4);
+      delay(2000);
     }
     }
   }
