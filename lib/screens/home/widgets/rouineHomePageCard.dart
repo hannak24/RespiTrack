@@ -74,8 +74,8 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                       var lastPushDate = DateTime.parse('1000-11-03 18:00:04Z');
                       var firstPushDate = DateTime.parse(
                           '2222-11-03 18:00:04Z');
-                      DateTime alarm1Time = DateTime.now();
-                      DateTime alarm2Time = DateTime.now();
+                      DateTime alarm1Time = DateTime.now().toUtc().toLocal();
+                      DateTime alarm2Time = DateTime.now().toUtc().toLocal();
                       for (int index = 0; index < snapshot1.data?.docs.length; index++) {
                             DocumentSnapshot documentSnapshot = snapshot1.data
                                 ?.docs[index];
@@ -109,7 +109,7 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                         });
 
 
-                        DateTime current_date = DateTime.now();
+                        DateTime current_date = DateTime.now().toUtc().toLocal();
                         var todayMorningAlarm = DateTime(
                             current_date.year, current_date.month,
                             current_date.day,
@@ -151,8 +151,10 @@ class _routineHomePageCardState extends State<routineHomePageCard> {
                           }
                         }
 
+
+
                       if (pushes.last.isBefore(todayMorningAlarm) &&
-                          (current_date.isAfter(todayEveningAlarm))) {
+                          (DateTime.now().toUtc().toLocal().isAfter(todayEveningAlarm))) {
                         isMoriningMedicineTaken = "missed";
                       }
 

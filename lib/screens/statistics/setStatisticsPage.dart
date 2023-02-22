@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
+import 'package:respi_track/screens/statistics/widgets/addTimeRangeScatterGraph.dart';
 
 import 'pdf_to_doctor/pdf_api.dart';
 import 'package:flutter/cupertino.dart';
@@ -68,8 +70,29 @@ class _StatisticsPageState extends State<StatisticsPage> {
 
   //Uint8List bytes_ = 0 as Uint8List;
 
+  DateTimeRange dateRange = DateTimeRange(
+    start: DateTime(2022, 11, 5),
+    end: DateTime(2022, 12, 24),
+  );
+
+
+  Future pickDateRange() async {
+    DateTimeRange? newDateRange = await showDateRangePicker(
+      context: context,
+      initialDateRange: dateRange,
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+    );
+
+    if (newDateRange == null) return; // pressed 'X'
+
+    setState(() => dateRange = newDateRange); // pressed 'SAVE'
+  }
+
   @override
   Widget build(BuildContext context) {
+    final start = dateRange.start;
+    final end = dateRange.end;
     return Scaffold(
       body: Center(
         child: StreamBuilder(
@@ -326,7 +349,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                                             ),
 
                                                             SizedBox(
-                                                              height: 250.0,
+                                                              height: 400.0,
                                                               width: size.width,
                                                               child: WidgetToImage(
                                                                   builder: (key) {
@@ -347,7 +370,40 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                                                                 .circular(
                                                                                 12)),
                                                                       ),
-                                                                      child: SimpleScatterPlotChartDB(),
+                                                                      child: Container(
+                                                                        child:timeRangeScatterGraph(),
+                                                                      )
+
+                                                                    //   Column(
+                                                                    //     mainAxisAlignment: MainAxisAlignment.center,
+                                                                    //       children: [
+                                                                    //         //   Text(
+                                                                    //         //   'Date Range',
+                                                                    //         //   style: TextStyle(fontSize: 16),
+                                                                    //         // ),
+                                                                    //         //const SizedBox(height: 5),
+                                                                    //         // Row(
+                                                                    //         //   mainAxisAlignment: MainAxisAlignment.center,
+                                                                    //         //   children: [
+                                                                    //         //   Expanded(
+                                                                    //         //     child: ElevatedButton(
+                                                                    //         //       child: Text(DateFormat('yyyy/MM/dd').format(start)),
+                                                                    //         //       onPressed: pickDateRange,
+                                                                    //         //     ),
+                                                                    //         //   ),
+                                                                    //         //   const SizedBox(width: 12),
+                                                                    //         //   Expanded(
+                                                                    //         //     child: ElevatedButton(
+                                                                    //         //       child: Text(DateFormat('yyyy/MM/dd').format(end)),
+                                                                    //         //       onPressed: pickDateRange,
+                                                                    //         //     ),
+                                                                    //         //   ),
+                                                                    //         //   const SizedBox(width: 5),
+                                                                    //         // ],
+                                                                    //         // ),
+                                                                    //         SimpleScatterPlotChartDB(),
+                                                                    //       ]
+                                                                    // ),
                                                                     );
                                                                   }),
                                                             ),
@@ -435,7 +491,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                                         .of(context)
                                                         .size;
                                                     return Container(
-                                                      height: 1600 - MediaQuery
+                                                      height: 2000 - MediaQuery
                                                           .of(context)
                                                           .viewInsets
                                                           .bottom,
@@ -500,7 +556,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                                             // space
 
                                                             SizedBox(
-                                                              height: 250.0,
+                                                              height: 400.0,
                                                               width: size.width,
                                                               child: Card(
                                                                 elevation: 3.5,
@@ -519,7 +575,8 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                                                           .circular(
                                                                           12)),
                                                                 ),
-                                                                child: SimpleScatterPlotChartDB(),
+                                                                //child: SimpleScatterPlotChartDB(),
+                                                                child: timeRangeScatterGraph(),
                                                               ),
                                                             ),
 
@@ -600,7 +657,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                                         .of(context)
                                                         .size;
                                                     return Container(
-                                                      height: 1000 - MediaQuery
+                                                      height: 2000 - MediaQuery
                                                           .of(context)
                                                           .viewInsets
                                                           .bottom,
@@ -678,7 +735,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                                         .of(context)
                                                         .size;
                                                     return Container(
-                                                      height: 1000 - MediaQuery
+                                                      height: 2000 - MediaQuery
                                                           .of(context)
                                                           .viewInsets
                                                           .bottom,

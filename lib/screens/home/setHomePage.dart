@@ -110,6 +110,7 @@ class HomePageState extends State<HomePage>
                       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                         return <Widget>[
                           SliverAppBar(
+                            automaticallyImplyLeading: false,
                             bottom: TabBar(
                               indicatorColor: Color(0xFF1A237E),
                               unselectedLabelColor: Color(0xFFE0A1A1),

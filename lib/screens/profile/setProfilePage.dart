@@ -262,10 +262,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ),
                                     ),
                                   ),
-                                  onPressed: () {
-                                    setState(() {
-                                      FirebaseAuth.instance.signOut();
-                                    });
+                                  onPressed: () async{
+                                    // setState(() async {
+                                      await FirebaseAuth.instance.signOut();
+                                      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => LoginPage()));
+                                      //_pushLogin();
+                                    // });
                                   },
                                   child: Column(
                                     children: const <Widget>[

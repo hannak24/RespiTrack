@@ -52,8 +52,12 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Column(
           children: [
             Container(
-              height: 780,
-              width: 400,
+              height: MediaQuery
+                  .of(context)
+                  .size.height,
+              width: MediaQuery
+                  .of(context)
+                  .size.width,
               decoration: BoxDecoration( gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,

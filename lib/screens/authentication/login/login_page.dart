@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:respi_track/screens/authentication/register/register_page.dart';
+import '../../../main/main_page.dart';
+import '../../home/setHomePage.dart';
 import '../forgot_password/forgot_password_page.dart';
 
 
@@ -18,8 +20,42 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  Future SignIn() async{
-    await FirebaseAuth.instance.signInWithEmailAndPassword(email: _emailController.text.trim(), password: _passwordController.text.trim());
+  Future SignIn() async {
+    try {
+      final user = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim());
+      if (user != null) {
+        setState(() {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => MainPage()));
+        });
+      }
+      else {
+        final snackBar = SnackBar(
+          content: const Text('Wrong authentication credentials!'),
+          action: SnackBarAction(
+            label: 'Got it',
+            onPressed: () {
+              // Some code to undo the change.
+            },
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+    } catch (e) {
+      print("no such user!");
+      final snackBar = SnackBar(
+        content: const Text('Wrong authentication credentials!'),
+        action: SnackBarAction(
+          label: 'Got it',
+          onPressed: () {
+            // Some code to undo the change.
+          },
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
   
   void _pushRegisterPage() {
@@ -46,8 +82,12 @@ class _LoginPageState extends State<LoginPage> {
       child: Column(
         children: [
           Container(
-            height: 880,
-            width: 400,
+            height: MediaQuery
+                .of(context)
+                .size.height,
+            width: MediaQuery
+                .of(context)
+                .size.width,
             decoration: BoxDecoration( gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
