@@ -23,7 +23,7 @@ String parse (){
 class PdfApi{
 
    static Future<void> createPDF(String childName,String birthday,String IDnumber,String routineMed, String prescriptedDose, String symptoms,Uint8List bytes1,
-       Uint8List bytes2,Uint8List bytes3,Uint8List bytes4,Uint8List bytes5) async {
+       Uint8List bytes2,Uint8List bytes3,Uint8List bytes4,Uint8List bytes5, String acuteTaking) async {
    final pdf = Document();
    pdf.addPage(MultiPage(
        build: (context) => <Widget>[
@@ -43,7 +43,7 @@ class PdfApi{
          Bullet(text: "Date of Birth: " + birthday,bulletColor: PdfColors.blue,style: TextStyle( fontSize: 15)),
          Bullet(text: "ID number: " + IDnumber,bulletColor: PdfColors.blue,style: TextStyle( fontSize: 15)),
          Bullet(text: "Routine medicine: " + routineMed,bulletColor: PdfColors.blue,style: TextStyle( fontSize: 15)),
-         Bullet(text: "Prescripted Dose: " + prescriptedDose,bulletColor: PdfColors.blue,style: TextStyle( fontSize: 15)),
+         Bullet(text: "Prescription: " + prescriptedDose,bulletColor: PdfColors.blue,style: TextStyle( fontSize: 15)),
          SizedBox(height: 20),
          Text('General statistics:', style: TextStyle(fontSize: 15, color: PdfColors.blue800,decoration: TextDecoration.underline)),
          Image(MemoryImage(bytes1)),
@@ -55,9 +55,14 @@ class PdfApi{
          Image(MemoryImage(bytes4)),
          SizedBox(height: 10),
          Image(MemoryImage(bytes5),width: 400, height: 400),
-         SizedBox(height: 30),
+         SizedBox(height: 35),
          Text('Symptoms history:', style: TextStyle(fontSize: 15, color: PdfColors.blue800,decoration: TextDecoration.underline)),
+         SizedBox(height: 20),
          Text(symptoms),
+         SizedBox(height: 70),
+         Text('Acute inhaler usage history:', style: TextStyle(fontSize: 15, color: PdfColors.blue800,decoration: TextDecoration.underline)),
+         SizedBox(height: 20),
+         Text(acuteTaking),
         // Text('Acute inhaler statistics:', style: TextStyle(fontSize: 15, color: PdfColors.blue800,decoration: TextDecoration.underline)),
 
 
