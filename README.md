@@ -8,12 +8,13 @@ Project team: Eden Ayaso, Hanna Keller and Taya Harshuk.
 
 
 ### Git directories
-- Lib - the application code. It contains the coming directories:
-   - Login- 
-   - Alarm- 
-  - Symptoms-
-   - MedicalPDF-
-   - *** Hanna's screens - how she would like to divied into directories
+- Lib - contains main file and the upcoming directories:
+   - main - contains mainPage file for checking if there are connected users ( Login/Logout)
+   - screens- contains the upcoming directories: alarm, authentication, home, profile, statistics, symptoms.
+   - globals - for variables and globals.
+   - icons - contains icons we have used in the app.
+   - utils - contains utils file - for transforming widgets into graphs.
+     
 - UnitTest - contains deep sleep tests and hardware sanity tests.
 - Watch - contains the smart watch code.
 
